@@ -22,7 +22,7 @@ app.get('/user/:name', function(req, res) {
 	}
 });
 
-app.get('/hello', function(req, res) {
+app.get('/user', function(req, res) {
 	res.send("404 code : Name not found");
 });
 
