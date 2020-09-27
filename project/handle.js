@@ -1,33 +1,28 @@
-const express = require('express');
-const app = express();
+const express = require('express')
+const app = express.Router()
 
 app.get('/', function(req, res) {
-	res.send('Welcome !');
+	res.send('Welcome on the landing page!')
 });
 
 app.get('/user/:name', function(req, res) {
-	var response = req.params['name'];
-	
-	if (response == 'Theo') 
+	var response = req.params['name']
+
+	switch (response)
 	{
-		res.send( "Hello, I'm Theo " );
-	}
-	else if (response == 'Victor') 
-	{
-		res.send( "Hello, I'm Victor ! " );
-	}
-	else
-	{
-		res.send('Hello ' + response);
+		case 'Theo':
+			res.send( "Hello, I'm Theo ! I'm 21" )
+			break
+		case 'Victor':
+			res.send( "Hello, I'm Victor ! I'm 21" )
+			break
+		default:
+			res.send('Hello ' + response);
 	}
 });
 
 app.get('/user', function(req, res) {
-	res.send("404 code : Name not found");
-});
-
-app.listen(3000, function () {
-    console.log('Example app listening on port 3000!');
+	res.send("404 code : Name not found")
 });
 
 module.exports = app;
