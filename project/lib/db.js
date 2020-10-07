@@ -25,8 +25,9 @@ module.exports = {
       return merge(channel, {id: id})
     },
     createMessage: async (idParent, message) => {
+      message.creation = Date.now()
       store.channels[idParent].messages.push(message)
-      return store.channels[idParent].messages     
+      return message
     },
     list: async () => {
       //Object.keys : https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Object/keys

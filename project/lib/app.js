@@ -69,6 +69,10 @@ app.post('/channels/:id/messages/', async (req, res) => {
   res.status(201).json(message)
 })
 
+app.put('/channels/:id/messages/', async (req, res) => {
+
+})
+
 
 
 
