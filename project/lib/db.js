@@ -26,7 +26,7 @@ module.exports = {
     },
     createMessage: async (idParent, message) => {
       store.channels[idParent].messages.push(message)
-        return store.channels[idParent].messages     
+      return store.channels[idParent].messages     
     },
     list: async () => {
       //Object.keys : https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Object/keys
