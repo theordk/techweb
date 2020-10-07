@@ -4,8 +4,6 @@ const {clone, merge} = require('mixme') //pareil. Ces fonctions permettes de d'�
 //Création d'une "base de données" fake
 const store =  {
   channels: {
-    "messages": [{
-    }]
   },
   users: {
   }
