@@ -2,24 +2,16 @@
 
 # Functionalities
 
-* Express routing
-* Route parameters
+* how to use unit test, REST API and a storage layer.
 
 #  Installation instructions 
 
 - Launch the terminal
-- Install the packages : npm init & npm install express --save
-- Run the app : node index.js (which will call handle.js for dynamic URLs)
-
-# Usage instructions
-
-- Get connected to localhost/3000, you will have a message "Welcome on the landing page !"
-- Type the URL with the information needed : /users/:name
+- Run the different test : npm run test
 
 # Result of the app
 
-- If you put in the URL : http://localhost:3000/user/Theo
-- Result : Hello, I'm Theo ! I'm 21
+- Get the different result for each entity: messages, users, channels
 
 # Author information
 
