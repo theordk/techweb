@@ -1,3 +1,4 @@
+
 const supertest = require('supertest')
 const app = require('../lib/app')
 const db = require('../lib/db')
@@ -20,7 +21,7 @@ describe('messages', () => {
     messages.should.eql([])
   })
   
-  it.skip('list one message', async () => {
+  it('list one message', async () => {
     // Create a channel
     const {body: channel} = await supertest(app)
     .post('/channels')
@@ -39,7 +40,7 @@ describe('messages', () => {
     }])
   })
   
-  it.skip('add one element', async () => {
+  it('add one element', async () => {
     // Create a channel
     const {body: channel} = await supertest(app)
     .post('/channels')

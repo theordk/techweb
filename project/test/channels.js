@@ -47,7 +47,7 @@ describe('channels', () => {
     // Check it was correctly inserted
     const {body: channels} = await supertest(app)
     .get('/channels')
-    channels.length.should.eql(2)
+    channels.length.should.eql(1)
   })
 
 })
