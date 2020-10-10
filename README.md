@@ -2,16 +2,26 @@
 
 # Functionalities
 
-* how to use unit test, REST API and a storage layer.
+* unit test with MOCHA,
+* embeded storage : levelDB & REST APIs
 
 #  Installation instructions 
 
-- Launch the terminal
-- Run the different test : npm run test
+- Run the different test with mocha : 
+```sh
+npm run test
+```
+- Lauch the web app
+```sh
+npm run test
+```
+./bin/start 
+Chat is waiting for you at http://localhost:3000
 
 # Result of the app
 
-- Get the different result for each entity: messages, users, channels
+- Get the different result for each test for each entity: messages, users, channels
+- Access to an app on localhost with the entities
 
 # Author information
 
