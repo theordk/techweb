@@ -13,10 +13,9 @@ npm run test
 ```
 - Lauch the web app
 ```sh
-npm run test
-```
 ./bin/start 
 Chat is waiting for you at http://localhost:3000
+```
 
 # Result of the app
 
