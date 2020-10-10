@@ -27,7 +27,7 @@ describe('users', () => {
     .get('/users')
     .expect(200)
     users.should.match([{
-      id: /^\w+-\w+-\w+-\w+-\w+$/,
+      id: /^users:\w+-\w+-\w+-\w+-\w+$/,
       username: 'user_1'
     }])
   })
@@ -42,7 +42,7 @@ describe('users', () => {
     // Check it was correctly inserted
     const {body: users} = await supertest(app)
     .get('/users')
-    users.length.should.eql(2)
+    users.length.should.eql(1)
   })
   
 })
