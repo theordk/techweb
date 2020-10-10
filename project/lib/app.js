@@ -39,6 +39,7 @@ app.put('/channels/:id', (req, res) => {
 
 //Add missing routes here...
 
+//Users
 app.get('/users', async (req, res) => {
   const users = await db.users.list()
   res.json(users)
@@ -49,7 +50,7 @@ app.post('/users', async (req, res) => {
   res.status(201).json(user)
 })
 
-app.get('/users/:id', (req, res) => {
+/* app.get('/users/:id', (req, res) => {
   const user = db.users.get(req.body)
   res.json(user)
 })
@@ -57,23 +58,17 @@ app.get('/users/:id', (req, res) => {
 app.put('/users/:id', (req, res) => {
   const user = db.users.update(req.body)
   res.json(user)
+}) */
+
+//Messages
+app.get('/channels/:id/messages', async(req, res) => {
+  const messages = await db.channels.listMessages(req.params.id)
+  res.json(messages)
 })
 
-app.get('/channels/:id/messages', async (req, res) => {
-  const message = await db.channels.listMessages(req.params.id)
-  res.json(message)
-})
-
-app.post('/channels/:id/messages/', async (req, res) => {
+app.post('/channels/:id/messages', async(req, res) => {
   const message = await db.channels.createMessage(req.params.id, req.body)
   res.status(201).json(message)
 })
-
-app.put('/channels/:id/messages/', async (req, res) => {
-
-})
-
-
-
 
 module.exports = app
