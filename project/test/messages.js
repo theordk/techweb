@@ -40,7 +40,7 @@ describe('messages', () => {
     }])
   })
   
-  it.skip('add one element', async () => {
+  it('add one element', async () => {
     // Create a channel
     const {body: channel} = await supertest(app)
     .post('/channels')

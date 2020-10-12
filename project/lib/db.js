@@ -31,11 +31,11 @@ module.exports = {
       store.channels[idParent].messages.push(message)
       return message */
       //LevelDB
-      if(!message.content) throw Error('Invalid message')
-      const id = uuid()
+      if(!message.content) throw Error('Invalid message')     
       message.creation = Date.now()
+      const id = message.creation
       await db.put(`channels:${idParent}.messages:${id}`, JSON.stringify(message))
-      return merge(message, {id: id})
+      return message
     },
     list: async () => {
       //Object.keys : https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Object/keys
@@ -68,11 +68,10 @@ module.exports = {
       return new Promise( (resolve, reject) => {
         const messages = []
         db.createReadStream({
-          gt: "channels:" + String(idParent) + ".messages:",
-          lte: "channels" + String(idParent) + ".messages:" + String.fromCharCode(":".charCodeAt(0) + 1),
+          gt: `channels:${idParent}.messages:`,
+          lte: `channels:${idParent}.messages:` + String.fromCharCode(":".charCodeAt(0) + 1),
         }).on( 'data', ({key, value}) => {
           message = JSON.parse(value)
-          message.id = key
           messages.push(message)
         }).on( 'error', (err) => {
           reject(err)
