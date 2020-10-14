@@ -9,16 +9,36 @@ import './index.css';
       super(props);
       this.state = {
         messages: [],
+        messages2: [],
         value: '',
         user: true,
       };
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
-      this.switchUser = this.switchUser(this);
+      this.switchUser = this.switchUser.bind(this);
     }
 
     handleChange(event) {
       this.setState({value: event.target.value});
+    }
+
+    handleSubmit(event) {  
+      if(this.state.user) {
+        var joined = this.state.messages.concat(this.state.value);
+        event.preventDefault();
+        this.setState({messages: joined})
+      }
+      else {
+        var joined = this.state.messages2.concat(this.state.value);
+      event.preventDefault();
+      this.setState({messages2: joined})
+      }
+      console.log(this.state.messages);
+    }
+
+    switchUser(){
+      this.setState({user: !this.state.user});
+      console.log(this.state.user);
     }
  
     render() {
@@ -26,7 +46,12 @@ import './index.css';
         <div>
           <div>
                 {this.state.messages.map(function(message) {
-                      return <div key={message} className = {this.state.user ? 'user1' : 'user2'}>{message}</div>
+                      return <div key={message} className = "user1">{message}</div>
+                 }, this)}                
+          </div>
+          <div>
+                {this.state.messages2.map(function(message) {
+                      return <div key={message} className = "user2">{message}</div>
                  }, this)}                
           </div>
           <form onSubmit={this.handleSubmit}>
@@ -34,22 +59,10 @@ import './index.css';
               </input>
               <input type="submit" value="send" ></input>
           </form>
-          <button name="Switch user" onClick={this.switchUser}>Switch user</button>
+          <button onClick={() => this.switchUser()}>Switch user</button>
 
         </div>
       );
-    }
-
-    handleSubmit(event) {   
-      var joined = this.state.messages.concat(this.state.value);
-      event.preventDefault();
-      this.setState({messages: joined})
-      console.log(this.state.messages);
-    }
-
-    switchUser(){
-      this.setState({user: !this.state.user});
-      console.log(this.state.user);
     }
   }
   
