@@ -48,3 +48,11 @@ body {
   .game-info {
     margin-left: 20px;
   }
+
+  .user1 {
+    margin-left: 5px;
+  }
+
+  .user2 {
+    margin-left: 200px;
+  }

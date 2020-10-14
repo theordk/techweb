@@ -14,6 +14,7 @@ import './index.css';
       };
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
+      this.switchUser = this.switchUser(this);
     }
 
     handleChange(event) {
@@ -25,14 +26,16 @@ import './index.css';
         <div>
           <div>
                 {this.state.messages.map(function(message) {
-                      return <div key={message} /*className = {this.state.user ?'user1' : 'user2'}*/>{message}</div>
-                 })}                
-          </div> 
+                      return <div key={message} className = {this.state.user ? 'user1' : 'user2'}>{message}</div>
+                 }, this)}                
+          </div>
           <form onSubmit={this.handleSubmit}>
               <input type="text" name="message" value={this.state.value} onChange={this.handleChange}>
               </input>
               <input type="submit" value="send" ></input>
           </form>
+          <button name="Switch user" onClick={this.switchUser}>Switch user</button>
+
         </div>
       );
     }
@@ -42,6 +45,11 @@ import './index.css';
       event.preventDefault();
       this.setState({messages: joined})
       console.log(this.state.messages);
+    }
+
+    switchUser(){
+      this.setState({user: !this.state.user});
+      console.log(this.state.user);
     }
   }
   
