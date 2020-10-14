@@ -1,26 +1,34 @@
 # ECE-TechWeb
 
-# Functionalities
+# LAB4
 
-* unit test with MOCHA,
-* embeded storage : levelDB & REST APIs
+* Creation of 2 different React App : 
+- A game : Tic - Tac - Toe
+- A chat : Sending messages
 
 #  Installation instructions 
 
-- Run the different test with mocha : 
+- Installation of Create React App : 
 ```sh
-npm run test
+npx create-react-app my-app
+```
+- Delete all the files is the folder src/
+```sh
+cd my-app
+cd src
+rm -f *
+```
+- Insert those lines in your .js file
+```sh
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
 ```
 - Lauch the web app
 ```sh
-./bin/start 
-Chat is waiting for you at http://localhost:3000
+npm start
+Open the React App at http://localhost:3000
 ```
-
-# Result of the app
-
-- Get the different result for each test for each entity: messages, users, channels
-- Access to an app on localhost with the entities
 
 # Author information
 
