@@ -2,14 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-function Square(props) {
-    return (
-      <button className="square" onClick={props.onClick}>
-        {props.value}
-      </button>
-    );
-  }
-
   
   class Board extends React.Component {
 
@@ -18,58 +10,42 @@ function Square(props) {
       this.state = {
         messages: [],
         value: '',
+        user: true,
       };
-
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    renderSquare(i) {
-      return (<Square 
-      value={this.props.squares[i]} 
-      onClick={() => this.props.onClick(i)}
-      />
-      );
     }
 
     handleChange(event) {
       this.setState({value: event.target.value});
     }
-
-  
+ 
     render() {
       return (
         <div>
-          <ul>
+          <div>
                 {this.state.messages.map(function(message) {
-                      return <li key={message}>{message}</li>
-                 })}
-                
-              </ul>
- 
+                      return <div key={message} /*className = {this.state.user ?'user1' : 'user2'}*/>{message}</div>
+                 })}                
+          </div> 
           <form onSubmit={this.handleSubmit}>
               <input type="text" name="message" value={this.state.value} onChange={this.handleChange}>
               </input>
-              <input type="submit" value="send" /*onClick={() => this.handleClick()}*/></input>
+              <input type="submit" value="send" ></input>
           </form>
         </div>
       );
     }
 
-    handleSubmit(event) {
-     
-      //const history = this.state.messages.slice(0, this.step.messages.length + 1);
+    handleSubmit(event) {   
       var joined = this.state.messages.concat(this.state.value);
       event.preventDefault();
       this.setState({messages: joined})
       console.log(this.state.messages);
     }
-
-    
-
   }
   
-  class Game extends React.Component {
+  /*class Game extends React.Component {
       constructor(props){
           super(props);
           this.state = {
@@ -163,12 +139,12 @@ function Square(props) {
       }
     }
     return null;
-  }
+  }*/
   
   // ========================================
   
   ReactDOM.render(
-    <Game />,
+    <Board />,
     document.getElementById('root')
   );
   
