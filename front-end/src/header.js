@@ -12,7 +12,7 @@ const styles = {
 export default () => {
     return (
         <header css={styles.header}>
-            <h1>de la merde</h1>
+            <h1>Header</h1>
         </header>
     );
 }

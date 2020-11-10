@@ -12,7 +12,7 @@ const styles = {
 export default () => {
     return (
         <footer className="App-footer" style={styles.footer}>
-            de la merde
+            Footer
         </footer>
     );
 }   
