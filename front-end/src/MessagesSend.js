@@ -26,8 +26,10 @@ const styles = {
 }
 
 const { DateTime } = require("luxon");
+var showdown = require('showdown');
 
 var now = DateTime.local();
+var converter = new showdown.Converter();
 
 const MessagesSend = params => {
     const MessageForm = ({
@@ -37,7 +39,7 @@ const MessagesSend = params => {
             e.preventDefault()
             const data = new FormData(e.target)
             addMessage({
-                content: data.get('content'),
+                content: converter.makeHtml(data.get('content')),
                 author: 'david',
                 creation: now.toLocaleString(DateTime.DATETIME_MED),
             })

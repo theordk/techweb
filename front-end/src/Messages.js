@@ -35,20 +35,21 @@ const Messages = (
                 <h1>Messages for {channel.name}</h1>
                 <ul>
                     {messages.map((message, i) => (
-                        
                         <li key={i} css={styles.message}>
                             <p>
                                 <span>{message.author}</span>
                                 {' '}
                                 <span>{message.creation}</span>
                             </p>
-                            
                             <div>
                                 {
                                     message.content
                                     .split(/(\n +\n)/)
                                     .filter(el => el.trim())
-                                    .map(el => <p>{el}</p>)
+                                    .map(el => <div
+                                        dangerouslySetInnerHTML={{
+                                          __html: el
+                                        }}></div>)                                   
                                 }
                             </div>
                         </li>
