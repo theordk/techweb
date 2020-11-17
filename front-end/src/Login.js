@@ -14,7 +14,9 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 const useStyles = (theme) => ({
   root: {
     flex: '1 1 auto',
-    background: theme.palette.background.default,
+    //background: theme.palette.background.default,
+    background: "#054c6e",
+    borderRadius: '10px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -33,7 +35,7 @@ const useStyles = (theme) => ({
     '& button': {
       border: 'none',
       marginTop: theme.spacing(2),
-      marginLeft: theme.spacing(10),
+      marginLeft: theme.spacing(8),
     },
   },
 })
@@ -69,7 +71,7 @@ export default ({
       <div></div>
         <Button
         variant="contained"
-        color="primary"
+        color="#05253D"
         className={classes.button}
         startIcon={<CheckCircleIcon />}
         style={{justifyContent: 'center'}}

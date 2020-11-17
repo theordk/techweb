@@ -13,8 +13,9 @@ const styles = {
     boxSizing: 'border-box',
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: '#565E71',
-    padding: '50px',
+    backgroundColor: '#05253D',
+    padding: '30px',
+    //borderRadius: '20px'
   },
 }
 
