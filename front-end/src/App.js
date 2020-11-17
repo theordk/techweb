@@ -1,10 +1,12 @@
-import {useState} from 'react';
+import {useState} from 'react'
 import './App.css';
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import Header from './header'
-import Footer from './footer'
-import Main from './main'
+// Local
+import Footer from './Footer'
+import Header from './Header'
+import Main from './Main'
+import Login from './Login'
 
 const styles = {
   root: {
@@ -14,19 +16,16 @@ const styles = {
     backgroundColor: '#565E71',
     padding: '50px',
   },
-  headerLogIn: {
-    backgroundColor: 'red',
-  },
-  headerLogOut: {
-    backgroundColor: 'blue',
-  }, 
 }
 
 export default () => {
+  const [user, setUser] = useState(null)
   return (
     <div className="App" css={styles.root}>
       <Header />
-      <Main />
+      {
+        user ? <Main /> : <Login onUser={setUser} />
+      }
       <Footer />
     </div>
   );
