@@ -1,29 +1,12 @@
 # ECE-TechWeb
 
-# LAB4
+# LAB5
 
-* Creation of 2 different React App : 
-- A game : Tic - Tac - Toe
-- A chat : Sending messages
+* Working on the react app "My Chat" using Material-UI
+* Customize the login screen using nice form inputs and a buttom from the Material-UI components list.
 
 #  Installation instructions 
 
-- Installation of Create React App : 
-```sh
-npx create-react-app my-app
-```
-- Delete all the files is the folder src/
-```sh
-cd my-app
-cd src
-rm -f *
-```
-- Insert those lines in your .js file
-```sh
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-```
 - Lauch the web app
 ```sh
 npm start
