@@ -10,6 +10,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import Button from '@material-ui/core/Button';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import Cookies from 'js-cookie';
 
 const useStyles = (theme) => ({
   root: {
@@ -40,6 +41,47 @@ const useStyles = (theme) => ({
   },
 })
 
+const crypto = require('crypto');
+
+const base64URLEncode = (str) => (
+  str.toString('base64')
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=/g, '')
+)
+const sha256 = (buffer) => (
+  crypto
+    .createHash('sha256')
+    .update(buffer)
+    .digest()
+)
+
+var code_verifier
+var code_challenge
+var url
+
+const handler = (authorization_endpoint, client_id, redirect_uri, scope) => (
+  code_verifier = base64URLEncode(crypto.randomBytes(32)),
+  code_challenge = base64URLEncode(sha256(code_verifier)),
+  Cookies.set('verifier', code_verifier),
+  url = new URL(authorization_endpoint+ "?client_id=" + client_id 
+  + "&scope=" + scope
+  + "&response_type=code&redirect_uri=" + redirect_uri 
+  + "&code_challenge="+ code_challenge 
+  + "&code_challenge_method=S256"),
+  url.toString()
+)
+
+//var url = "https://www.google.com"
+if (window.location.href === "http://localhost:3000/") {
+  if (Cookies.get('credential' === null)) {
+    handler("http://127.0.0.1:5556/dex/auth", "techweb", "http://localhost:3000/callback","openid")
+  }
+}
+else{
+  
+}
+
 export default ({
   onUser
 }) => {
@@ -47,6 +89,9 @@ export default ({
   const classes = useStyles(useTheme())
   return (
     <div css={styles.root}>
+      <fieldset>
+          <a href={url} >test </a>
+        </fieldset>
       <div backgroundColor = "red">
         <div className={classes.root}>
         <Grid container spacing={1} alignItems="flex-end">
