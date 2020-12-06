@@ -17,6 +17,7 @@
     "js-cookie": "^2.2.1",
     "js-cookies": "^1.0.4",
     "react": "^16.13.1",
+    "react-cookie": "^4.0.3",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.3",
     "rehype-stringify": "^8.0.0",
