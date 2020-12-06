@@ -1,13 +1,17 @@
-import './App.css';
+
+import { useContext } from 'react'
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import { Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import ChatIcon from '@material-ui/icons/Chat';
+// Layout
+import { useTheme } from '@material-ui/core/styles';
+import IconButton from '@material-ui/core/IconButton';
+import Link from '@material-ui/core/Link';
+import MenuIcon from '@material-ui/icons/Menu';
+import Context from './Context'
 
-/* const styles = {
+const useStyles = (theme) => ({
   header: {
-    height: '60px',
+    padding: theme.spacing(1),
     backgroundColor: 'rgba(255,255,255,.3)',
     flexShrink: 0,
   },
@@ -17,23 +21,49 @@ import ChatIcon from '@material-ui/icons/Chat';
   headerLogOut: {
     backgroundColor: 'blue',
   },
-} */
-
-const useStyles = makeStyles({
-  titleStyles: {
-    color: "white",
-    fontSize: "40px",
-    //backgroundColor: "#303030",
-    //borderRadius: '10px'
+  menu: {
+    [theme.breakpoints.up('sm')]: {
+      display: 'none !important',
+    },
   }
-});
+})
 
-export default () => {
-  const classes = useStyles();
+export default ({
+  drawerToggleListener
+}) => {
+  const styles = useStyles(useTheme())
+  const {
+    oauth, setOauth,
+    drawerVisible, setDrawerVisible
+  } = useContext(Context)
+  const drawerToggle = (e) => {
+    setDrawerVisible(!drawerVisible)
+  }
+  const onClickLogout = (e) => {
+    e.stopPropagation()
+    setOauth(null)
+  }
   return (
-    <Typography  className={classes.titleStyles} align="center">
-      Welcome on MyChat <ChatIcon fontSize="large"/>
-    </Typography>  
+    <header css={styles.header}>
+      <IconButton
+        color="inherit"
+        aria-label="open drawer"
+        onClick={drawerToggle}
+        css={styles.menu}
+      >
+        <MenuIcon />
+      </IconButton>
+      Header
+      {
+        oauth ?
+          <span>
+            {oauth.email}
+            <Link onClick={onClickLogout}>logout</Link>
+          </span>
+        :
+          <span>new user</span>
+      }
+      
+    </header>
   );
 }
-

@@ -27,7 +27,7 @@ const config = {
       - 'Channel.js' prints the messages, uses 'Messages.js' and 'MessageSend.js'
       - 'Messages.js' prints the list of messages inside the current channel
       - 'MessageForm.js' send a new message
-  
+
       \`\`\`
       +--------------------------------------------+
       |                  Header                    |
@@ -42,7 +42,7 @@ const config = {
       |                  Footer                    |
       +--------------------------------------------+
       \`\`\`
-      `,
+      `.replace(/^ {6}/gm,''),
     },{
       author: 'david',
       creation: 1602832138892,
@@ -52,7 +52,7 @@ const config = {
       Give it some styles, use CSS to make it looks good. Possible source of
       improvements include changing the colors, replacing the HTML "send" button
       with an icon, working on the header, providing day/night themes ... be creative
-      `,
+      `.replace(/^ {6}/gm,''),
     },{
       author: 'sergei',
       creation: 1602840139202,
@@ -66,7 +66,7 @@ const config = {
       for many years to accomplish date formatting. Read what is displayed on the
       top right corner of their homepage, it is now depreciated. Read the reasons
       and act accordingly.
-      `,
+      `.replace(/^ {6}/gm,''),
     },{
       author: 'david',
       creation: 1602844139200,
@@ -84,7 +84,7 @@ const config = {
   
       Consider adding syntax highlight support with a library like
       [Prism](https://prismjs.com/).
-      `,
+      `.replace(/^ {6}/gm,'').replace(/^ {6}/gm,''),
     }]
   },{
     name: 'Channel 2',
@@ -93,13 +93,13 @@ const config = {
       creation: 1602223579200,
       content: `
       Ping
-      `
+      `.replace(/^ {6}/gm,'')
     },{
       author: 'david',
       creation: 1602523579200,
       content: `
       Pong
-      `
+      `.replace(/^ {6}/gm,'')
     }]
   },{
     name: 'Channel 3',
@@ -108,13 +108,13 @@ const config = {
       creation: 1602223579200,
       content: `
       What is the answer to the Ultimate Question of Life, the Universe and Everything ?
-      `
+      `.replace(/^ {6}/gm,'')
     },{
       author: 'david',
       creation: 1602523579200,
       content: `
       42
-      `
+      `.replace(/^ {6}/gm,'')
     }]
   }].map( async (channel) => {
     const {data: {id}} = await axios.post(`http://localhost:${config.port}/channels`, {

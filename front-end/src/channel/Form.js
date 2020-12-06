@@ -36,12 +36,12 @@ export default ({
   const [content, setContent] = useState('')
   const styles = useStyles(useTheme())
   const onSubmit = async () => {
-    const { data: message } = await axios.post(
+    const {data: message} = await axios.post(
       `http://localhost:3001/channels/${channel.id}/messages`
-      , {
-        content: content,
-        author: 'david',
-      })
+    , {
+      content: content,
+      author: 'david',
+    })
     addMessage(message)
     setContent('')
   }

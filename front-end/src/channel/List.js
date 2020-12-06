@@ -24,7 +24,10 @@ const useStyles = (theme) => ({
   root: {
     position: 'relative',
     flex: '1 1 auto',
-    overflow: 'auto',
+    'pre': {
+      
+      overflowY: 'auto',
+    },
     '& ul': {
       'margin': 0,
       'padding': 0,
