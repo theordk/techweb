@@ -28,7 +28,8 @@ module.exports = {
         }).on( 'data', ({key, value}) => {
           channel = JSON.parse(value)
           channel.id = key.split(':')[1]
-          channels.push(channel)
+          console.log(channel)
+          channels.push(channel)           
         }).on( 'error', (err) => {
           reject(err)
         }).on( 'end', () => {
@@ -124,5 +125,5 @@ module.exports = {
     clear: async () => {
       await db.clear()
     }
-  }
+  },
 }

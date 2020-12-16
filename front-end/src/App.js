@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react'
+import { green } from "@material-ui/core/colors";
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 // Local
@@ -16,13 +17,18 @@ import {
   useLocation
 } from "react-router-dom"
 
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { red } from '@material-ui/core/colors'
+
+
+
 const styles = {
   root: {
     boxSizing: 'border-box',
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: '#565E71',
-    padding: '50px',
+    padding: '0px',
   },
 }
 

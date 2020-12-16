@@ -18,10 +18,11 @@ app.get('/', (req, res) => {
   ].join(''))
 })
 
-// Channels
+// Channels a
 
 app.get('/channels', authenticate, async (req, res) => {
-  const channels = await db.channels.list()
+  console.log(req.body)
+  const channels = await db.channels.list(req.body)
   res.json(channels)
 })
 

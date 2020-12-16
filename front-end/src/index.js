@@ -7,10 +7,13 @@ import { Provider as ContextProvider } from './Context';
 import * as serviceWorker from './serviceWorker';
 import 'typeface-roboto'
 // Layout
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/core/styles';
+import { unstable_createMuiStrictModeTheme as createMuiTheme } from '@material-ui/core';
 import {
   BrowserRouter as Router,
 } from "react-router-dom";
+
+
 
 const theme = createMuiTheme({
   palette: {

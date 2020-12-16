@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import Context from './Context'
+import {useHistory} from 'react-router-dom';
 
 const useStyles = (theme) => ({
   header: {
@@ -31,6 +32,7 @@ const useStyles = (theme) => ({
 export default ({
   drawerToggleListener
 }) => {
+  const history = useHistory()
   const styles = useStyles(useTheme())
   const {
     oauth, setOauth,
@@ -43,6 +45,9 @@ export default ({
     e.stopPropagation()
     setOauth(null)
   }
+  const onClickWelcome = (e) => {
+    e.stopPropagation()
+  }
   return (
     <header css={styles.header}>
       <IconButton
@@ -53,7 +58,6 @@ export default ({
       >
         <MenuIcon />
       </IconButton>
-      Header
       {
         oauth ?
           <span>
@@ -63,7 +67,13 @@ export default ({
         :
           <span>new user</span>
       }
-      
+      <Link
+            href={`/channels`}
+            onClick={ (e) => {
+              e.preventDefault()
+              history.push(`/channels`)
+            }}
+          >Back to Welcome</Link>
     </header>
   );
 }

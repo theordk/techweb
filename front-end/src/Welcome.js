@@ -1,66 +1,217 @@
-import {} from 'react';
+import { } from 'react';
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 // Layout
-import { useTheme } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
+import { duration, useTheme } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Context from './Context'
 import Typography from '@material-ui/core/Typography';
-import {ReactComponent as ChannelIcon} from './icons/channel.svg';
-import {ReactComponent as FriendsIcon} from './icons/friends.svg';
-import {ReactComponent as SettingsIcon} from './icons/settings.svg';
+import { ReactComponent as ChannelIcon } from './icons/channel.svg';
+import { ReactComponent as FriendsIcon } from './icons/friends.svg';
+import { ReactComponent as SettingsIcon } from './icons/settings.svg';
+import { makeStyles } from '@material-ui/core/styles';
+import users from './icons/users.png';
+import message from './icons/message.png';
+import { Particles } from 'react-particles-js';
+import React from 'react';
+import { useContext } from 'react'
+import Dialog from '@material-ui/core/Dialog';
+import {BasicTextFields} from './Dialogs1.js'
+
+
+
+const particuleParams = {
+  background: {
+    "particles": {
+      "number": {
+        "value": 25,
+        "density": {
+          "enable": true,
+          "value_area": 800,
+        }
+      },
+      "line_linked": {
+        "enable": false,
+        "opacity": "0.5"
+      },
+      "move": {
+        "speed": 1,
+        "out_mode": "out"
+      },
+      "shape": {
+        "type": [
+          "images",
+        ],
+        "images": [
+          {
+            "src": users,
+            "height": 20,
+            "width": 23
+          },
+          {
+            "src": message,
+            "height": 20,
+            "width": 23
+          }
+        ]
+      },
+      "color": {
+        "value": "#CCC"
+      },
+      "size": {
+        "value": 30,
+        "random": false,
+        "anim": {
+          "enable": true,
+          "speed": 4,
+          "size_min": 10,
+          "sync": false
+        }
+      },
+      "event": {
+        "onhover": {
+          "enable": true,
+          "mode": "repulse"
+        }
+      }
+    },
+    "retina_detect": false
+
+  }
+}
+
+
+
+
+const useStyles2 = makeStyles((theme) => ({
+  container: {
+    marginLeft: '1%',
+    marginTop: '2%',
+    marginBottom: '2%',
+    position: 'abosulte',
+    float: 'left',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    //overflowY: 'scroll'
+  }
+}))
 
 const useStyles = (theme) => ({
   root: {
     height: '100%',
     flex: '1 1 auto',
     display: 'flex',
-    // background: 'rgba(0,0,0,.2)',
+    background: 'linear-gradient(to bottom, #152020, #404242)',
+    overflowY: 'scroll'
+  },
+  particles: {
+    zIndex: '1',
+    position: 'absolute',
+    height: '100%',
+    width: '100%'
   },
   card: {
+    position: 'relative',
+    zIndex: '2',
     textAlign: 'center',
+    float: 'left',
+
   },
   icon: {
-    width: '30%',
-    fill: '#fff',
+    position: 'relative',
+    zIndex: '3',
+    fill: '#fff55',
+    opacity: "5",
+    height: '100%',
+    width: '100%'
+  },
+  title: {
+    position: 'relative',
+    justifyContent: 'center',
+    zIndex: '4',
+  },
+  dialog: {
+    height:'100%',
+    width: '100%'
   }
 })
 
+
+
 export default () => {
+  const {
+    oauth
+  } = useContext(Context)
   const styles = useStyles(useTheme())
+  const styles2 = useStyles2(useTheme())
+  const [openChannel, setOpenChannel] = React.useState(false)
+  const [openFriends, setOpenFriends] = React.useState(false)
+  const [openSettings, setOpenSettings] = React.useState(false)
+
+  const handleClickOpenChannel = () => {
+    setOpenChannel(true);
+  };
+  const handleCloseChannel = () => {
+    setOpenChannel(false);
+  };
+
+  const handleClickOpenFriends = () => {
+    setOpenFriends(true);
+  };
+  const handleCloseFriends = () => {
+    setOpenFriends(false);
+  };
+
+  const handleClickOpenSettings = () => {
+    setOpenSettings(true);
+  };
+  const handleCloseSettings = () => {
+    setOpenSettings(false);
+  };
+
   return (
     <div css={styles.root}>
-      <Grid
-        container
-        direction="row"
-        justify="center"
-        alignItems="center"
-        spacing={5}
-      >
-        <Grid item xs>
-          <div css={styles.card}>
-            <ChannelIcon css={styles.icon} />
+      <Particles css={styles.particles} params={particuleParams.background} />
+      <div className={styles2.container}>
+        <div css={styles.card}>
+          <Button onClick={handleClickOpenChannel}>
+            <ChannelIcon css={styles.icon} /><br />
             <Typography color="textPrimary">
-              Create channels
+              Create Channel
             </Typography>
-          </div>
-        </Grid>
-        <Grid item xs>
-          <div css={styles.card}>
+          </Button>
+        </div>
+        <div css={styles.card} >
+          <Button onClick={handleClickOpenFriends}>
             <FriendsIcon css={styles.icon} />
             <Typography color="textPrimary">
               Invite friends
             </Typography>
-          </div>
-        </Grid>
-        <Grid item xs>
-          <div css={styles.card}>
+          </Button>
+        </div>
+        <div css={styles.card}>
+          <Button onClick={handleClickOpenSettings}>
             <SettingsIcon css={styles.icon} />
             <Typography color="textPrimary">
-              Settings
+              Manage Account
             </Typography>
-          </div>
-        </Grid>
-      </Grid>
+          </Button>
+          <Dialog open={openChannel} onClose={handleCloseChannel} css={styles.icon}>
+            <Button>
+              Channel
+            </Button>
+          </Dialog>
+          <Dialog open={openFriends} onClose={handleCloseFriends} css={styles.icon}>
+            <Button>
+              Friends
+            </Button>
+          </Dialog>
+          <Dialog open={openSettings} onClose={handleCloseSettings} css={styles.dialog}>
+            <BasicTextFields openSettings={openSettings} onChange={handleCloseSettings} />
+          </Dialog>
+        </div>
+      </div>
     </div>
   );
 }
