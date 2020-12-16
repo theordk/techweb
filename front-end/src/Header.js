@@ -29,19 +29,17 @@ const useStylesBis = makeStyles((theme) => ({
 const useStyles = (theme) => ({
   header: {
     padding: theme.spacing(1),
-    backgroundColor: '#2E3B55',
+    backgroundColor: '#122A42',
     flexShrink: 0,
-    borderRadius: 5
   },
-  headerLogIn: {
-    backgroundColor: 'red',
-  },
-  headerLogOut: {
-    backgroundColor: 'blue',
+  headerlog: {
+    padding: theme.spacing(4),
+    backgroundColor: '#122A42',
+    flexShrink: 0,
+    textAlign: "center",
   },
   PowerSettingsNewIcon: {
     display: "right",
-
   },
   menu: {
     [theme.breakpoints.up('sm')]: {
@@ -58,7 +56,6 @@ export default ({
   const [auth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-
   const {
     oauth, setOauth,
     drawerVisible, setDrawerVisible
@@ -78,66 +75,79 @@ export default ({
     setAnchorEl(null);
   };
 
-  return (
-    <header css={styles.header}>
-      <div className={classes.root}>
-        <AppBar position="static" style={{ background: '#2E3B55' }}>
-          <Toolbar>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              onClick={drawerToggle}
-              css={styles.menu}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" className={classes.title}>
-              My Web App
-            </Typography>
-            {auth && (
-              <div>
-                <IconButton
-                  aria-label="account of current user"
-                  aria-controls="menu-appbar"
-                  aria-haspopup="true"
-                  onClick={handleMenu}
-                  color="inherit"
-                >
-                  <AccountCircle />
-                </IconButton>
-                <Menu
-                  id="menu-appbar"
-                  anchorEl={anchorEl}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  open={open}
-                  onClose={handleClose}
-                >
-                  <MenuItem onClick={handleClose}>Email</MenuItem>
-                  <MenuItem onClick={handleClose}>
-                    {
-                      oauth ?
-                        <span>
-                          {oauth.email}
-                        </span>
-                        :
-                        <span>new user</span>
-                    }
-                  </MenuItem>
-                </Menu>
-              </div>
-            )}
-            <Button color="inherit" onClick={onClickLogout}>Logout</Button>
-          </Toolbar>
-        </AppBar>
-      </div>
-    </header>
-  );
+  if (oauth) {
+    return (
+      <header css={styles.header}>
+        <div className={classes.root}>
+          <AppBar position="static" style={{ background: '#122A42' }}>
+            <Toolbar>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                onClick={drawerToggle}
+                css={styles.menu}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Typography variant="h6" className={classes.title}>
+                My Web App
+              </Typography>
+              {auth && (
+                <div>
+                  <IconButton
+                    aria-label="account of current user"
+                    aria-controls="menu-appbar"
+                    aria-haspopup="true"
+                    onClick={handleMenu}
+                    color="inherit"
+                  >
+                    <AccountCircle />
+                  </IconButton>
+                  <Menu
+                    id="menu-appbar"
+                    anchorEl={anchorEl}
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    open={open}
+                    onClose={handleClose}
+                  >
+                    <MenuItem onClick={handleClose}>My Email</MenuItem>
+                    <MenuItem onClick={handleClose}>
+                      {
+                        oauth ?
+                          <span>
+                            {oauth.email}
+                          </span>
+                          :
+                          <span>new user</span>
+                      }
+                    </MenuItem>
+                  </Menu>
+                </div>
+              )}
+              <Button color="inherit" onClick={onClickLogout}>Logout</Button>
+            </Toolbar>
+          </AppBar>
+        </div>
+      </header>
+    );
+  } else {
+    return (
+      <header css={styles.headerlog} >
+       
+          <Typography style={{ fontWeight: "bold", fontSize: 45, }}>Welcome on your Chat'App !</Typography>
+        
+      </header>
+    );
+
+  }
+
+
 }

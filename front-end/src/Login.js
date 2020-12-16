@@ -10,7 +10,10 @@ import { jsx } from '@emotion/core'
 import { useTheme, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import React from 'react';
 import Link from '@material-ui/core/Link'
-import { FormControl, InputLabel, Input, FormHelperText, withStyles, TextField, Grid, Button, Paper, FormControlLabel, Checkbox } from '@material-ui/core';
+import { TextField, Grid, Button, Paper, FormControlLabel, Checkbox, InputBase } from '@material-ui/core';
+import {
+  withStyles,
+} from '@material-ui/core/styles';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
@@ -45,7 +48,8 @@ const sha256 = (buffer) => {
 const useStyles = (theme) => ({
   root: {
     flex: '1 1 auto',
-    background: theme.palette.background.default,
+    /* background: theme.palette.background.default, */
+    backgroundColor: '#4A94C3',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -61,8 +65,33 @@ const useStyles = (theme) => ({
         display: 'block',
       },
     },
+  },
+  notchedOutline: {
+    borderColor: "yellow !important"
   }
 })
+
+const CssTextField = withStyles({
+  root: {
+    '& label.Mui-focused': {
+      color: 'white',
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: 'white',
+    },
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: 'white',
+      },
+      '&:hover fieldset': {
+        borderColor: 'white',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: 'white',
+      },
+    },
+  },
+})(TextField);
 
 const Redirect = ({
   config,
@@ -87,15 +116,16 @@ const Redirect = ({
   return (
     <div css={styles.root}>
       <Router>
-        <Paper className={classes.padding} style={{ textAlign: "center", paddingTop: '20px', fontSize: '150%', fontWeight: "bold" }}> Sign In !
-
+        <Paper className={classes.padding} style={{ backgroundColor: "#122A42", textAlign: "center", paddingTop: '20px', fontSize: '150%', fontWeight: "bold" }}>
+          Sign In !
         <div className={classes.margin} style={{ marginLeft: '50px', marginRight: '50px', marginBottom: '20px', marginTop: '20px' }}>
             <Grid container spacing={3} alignItems="flex-end">
               <Grid item>
                 <AccountCircle />
               </Grid>
               <Grid item>
-                <TextField id="email" label="Email" type="email" color="secondary" required />
+                {/* <TextField id="email" label="Email" type="email" required /> */}
+                <CssTextField id="email" label="Email" type="email" required />
               </Grid>
             </Grid>
             <Grid container spacing={3} alignItems="flex-end">
@@ -103,7 +133,8 @@ const Redirect = ({
                 <Fingerprint />
               </Grid>
               <Grid item>
-              <TextField id="password" label="Password" type="password" color="secondary" required />
+                {/* <TextField id="password" label="Password" type="password" required /> */}
+                <CssTextField id="password" label="Password" type="password" required />
               </Grid>
             </Grid>
             <Grid container spacing={3} alignItems="flex-end" style={{ marginTop: '8px' }}>
@@ -119,15 +150,12 @@ const Redirect = ({
               <Button type="submit" id="subscribe-submit" variant="outlined" color="white" style={{ textTransform: "none", marginRight: '10px' }}>Login</Button>
               <Button onClick={redirect} variant="outlined" color="white" style={{ textTransform: "none", marginLeft: '10px' }}>Login with OAuth</Button>
             </Grid>
-
             <Route exact path="/">
               <Grid item justify="center">
                 <Button disableFocusRipple disableRipple style={{ textTransform: "none" }} variant="text" color="white">Create an account</Button>
               </Grid>
             </Route>
-
           </div>
-
         </Paper>
       </Router>
     </div>
