@@ -17,7 +17,7 @@ import {
 
 const useStyles = (theme) => ({
   root: {
-    backgroundColor: '#373B44',
+    backgroundColor: '#1C7EB8',
     overflow: 'hidden',
     flex: '1 1 auto',
     display: 'flex',
@@ -31,6 +31,9 @@ const useStyles = (theme) => ({
   drawerVisible: {
     display: 'block',
   },
+  paper: {
+    background: "blue"
+  }
 })
 
 export default () => {

@@ -49,7 +49,7 @@ const useStyles = (theme) => ({
   root: {
     flex: '1 1 auto',
     /* background: theme.palette.background.default, */
-    backgroundColor: '#4A94C3',
+    backgroundColor: '#1C7EB8',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -66,9 +66,6 @@ const useStyles = (theme) => ({
       },
     },
   },
-  notchedOutline: {
-    borderColor: "yellow !important"
-  }
 })
 
 const CssTextField = withStyles({
