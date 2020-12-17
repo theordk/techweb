@@ -18,8 +18,6 @@ import { useContext } from 'react'
 import Dialog from '@material-ui/core/Dialog';
 import {BasicTextFields} from './Dialogs1.js'
 
-
-
 const particuleParams = {
   background: {
     "particles": {
@@ -80,9 +78,6 @@ const particuleParams = {
   }
 }
 
-
-
-
 const useStyles2 = makeStyles((theme) => ({
   container: {
     marginLeft: '1%',
@@ -102,8 +97,7 @@ const useStyles = (theme) => ({
     height: '100%',
     flex: '1 1 auto',
     display: 'flex',
-    background: 'linear-gradient(to bottom, #152020, #404242)',
-    overflowY: 'scroll'
+    background: 'linear-gradient(to bottom, #4A94C3, #187CB7)',
   },
   particles: {
     zIndex: '1',
@@ -121,7 +115,7 @@ const useStyles = (theme) => ({
   icon: {
     position: 'relative',
     zIndex: '3',
-    fill: '#fff55',
+    fill: '122A42',
     opacity: "5",
     height: '100%',
     width: '100%'
@@ -136,8 +130,6 @@ const useStyles = (theme) => ({
     width: '100%'
   }
 })
-
-
 
 export default () => {
   const {
@@ -177,7 +169,7 @@ export default () => {
         <div css={styles.card}>
           <Button onClick={handleClickOpenChannel}>
             <ChannelIcon css={styles.icon} /><br />
-            <Typography color="textPrimary">
+            <Typography color="textPrimary" >
               Create Channel
             </Typography>
           </Button>

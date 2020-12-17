@@ -1,8 +1,9 @@
-
+import { useContext } from 'react'
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import Context from './Context'
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import GroupIcon from '@material-ui/icons/Group';
@@ -60,64 +61,81 @@ const useStyles = makeStyles((theme) => ({
 
 export default () => {
   const classes = useStyles();
-  return (
-    <footer style={styles.footer}>
-      <div className={classes.root}>
-        <Grid container spacing={1} direction="row" alignItems="center">
-          <Grid item xs={6} sm={3}>
-            <Paper className={classes.paper}>
-              <Typography className={classes.title}>
-                <GroupIcon className={classes.wrapIcon}></GroupIcon>
-                Team
-              </Typography>
-              <Divider variant="middle"></Divider>
-              <Typography className={classes.elements}>Victor Quidet | Théophile Tarbé</Typography>
-            </Paper>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Paper className={classes.paper}>
-              <Typography className={classes.title}>
-                <PhoneIcon className={classes.wrapIcon}></PhoneIcon>
-                Contact Us
-              </Typography>
-              <Divider variant="middle"></Divider>
-              <Typography className={classes.elements}>+33 981507172</Typography>
-            </Paper>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Paper className={classes.paper}>
-              <Typography className={classes.title}>
-                <ContactSupportIcon className={classes.wrapIcon}></ContactSupportIcon>
-                Email Us
-              </Typography>
-              <Divider variant="middle"></Divider>
-              <Typography className={classes.elements}>rdk@webtech.com</Typography>
-            </Paper>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Paper className={classes.paper}>
-              <Typography className={classes.title}>
-                <LanguageIcon className={classes.wrapIcon}></LanguageIcon>
-                Follow Us
-              </Typography>
-              <Divider variant="middle"></Divider>
-              <Typography className={classes.elements}>
-                <FacebookIcon style={{ fontSize: "small" }}></FacebookIcon>
-                <InstagramIcon style={{ fontSize: "small" }}></InstagramIcon>
-              </Typography>
-            </Paper>
-          </Grid>
-        </Grid>
+  const oauth = useContext(Context)
+
+  if (oauth) {
+    return (
+      <footer style={styles.footer}>
         <Grid item xs={12}>
           <Paper className={classes.paper}>
             <Typography style={{ fontSize: 10 }}>
               <CopyrightIcon className={classes.copy}></CopyrightIcon>
-              Copyright 2020 - Web Application on React
-            </Typography>
+                Copyright 2020 - Web Application on React
+              </Typography>
           </Paper>
         </Grid>
-      </div>
-    </footer>
-  );
+      </footer>
+    );
+  } else {
+    return (
+      <footer style={styles.footer}>
+        <div className={classes.root}>
+          <Grid container spacing={1} direction="row" alignItems="center">
+            <Grid item xs={6} sm={3}>
+              <Paper className={classes.paper}>
+                <Typography className={classes.title}>
+                  <GroupIcon className={classes.wrapIcon}></GroupIcon>
+                  Team
+                </Typography>
+                <Divider variant="middle"></Divider>
+                <Typography className={classes.elements}>Victor Quidet | Théophile Tarbé</Typography>
+              </Paper>
+            </Grid>
+            <Grid item xs={6} sm={3}>
+              <Paper className={classes.paper}>
+                <Typography className={classes.title}>
+                  <PhoneIcon className={classes.wrapIcon}></PhoneIcon>
+                  Contact Us
+                </Typography>
+                <Divider variant="middle"></Divider>
+                <Typography className={classes.elements}>+33 981507172</Typography>
+              </Paper>
+            </Grid>
+            <Grid item xs={6} sm={3}>
+              <Paper className={classes.paper}>
+                <Typography className={classes.title}>
+                  <ContactSupportIcon className={classes.wrapIcon}></ContactSupportIcon>
+                  Email Us
+                </Typography>
+                <Divider variant="middle"></Divider>
+                <Typography className={classes.elements}>rdk@webtech.com</Typography>
+              </Paper>
+            </Grid>
+            <Grid item xs={6} sm={3}>
+              <Paper className={classes.paper}>
+                <Typography className={classes.title}>
+                  <LanguageIcon className={classes.wrapIcon}></LanguageIcon>
+                  Follow Us
+                </Typography>
+                <Divider variant="middle"></Divider>
+                <Typography className={classes.elements}>
+                  <FacebookIcon style={{ fontSize: "small" }}></FacebookIcon>
+                  <InstagramIcon style={{ fontSize: "small" }}></InstagramIcon>
+                </Typography>
+              </Paper>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Paper className={classes.paper}>
+              <Typography style={{ fontSize: 10 }}>
+                <CopyrightIcon className={classes.copy}></CopyrightIcon>
+                Copyright 2020 - Web Application on React
+              </Typography>
+            </Paper>
+          </Grid>
+        </div>
+      </footer>
+    );
+  }
 }
 

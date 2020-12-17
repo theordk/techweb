@@ -25,7 +25,8 @@ const styles = {
   channel: {
     padding: '.2rem .5rem',
     whiteSpace: 'nowrap',
-    color: "white"
+    color: "white",
+    /* backgroundColor: '#122A42', */
   }
 }
 
@@ -34,12 +35,13 @@ const useStyles = makeStyles((theme) => ({
     padding: "2px 4px",
     display: "flex",
     alignItems: "center",
-    width: 200,
+    width: 215,
+    backgroundColor: '#122A42',
     marginLeft: theme.spacing(1),
-    marginTop: 5
+    marginTop: 5,
   },
   Paper: {
-    marginRight: theme.spacing(1),
+    marginRight: theme.spacing(0.8),
     display: "flex",
   },
   input: {
@@ -65,7 +67,7 @@ export default () => {
         const { data: channels } = await axios.get('http://localhost:3001/channels', {
           headers: {
             'Authorization': `Bearer ${oauth.access_token}`
-          },     
+          },
         }, {
           body: {
             'itok': `itok ${oauth.id_token}`
@@ -81,40 +83,37 @@ export default () => {
   return (
     <ul style={styles.root}>
       <Paper component="form" className={classes.root}>
-      <InputBase
-        className={classes.input}
-        placeholder="Search Channel"
-        inputProps={{ "aria-label": "search channel" }}
-      />
-      <IconButton
-        type="submit"
-        className={classes.iconButton}
-        aria-label="search"
-      >
-        <SearchIcon />
-      </IconButton>
-      <Divider className={classes.divider} orientation="vertical" />
-    </Paper>
+        <InputBase
+          className={classes.input}
+          placeholder="Search Channel"
+          inputProps={{ "aria-label": "search channel" }}
+        />
+        <IconButton
+          type="submit"
+          className={classes.iconButton}
+          aria-label="search"
+        >
+          <SearchIcon />
+        </IconButton>
+        <Divider className={classes.divider} orientation="vertical" />
+      </Paper>
       { channels.map((channel, i) => (
         <li key={i} css={styles.channel}>
           {/* <div className={classes.root}> */}
-            <Paper className={classes.paper}>
-              <MenuList>
-                <MenuItem>
-                  <Link
-                    href={`/channels/${channel.id}`}
-                    onClick={(e) => {
-                      e.preventDefault()
-                      history.push(`/channels/${channel.id}`)
-                    }}
-                  >
-                    <div css={styles.channel}>
-                      {channel.name}
-                    </div>
-                  </Link>
+          <Paper className={classes.paper}>
+            <MenuList>
+              <MenuItem href={`/channels/${channel.id}`}
+                onClick={(e) => {
+                  e.preventDefault()
+                  history.push(`/channels/${channel.id}`)
+                }}
+              >
+                <div css={styles.channel}>
+                  {channel.name}
+                </div>
                 </MenuItem>
-              </MenuList>
-            </Paper>
+            </MenuList>
+          </Paper>
           {/* </div> */}
         </li>
       ))}
