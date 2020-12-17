@@ -18,8 +18,6 @@ import { useContext } from 'react'
 import Dialog from '@material-ui/core/Dialog';
 import {BasicTextFields} from './Dialogs1.js'
 
-
-
 const particuleParams = {
   background: {
     "particles": {
@@ -93,7 +91,7 @@ const useStyles2 = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    //overflowY: 'scroll'
+    
   }
 }))
 
@@ -103,7 +101,6 @@ const useStyles = (theme) => ({
     flex: '1 1 auto',
     display: 'flex',
     background: 'linear-gradient(to bottom, #152020, #404242)',
-    overflowY: 'scroll'
   },
   particles: {
     zIndex: '1',

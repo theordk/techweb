@@ -23,17 +23,21 @@ const useStyles = makeStyles((theme) => ({
 export function BasicTextFields(props) {
   const classes = useStyles();
   const [channelName, setChannelName] = React.useState('')
+  const [friendsList, setFriendsList] = React.useState('')
   const {
     oauth, setChannels
   } = React.useContext(Context)
 
   const handleSubmit = async (e) => {
+    let listWithoutSpaces = friendsList.replace(/ /g,'')
+    const finalFriendsList = listWithoutSpaces.split(',')
+    finalFriendsList.push(`${oauth.email}`)
     props.onChange(e.target.value)
     if (channelName != '') {
       e.preventDefault()
       await axios.post(`http://localhost:3001/channels/`, {
         name: `${channelName}`,
-        itok: `${oauth.id_token}`
+        list: `${finalFriendsList}`
       }
       ).then(function (response) {
         console.log(response);
@@ -43,7 +47,9 @@ export function BasicTextFields(props) {
           headers: {
             'Authorization': `Bearer ${oauth.access_token}`
           },
-          itok: `${oauth.id_token}`      
+          params: {
+            user: `${oauth.email}`
+          },               
         })
         setChannels(channels)
       } catch (err) {
@@ -62,6 +68,9 @@ export function BasicTextFields(props) {
       <form autoComplete="off" onSubmit={handleSubmit}>
         <Box className={classes.root}>
           <TextField required id="channelName" name="Channel name" variant="outlined" label="Channel name" onChange={(event) => setChannelName(event.target.value)} />
+        </Box>
+        <Box className={classes.root}>
+          <TextField  id="addFriends" name="Add Friends" variant="outlined" label="Add Friends" onChange={(event) => setFriendsList(event.target.value)} />
         </Box>
         <Box className={classes.root}>
           <Button type="submit" style={{ justifyContent: 'center' }}>Valider</Button>
