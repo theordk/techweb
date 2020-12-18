@@ -1,4 +1,4 @@
-import {forwardRef, useImperativeHandle, useLayoutEffect, useRef} from 'react'
+import { forwardRef, useImperativeHandle, useLayoutEffect, useRef } from 'react'
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 // Layout
@@ -8,6 +8,7 @@ import unified from 'unified'
 import markdown from 'remark-parse'
 import remark2rehype from 'remark-rehype'
 import html from 'rehype-stringify'
+import Divider from '@material-ui/core/Divider';
 // Time
 import dayjs from 'dayjs'
 import calendar from 'dayjs/plugin/calendar'
@@ -23,9 +24,10 @@ dayjs.updateLocale('en', {
 const useStyles = (theme) => ({
   root: {
     position: 'relative',
+    marginleft: '10px',
     flex: '1 1 auto',
     'pre': {
-      
+
       overflowY: 'auto',
     },
     '& ul': {
@@ -52,6 +54,14 @@ const useStyles = (theme) => ({
     top: 0,
     width: '50px',
   },
+  title: {
+    marginLeft: '10px',
+    position: "fixed",
+    /* marginButtom: '50px' */
+  },
+  list: {
+    marginTop: '70px'
+  }
 })
 
 export default forwardRef(({
@@ -71,13 +81,13 @@ export default forwardRef(({
   }
   // See https://dev.to/n8tb1t/tracking-scroll-position-with-react-hooks-3bbj
   const throttleTimeout = useRef(null) // react-hooks/exhaustive-deps
-  useLayoutEffect( () => {
+  useLayoutEffect(() => {
     const rootNode = rootEl.current // react-hooks/exhaustive-deps
     const handleScroll = () => {
       if (throttleTimeout.current === null) {
         throttleTimeout.current = setTimeout(() => {
           throttleTimeout.current = null
-          const {scrollTop, offsetHeight, scrollHeight} = rootNode // react-hooks/exhaustive-deps
+          const { scrollTop, offsetHeight, scrollHeight } = rootNode // react-hooks/exhaustive-deps
           onScrollDown(scrollTop + offsetHeight < scrollHeight)
         }, 200)
       }
@@ -87,29 +97,35 @@ export default forwardRef(({
     return () => rootNode.removeEventListener('scroll', handleScroll)
   })
   return (
-    <div css={styles.root} ref={rootEl}>
-      <h1>Messages for {channel.name}</h1>
-      <ul>
-        { messages.map( (message, i) => {
-            const {contents: content} = unified()
-            .use(markdown)
-            .use(remark2rehype)
-            .use(html)
-            .processSync(message.content)
-            return (
-              <li key={i} css={styles.message}>
-                <p>
-                  <span>{message.author}</span>
-                  {' - '}
-                  <span>{dayjs().calendar(message.creation)}</span>
-                </p>
-                <div dangerouslySetInnerHTML={{__html: content}}>
-                </div>
-              </li>
-            )
-        })}
-      </ul>
-      <div ref={scrollEl} />
+    <div>
+      <div css={styles.root} ref={rootEl}>
+        <h1 css={styles.title} >Messages for {channel.name}</h1>
+      </div>
+      <div css={styles.root} ref={rootEl}>
+        <div css={styles.list}>
+          <ul>
+            {messages.map((message, i) => {
+              const { contents: content } = unified()
+                .use(markdown)
+                .use(remark2rehype)
+                .use(html)
+                .processSync(message.content)
+              return (
+                <li key={i} css={styles.message}>
+                  <p>
+                    <span>{message.author}</span>
+                    {' - '}
+                    <span>{dayjs().calendar(message.creation)}</span>
+                  </p>
+                  <div dangerouslySetInnerHTML={{ __html: content }}>
+                  </div>
+                </li>
+              )
+            })}
+            <div ref={scrollEl} />
+          </ul>
+        </div>
+      </div>
     </div>
   )
 })

@@ -16,7 +16,7 @@ import { Particles } from 'react-particles-js';
 import React from 'react';
 import { useContext } from 'react'
 import Dialog from '@material-ui/core/Dialog';
-import {BasicTextFields} from './Dialogs1.js'
+import { BasicTextFields } from './Dialogs1.js'
 
 const particuleParams = {
   background: {
@@ -88,7 +88,7 @@ const useStyles2 = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    
+
   }
 }))
 
@@ -126,7 +126,7 @@ const useStyles = (theme) => ({
     zIndex: '4',
   },
   dialog: {
-    height:'100%',
+    height: '100%',
     width: '100%'
   }
 })
@@ -147,14 +147,12 @@ export default () => {
   const handleCloseChannel = () => {
     setOpenChannel(false);
   };
-
   const handleClickOpenFriends = () => {
     setOpenFriends(true);
   };
   const handleCloseFriends = () => {
     setOpenFriends(false);
   };
-
   const handleClickOpenSettings = () => {
     setOpenSettings(true);
   };
@@ -190,9 +188,7 @@ export default () => {
             </Typography>
           </Button>
           <Dialog open={openChannel} onClose={handleCloseChannel} css={styles.icon}>
-            <Button>
-              Channel
-            </Button>
+            <BasicTextFields openSettings={openSettings} onChange={handleCloseChannel} />
           </Dialog>
           <Dialog open={openFriends} onClose={handleCloseFriends} css={styles.icon}>
             <Button>
@@ -200,7 +196,9 @@ export default () => {
             </Button>
           </Dialog>
           <Dialog open={openSettings} onClose={handleCloseSettings} css={styles.dialog}>
-            <BasicTextFields openSettings={openSettings} onChange={handleCloseSettings} />
+            <Button>
+              Settings
+            </Button>
           </Dialog>
         </div>
       </div>

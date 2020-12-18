@@ -1,10 +1,13 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import { Button } from '@material-ui/core';
+import { Button, Paper } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import axios from 'axios';
+import Typography from '@material-ui/core/Typography';
 import Context from './Context'
+import { useTheme, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,11 +20,88 @@ const useStyles = makeStyles((theme) => ({
       width: '25vh',
     },
   },
+  paperstyle: {
+    background: theme.palette.primary.main,
+    /* backgroundColor: "#122A42",  */
+    textAlign: "center",
+    padding: '20px',
+    fontSize: '150%',
+    fontWeight: "bold",
+    color: "white",
+  },
+  input: {
+    color: "white"
+  }
 }));
 
+const useStylesBis = (theme) => ({
+  root: {
+    flex: '1 1 auto',
+    background: theme.palette.secondary.main,
+    /* backgroundColor: '#1C7EB8', */
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    '& > div': {
+      margin: `${theme.spacing(2)}`,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
+    '& fieldset': {
+      border: 'none',
+      '& label': {
+        marginBottom: theme.spacing(0.5),
+        display: 'block',
+      },
+    },
+  },
+  margin: {
+    marginLeft: '50px',
+    marginRight: '50px',
+    marginBottom: '20px',
+    marginTop: '20px',
+  }
+})
+
+const CssTextField = withStyles({
+  root: {
+    '& label.Mui-focused': {
+      color: 'white',
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: 'white',
+    },
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: 'white',
+      },
+      '&:hover fieldset': {
+        borderColor: 'white',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: 'white',
+      },
+    },
+  },
+  error: {},
+})(TextField);
+
+const helperTextStyles = makeStyles(theme => ({
+  root: {
+    margin: 4,
+    color: "white"
+  },
+  error: {
+    "&.MuiFormHelperText-root.Mui-error": {
+      color: "white"
+    }
+  }
+}));
 
 export function BasicTextFields(props) {
   const classes = useStyles();
+  const styles = useStylesBis(useTheme())
+  const helperTestClasses = helperTextStyles();
   const [channelName, setChannelName] = React.useState('')
   const [friendsList, setFriendsList] = React.useState('')
   const {
@@ -29,7 +109,7 @@ export function BasicTextFields(props) {
   } = React.useContext(Context)
 
   const handleSubmit = async (e) => {
-    let listWithoutSpaces = friendsList.replace(/ /g,'')
+    let listWithoutSpaces = friendsList.replace(/ /g, '')
     const finalFriendsList = listWithoutSpaces.split(',')
     finalFriendsList.push(`${oauth.email}`)
     props.onChange(e.target.value)
@@ -49,7 +129,7 @@ export function BasicTextFields(props) {
           },
           params: {
             user: `${oauth.email}`
-          },               
+          },
         })
         setChannels(channels)
       } catch (err) {
@@ -63,20 +143,59 @@ export function BasicTextFields(props) {
   }
 
   return (
-    <div className={classes.root}>
-      <span><h2>Welcome on the channel creation form</h2></span>
-      <form autoComplete="off" onSubmit={handleSubmit}>
-        <Box className={classes.root}>
-          <TextField required id="channelName" name="Channel name" variant="outlined" label="Channel name" onChange={(event) => setChannelName(event.target.value)} />
-        </Box>
-        <Box className={classes.root}>
-          <TextField  id="addFriends" name="Add Friends" variant="outlined" label="Add Friends" onChange={(event) => setFriendsList(event.target.value)} />
-        </Box>
-        <Box className={classes.root}>
-          <Button type="submit" style={{ justifyContent: 'center' }}>Valider</Button>
-        </Box>
-      </form>
-    </div>
+
+    <Paper className={classes.paperstyle}>
+      Create a new channel
+      <div css={styles.margin}>
+        <form className={classes.container} autoComplete="off" onSubmit={handleSubmit}>
+          <Box className={classes.root}>
+            <CssTextField
+              className={classes.margin}
+              label="Name Channel"
+              variant="outlined"
+              id="custom-css-outlined-input"
+              color="inherit"
+              InputProps={{
+                classes: {
+                  input: classes.input,
+                },
+                inputMode: "numeric"
+              }}
+              InputLabelProps={{
+                style: { color: '#fff' },
+              }}
+              onChange={(event) => setChannelName(event.target.value)}
+            />
+          </Box>
+          <Box className={classes.root}>
+            <CssTextField
+              className={classes.margin}
+              label="Add Friends"
+              variant="outlined"
+              id="custom-css-outlined-input"
+              color="inherit"
+              helperText="Seperate by friends by ','"
+              InputProps={{
+                classes: {
+                  input: classes.input,
+                },
+                inputMode: "numeric"
+              }}
+              InputLabelProps={{
+                style: { color: '#fff' },
+              }}
+              FormHelperTextProps={{ classes: helperTestClasses }}
+              onChange={(event) => setFriendsList(event.target.value)}
+            />
+            <Typography variant="subtitle1"></Typography>
+          </Box>
+          <Box className={classes.root}>
+            <Button type="submit" color="inherit">Validate</Button>
+          </Box>
+        </form>
+      </div>
+    </Paper>
+
   );
 }
 

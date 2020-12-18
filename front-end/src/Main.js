@@ -17,7 +17,7 @@ import {
 
 const useStyles = (theme) => ({
   root: {
-    backgroundColor: '#1C7EB8',
+    background: theme.palette.secondary.main,
     overflow: 'hidden',
     flex: '1 1 auto',
     display: 'flex',
@@ -25,15 +25,12 @@ const useStyles = (theme) => ({
     position: 'relative',
   },
   drawer: {
-    width: '240px',
+    width: '260px',
     display: 'none',
   },
   drawerVisible: {
     display: 'block',
   },
-  paper: {
-    background: "blue"
-  }
 })
 
 export default () => {

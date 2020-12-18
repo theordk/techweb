@@ -12,14 +12,24 @@ import { unstable_createMuiStrictModeTheme as createMuiTheme } from '@material-u
 import {
   BrowserRouter as Router,
 } from "react-router-dom";
-
-
+import purple from '@material-ui/core/colors/blue';
+import green from '@material-ui/core/colors/blue';
+import CssBaseline from "@material-ui/core/CssBaseline";
 
 const theme = createMuiTheme({
   palette: {
-    type: 'dark',
+    /* type: 'dark', */
+    primary: {
+      //bleu foncé
+      main: "#122A42",
+    },
+    secondary: {
+      //bleu clair
+      main: "#1C7EB8"
+    },
   }
-});
+}); 
+
 
 ReactDOM.render(
   <React.StrictMode>

@@ -8,6 +8,10 @@ import Button from "@material-ui/core/Button"
 import SendIcon from "@material-ui/icons/Send";
 import TextField from '@material-ui/core/TextField';
 import { useTheme } from '@material-ui/core/styles';
+import {
+  withStyles,
+  makeStyles
+} from '@material-ui/core/styles';
 
 const useStyles = (theme) => {
   // See https://github.com/mui-org/material-ui/blob/next/packages/material-ui/src/OutlinedInput/OutlinedInput.js
@@ -24,10 +28,38 @@ const useStyles = (theme) => {
         marginRight: theme.spacing(1),
       },
     },
-    send: {
+    send: { 
     },
   }
 }
+
+const useStylesBis = makeStyles((theme) => ({
+  input: {
+    color: "white"
+  }
+}));
+
+const CssTextField = withStyles({
+  root: {
+    '& label.Mui-focused': {
+      color: 'white',
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: 'white',
+    },
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: 'white',
+      },
+      '&:hover fieldset': {
+        borderColor: 'white',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: 'white',
+      },
+    },
+  },
+})(TextField);
 
 export default ({
   addMessage,
@@ -35,13 +67,14 @@ export default ({
 }) => {
   const [content, setContent] = useState('')
   const styles = useStyles(useTheme())
+  const classes = useStylesBis(useTheme())
   const onSubmit = async () => {
-    const {data: message} = await axios.post(
+    const { data: message } = await axios.post(
       `http://localhost:3001/channels/${channel.id}/messages`
-    , {
-      content: content,
-      author: 'david',
-    })
+      , {
+        content: content,
+        author: 'david',
+      })
     addMessage(message)
     setContent('')
   }
@@ -50,7 +83,7 @@ export default ({
   }
   return (
     <form css={styles.form} onSubmit={onSubmit} noValidate>
-      <TextField
+      <CssTextField
         id="outlined-multiline-flexible"
         label="Message"
         multiline
@@ -59,13 +92,22 @@ export default ({
         onChange={handleChange}
         variant="outlined"
         css={styles.content}
+        InputProps={{
+          classes: {
+            input: classes.input,
+          },
+          inputMode: "numeric"
+        }}
+        InputLabelProps={{
+          style: { color: '#fff' },
+        }}
       />
       <div>
         <Button
           variant="contained"
           color="primary"
           css={styles.send}
-          endIcon={<SendIcon />}
+          endIcon={<SendIcon/>}
           onClick={onSubmit}
         >
           Send
