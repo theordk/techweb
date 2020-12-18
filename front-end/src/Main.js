@@ -3,6 +3,7 @@ import {useContext} from 'react'
 import { jsx } from '@emotion/core'
 // Layout
 import { useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Drawer from '@material-ui/core/Drawer';
 // Local
@@ -17,7 +18,7 @@ import {
 
 const useStyles = (theme) => ({
   root: {
-    background: theme.palette.secondary.main,
+    background: theme.palette.secondary.dark,
     overflow: 'hidden',
     flex: '1 1 auto',
     display: 'flex',
@@ -33,6 +34,12 @@ const useStyles = (theme) => ({
   },
 })
 
+const useStylesBis = makeStyles((theme) => ({
+  paper: {
+    background: theme.palette.primary.main,
+  }
+}));
+
 export default () => {
   const {
     currentChannel,
@@ -40,6 +47,7 @@ export default () => {
   } = useContext(Context)
   const theme = useTheme()
   const styles = useStyles(theme)
+  const classes = useStylesBis(theme)
   const alwaysOpen = useMediaQuery(theme.breakpoints.up('sm'))
   const isDrawerVisible = alwaysOpen || drawerVisible
   return (
@@ -53,6 +61,7 @@ export default () => {
         variant="persistent"
         open={isDrawerVisible}
         css={[styles.drawer, isDrawerVisible && styles.drawerVisible]}
+        classes={{ paper: classes.paper }}
       >
         <Channels />
       </Drawer>

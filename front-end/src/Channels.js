@@ -20,31 +20,32 @@ import Context from './Context'
 import { useHistory } from 'react-router-dom'
 
 const styles = {
-   root: {
+  root: {
     color: "black"
-   },
+  },
   channel: {
     padding: '.2rem .5rem',
     whiteSpace: 'nowrap',
     color: "black",
-    //background: theme.palette.primary.main,
-    /* backgroundColor: "blue" */
   }
 }
 
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: "2px 4px",
+    marginBottom: "10px",
     display: "flex",
     alignItems: "center",
-    width: 215,
-    background: theme.palette.primary.main,
+    width: 235,
+    background: theme.palette.secondary.dark,
     marginLeft: theme.spacing(1),
-    marginTop: 5,
+    marginTop: 10,
   },
-  Paper: {
-    marginRight: theme.spacing(0.8),
+  paper: {
+    marginRight: theme.spacing(0),
+    padding: theme.spacing(0.1),
     display: "flex",
+    backgroundColor: theme.palette.secondary.light,
   },
   input: {
     marginLeft: theme.spacing(1),
@@ -99,24 +100,25 @@ export default () => {
         </IconButton>
         <Divider className={stylesBis.divider} orientation="vertical" />
       </Paper>
+
+      
       { channels.map((channel, i) => (
         <li key={i} css={styles.channel}>
-          {/* <div className={classes.root}> */}
-          <Paper className={stylesBis.paper}>
+          <Paper
+            className={stylesBis.paper}
+            href={`/channels/${channel.id}`}
+            onClick={(e) => {
+              e.preventDefault()
+              history.push(`/channels/${channel.id}`)
+            }}>
             <MenuList>
-              <MenuItem href={`/channels/${channel.id}`}
-                onClick={(e) => {
-                  e.preventDefault()
-                  history.push(`/channels/${channel.id}`)
-                }}
-              >
+              <MenuItem>
                 <div css={styles.channel}>
                   {channel.name}
                 </div>
               </MenuItem>
             </MenuList>
           </Paper>
-          {/* </div> */}
         </li>
       ))}
     </ul>

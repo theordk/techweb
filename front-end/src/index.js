@@ -27,7 +27,7 @@ const theme = createMuiTheme({
       //bleu clair
       main: "#1C7EB8"
     },
-  }
+  },
 }); 
 
 

@@ -48,9 +48,9 @@ const sha256 = (buffer) => {
 }
 
 const useStylesBis = makeStyles((theme) => ({
-/*   root: {
-    color: "white"
-  }, */
+  /*   root: {
+      color: "white"
+    }, */
   root: {
     '& label.Mui-focused': {
       color: 'white',
@@ -148,6 +148,9 @@ const CssTextField = withStyles({
     '& .MuiInput-underline:before': {
       borderBottomColor: 'white',
     },
+    '& .MuiInput-underline:hover:before': {
+      borderBottomColor: 'white', // Solid underline on hover
+    },
     '& .MuiInput-underline:after': {
       borderBottomColor: 'white',
     },
@@ -198,21 +201,21 @@ const Redirect = ({
               </Grid>
               <Grid item>
                 {/* <TextField id="email" label="Email" type="email" required /> */}
-                <CssTextField 
-                className={stylesBis.root} 
-                id="email" 
-                label="Email" 
-                type="email" 
-                required 
-                InputProps={{
-                  classes: {
-                    input: stylesBis.input,
-                  },
-                  inputMode: "numeric"
-                }}
-                InputLabelProps={{
-                  style: { color: '#fff'},
-                }} />
+                <CssTextField
+                  className={stylesBis.root}
+                  id="email"
+                  label="Email"
+                  type="email"
+                  required
+                  InputProps={{
+                    classes: {
+                      input: stylesBis.input,
+                    },
+                    inputMode: "numeric"
+                  }}
+                  InputLabelProps={{
+                    style: { color: '#fff' },
+                  }} />
               </Grid>
             </Grid>
             <Grid container spacing={3} alignItems="flex-end">
@@ -222,20 +225,20 @@ const Redirect = ({
               <Grid item>
                 {/* <TextField id="password" label="Password" type="password" required /> */}
                 <CssTextField
-                className={stylesBis.root}
-                id="password" 
-                label="Password" 
-                type="password" 
-                required
-                InputProps={{
-                  classes: {
-                    input: stylesBis.input,
-                  },
-                  inputMode: "numeric"
-                }}
-                InputLabelProps={{
-                  style: { color: '#fff' },
-                }} />
+                  className={stylesBis.root}
+                  id="password"
+                  label="Password"
+                  type="password"
+                  required
+                  InputProps={{
+                    classes: {
+                      input: stylesBis.input,
+                    },
+                    inputMode: "numeric"
+                  }}
+                  InputLabelProps={{
+                    style: { color: '#fff' },
+                  }} />
               </Grid>
             </Grid>
             <Grid container spacing={3} alignItems="flex-end" style={{ marginTop: '8px' }}>

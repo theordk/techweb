@@ -97,35 +97,32 @@ export default forwardRef(({
     return () => rootNode.removeEventListener('scroll', handleScroll)
   })
   return (
-    <div>
-      <div css={styles.root} ref={rootEl}>
-        <h1 css={styles.title} >Messages for {channel.name}</h1>
-      </div>
-      <div css={styles.root} ref={rootEl}>
-        <div css={styles.list}>
-          <ul>
-            {messages.map((message, i) => {
-              const { contents: content } = unified()
-                .use(markdown)
-                .use(remark2rehype)
-                .use(html)
-                .processSync(message.content)
-              return (
-                <li key={i} css={styles.message}>
-                  <p>
-                    <span>{message.author}</span>
-                    {' - '}
-                    <span>{dayjs().calendar(message.creation)}</span>
-                  </p>
-                  <div dangerouslySetInnerHTML={{ __html: content }}>
-                  </div>
-                </li>
-              )
-            })}
-            <div ref={scrollEl} />
-          </ul>
-        </div>
+    <div css={styles.root} ref={rootEl}>
+      <h1 css={styles.title}>Messages for {channel.name}</h1>
+      <div css={styles.list}>
+        <ul>
+          {messages.map((message, i) => {
+            const { contents: content } = unified()
+              .use(markdown)
+              .use(remark2rehype)
+              .use(html)
+              .processSync(message.content)
+            return (
+              <li key={i} css={styles.message}>
+                <p>
+                  <span>{message.author}</span>
+                  {' - '}
+                  <span>{dayjs().calendar(message.creation)}</span>
+                </p>
+                <div dangerouslySetInnerHTML={{ __html: content }}>
+                </div>         
+              </li>            
+            )
+          })}      
+        </ul>
+        <div ref={scrollEl} />
       </div>
     </div>
+
   )
 })
