@@ -73,17 +73,10 @@ export default ({
   const onSubmit = async () => {
     const { data: message } = await axios.post(
       `http://localhost:3001/channels/${channel.id}/messages`
-<<<<<<< HEAD
     , {
       content: content,
       author: `${oauth.email}`,
     })
-=======
-      , {
-        content: content,
-        author: 'david',
-      })
->>>>>>> ec1e383bf72f38fd5c933457618ea72da411ce83
     addMessage(message)
     setContent('')
   }

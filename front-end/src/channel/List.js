@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import { forwardRef, useImperativeHandle, useLayoutEffect, useRef, useState, useContext } from 'react'
-=======
-import { forwardRef, useImperativeHandle, useLayoutEffect, useRef } from 'react'
->>>>>>> ec1e383bf72f38fd5c933457618ea72da411ce83
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 // Layout
@@ -122,6 +118,7 @@ export default forwardRef(({
       , {
         content: newMessage,
         author: `${oauth.email}`,
+        creation: `${creation}`
       })
       fetchMessages()
   }
@@ -157,7 +154,6 @@ export default forwardRef(({
   return (
     <div css={styles.root} ref={rootEl}>
       <h1 css={styles.title}>Messages for {channel.name}</h1>
-<<<<<<< HEAD
       <ul>
         {messages.map((message, i) => {
           const { contents: content } = unified()
@@ -195,31 +191,6 @@ export default forwardRef(({
         })}
       </ul>
       <div ref={scrollEl} />
-=======
-      <div css={styles.list}>
-        <ul>
-          {messages.map((message, i) => {
-            const { contents: content } = unified()
-              .use(markdown)
-              .use(remark2rehype)
-              .use(html)
-              .processSync(message.content)
-            return (
-              <li key={i} css={styles.message}>
-                <p>
-                  <span>{message.author}</span>
-                  {' - '}
-                  <span>{dayjs().calendar(message.creation)}</span>
-                </p>
-                <div dangerouslySetInnerHTML={{ __html: content }}>
-                </div>         
-              </li>            
-            )
-          })}      
-        </ul>
-        <div ref={scrollEl} />
-      </div>
->>>>>>> ec1e383bf72f38fd5c933457618ea72da411ce83
     </div>
 
   )
