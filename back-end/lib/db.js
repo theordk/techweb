@@ -62,7 +62,6 @@ module.exports = {
         author: message.author,
         content: message.content
       }))
-      console.log(message)
       return merge(message, {channelId: channelId, creation: creation})    
     },
     list: async (channelId) => {
@@ -82,6 +81,11 @@ module.exports = {
         }).on( 'end', () => {
           resolve(messages)
         })
+      })
+    },
+    delete: async (channelId, creation) => {
+      await db.del(`messages:${channelId}:${creation}`, (error) => {
+        if(error) console.log("testes")
       })
     },
   },

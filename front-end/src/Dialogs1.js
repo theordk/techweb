@@ -35,9 +35,11 @@ export function BasicTextFields(props) {
     props.onChange(e.target.value)
     if (channelName != '') {
       e.preventDefault()
-      await axios.post(`http://localhost:3001/channels/`, {
-        name: `${channelName}`,
-        list: `${finalFriendsList}`
+      await axios.post(`http://localhost:3001/channels/`,{name: `${channelName}`,
+      list: `${finalFriendsList}`, chanAdmin: `${oauth.email}`}, {
+        headers: {
+          'Authorization': `Bearer ${oauth.access_token}`
+        },  
       }
       ).then(function (response) {
         console.log(response);

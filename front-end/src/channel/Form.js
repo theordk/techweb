@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import Context from './../Context'
 import axios from 'axios';
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
@@ -33,6 +34,7 @@ export default ({
   addMessage,
   channel,
 }) => {
+  const {oauth} = useContext(Context)
   const [content, setContent] = useState('')
   const styles = useStyles(useTheme())
   const onSubmit = async () => {
@@ -40,7 +42,7 @@ export default ({
       `http://localhost:3001/channels/${channel.id}/messages`
     , {
       content: content,
-      author: 'david',
+      author: `${oauth.email}`,
     })
     addMessage(message)
     setContent('')
