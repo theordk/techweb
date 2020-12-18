@@ -30,14 +30,12 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   footer: {
-    /* backgroundColor: '#122A42', */
     background: theme.palette.primary.main, 
     flexShrink: 0,
     overflow: "hidden"
   },
   paper: {
     padding: theme.spacing(0.5),
-    /* backgroundColor: '#122A42', */
     background: theme.palette.primary.main, 
     textAlign: 'center',
     color: theme.palette.text.secondary,
@@ -65,6 +63,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'inline-flex',
     marginRight: 8,
     alignItems: "center",
+  },
+  dividerColor: {
+    background: theme.palette.secondary.dark,
   }
 }));
 
@@ -102,7 +103,7 @@ export default () => {
                   <GroupIcon className={classes.wrapIcon}></GroupIcon>
                   Team
                 </Typography>
-                <Divider variant="middle"></Divider>
+                <Divider classes={{root: classes.dividerColor}} variant="middle"></Divider>
                 <Typography className={classes.elements}>Victor Quidet | Théophile Tarbé</Typography>
               </Paper>
             </Grid>
@@ -112,7 +113,7 @@ export default () => {
                   <PhoneIcon className={classes.wrapIcon}></PhoneIcon>
                   Contact Us
                 </Typography>
-                <Divider variant="middle"></Divider>
+                <Divider classes={{root: classes.dividerColor}} variant="middle"></Divider>
                 <Typography className={classes.elements}>+33 981507172</Typography>
               </Paper>
             </Grid>
@@ -122,7 +123,7 @@ export default () => {
                   <ContactSupportIcon className={classes.wrapIcon}></ContactSupportIcon>
                   Email Us
                 </Typography>
-                <Divider variant="middle"></Divider>
+                <Divider classes={{root: classes.dividerColor}} variant="middle"></Divider>
                 <Typography className={classes.elements}>rdk@webtech.com</Typography>
               </Paper>
             </Grid>
@@ -132,7 +133,7 @@ export default () => {
                   <LanguageIcon className={classes.wrapIcon}></LanguageIcon>
                   Follow Us
                 </Typography>
-                <Divider variant="middle"></Divider>
+                <Divider classes={{root: classes.dividerColor}} variant="middle"></Divider>
                 <Typography className={classes.elements}>
                   <FacebookIcon style={{ fontSize: "small" }}></FacebookIcon>
                   <InstagramIcon style={{ fontSize: "small" }}></InstagramIcon>

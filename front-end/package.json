@@ -25,6 +25,7 @@
     "rehype-stringify": "^8.0.0",
     "remark-parse": "^9.0.0",
     "remark-rehype": "^8.0.0",
+    "styled-components": "^5.2.1",
     "typeface-roboto": "^1.1.13",
     "unified": "^9.2.0"
   },

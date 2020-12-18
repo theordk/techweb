@@ -176,7 +176,7 @@ export function BasicTextFields(props) {
               variant="outlined"
               id="custom-css-outlined-input"
               color="inherit"
-              helperText="Seperate by friends by ','"
+              helperText="Seperate friends by ','"
               InputProps={{
                 classes: {
                   input: classes.input,
