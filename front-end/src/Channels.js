@@ -14,35 +14,38 @@ import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
+import { useTheme, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 // Local
 import Context from './Context'
 import { useHistory } from 'react-router-dom'
 
 const styles = {
-  // root: {
-  //   minWidth: '200px',
-  // },
+  root: {
+    color: "black"
+  },
   channel: {
     padding: '.2rem .5rem',
     whiteSpace: 'nowrap',
-    color: "white",
-    /* backgroundColor: '#122A42', */
+    color: "black",
   }
 }
 
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: "2px 4px",
+    marginBottom: "10px",
     display: "flex",
     alignItems: "center",
-    width: 215,
-    backgroundColor: '#122A42',
+    width: 235,
+    background: theme.palette.secondary.dark,
     marginLeft: theme.spacing(1),
-    marginTop: 5,
+    marginTop: 10,
   },
-  Paper: {
-    marginRight: theme.spacing(0.8),
+  paper: {
+    marginRight: theme.spacing(0),
+    padding: theme.spacing(0.1),
     display: "flex",
+    backgroundColor: theme.palette.secondary.light,
   },
   input: {
     marginLeft: theme.spacing(1),
@@ -51,10 +54,11 @@ const useStyles = makeStyles((theme) => ({
   divider: {
     height: 28,
     margin: 4,
-  }
+  },
 }));
 
 export default () => {
+  const stylesBis = useStyles(useTheme())
   const {
     oauth,
     channels, setChannels,
@@ -67,10 +71,10 @@ export default () => {
         const { data: channels } = await axios.get('http://localhost:3001/channels', {
           headers: {
             'Authorization': `Bearer ${oauth.access_token}`
-          }, 
+          },
           params: {
             user: `${oauth.email}`
-          },     
+          },
         })
         setChannels(channels)
       } catch (err) {
@@ -81,39 +85,40 @@ export default () => {
   }, [oauth, setChannels])
   return (
     <ul style={styles.root}>
-      <Paper component="form" className={classes.root}>
-        <InputBase
-          className={classes.input}
+      <Paper component="form" className={stylesBis.root}>
+        <InputBase  
+          className={stylesBis.input}
           placeholder="Search Channel"
           inputProps={{ "aria-label": "search channel" }}
         />
         <IconButton
           type="submit"
-          className={classes.iconButton}
+          className={stylesBis.iconButton}
           aria-label="search"
         >
           <SearchIcon />
         </IconButton>
-        <Divider className={classes.divider} orientation="vertical" />
+        <Divider className={stylesBis.divider} orientation="vertical" />
       </Paper>
+
+      
       { channels.map((channel, i) => (
         <li key={i} css={styles.channel}>
-          {/* <div className={classes.root}> */}
-          <Paper className={classes.paper}>
+          <Paper
+            className={stylesBis.paper}
+            href={`/channels/${channel.id}`}
+            onClick={(e) => {
+              e.preventDefault()
+              history.push(`/channels/${channel.id}`)
+            }}>
             <MenuList>
-              <MenuItem href={`/channels/${channel.id}`}
-                onClick={(e) => {
-                  e.preventDefault()
-                  history.push(`/channels/${channel.id}`)
-                }}
-              >
+              <MenuItem>
                 <div css={styles.channel}>
                   {channel.name}
                 </div>
-                </MenuItem>
+              </MenuItem>
             </MenuList>
           </Paper>
-          {/* </div> */}
         </li>
       ))}
     </ul>

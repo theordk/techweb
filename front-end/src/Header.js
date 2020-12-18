@@ -30,20 +30,29 @@ const useStylesBis = makeStyles((theme) => ({
     position: "relative",
     zIndex: '10'
   },
+  appStyle: {
+    background: theme.palette.primary.main, 
+  },
   title: {
     flexGrow: 1,
+    color: "white"
   },
+  menu: {
+    color: "white"
+  }
 }));
 
 const useStyles = (theme) => ({
   header: {
     padding: theme.spacing(1),
-    backgroundColor: '#122A42',
+    background: theme.palette.primary.main,
+    /* backgroundColor: '#122A42', */
     flexShrink: 0,
   },
   headerlog: {
     padding: theme.spacing(4),
-    backgroundColor: '#122A42',
+    background: theme.palette.primary.main,
+    /* backgroundColor: '#122A42', */
     flexShrink: 0,
     textAlign: "center",
   },
@@ -70,50 +79,42 @@ export default ({
     oauth, setOauth,
     drawerVisible, setDrawerVisible
   } = useContext(Context)
-
   const drawerToggle = (e) => {
     setDrawerVisible(!drawerVisible)
   }
-
   const onClickLogout = (e) => {
     e.stopPropagation()
     setOauth(null)
   }
-
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
-
   const handleClose = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
     setOpen(false);
   };
-
   function handleListKeyDown(event) {
     if (event.key === 'Tab') {
       event.preventDefault();
       setOpen(false);
     }
   }
-
   // return focus to the button when we transitioned from !open -> open
   const prevOpen = React.useRef(open);
   React.useEffect(() => {
     if (prevOpen.current === true && open === false) {
       anchorRef.current.focus();
     }
-
     prevOpen.current = open;
   }, [open]);
-
 
   if (oauth) {
     return (
       <header css={styles.header}>
         <div className={classes.root}>
-          <AppBar position="static" style={{ background: '#122A42' }}>
+          <AppBar className={classes.appStyle} position="static">
             <Toolbar>
               <IconButton
                 color="inherit"
@@ -125,7 +126,9 @@ export default ({
               </IconButton>
               {/* <HomeIcon></HomeIcon> */}
               <Typography className={classes.title}>
-                <Button href={`/'`}
+                <Button 
+                  color="inherit"
+                  href={`/'`}
                   onClick={(e) => {
                     e.preventDefault()
                     history.push(`/`)
@@ -136,6 +139,7 @@ export default ({
               {auth && (
                 <div>
                   <IconButton
+                    color="inherit"
                     ref={anchorRef}
                     aria-controls={open ? "menu-list-grow" : undefined}
                     aria-haspopup="true"
@@ -158,18 +162,20 @@ export default ({
                             placement === "bottom" ? "center top" : "center bottom"
                         }}
                       >
-                        <Paper>
+                        <Paper className={classes.menu} >
                           <ClickAwayListener onClickAway={handleClose}>                
                             <MenuList
                             
                             className={styles.dropmenu}
+                              color="inherit"
+                              css={styles.header}
                               autoFocusItem={open}
                               id="menu-list-grow"
                               onKeyDown={handleListKeyDown}                           
                             >
-                              <MenuItem onClick={handleClose}>Profile</MenuItem>
-                              <MenuItem onClick={handleClose}>My account</MenuItem>
-                              <MenuItem onClick={handleClose}>Logout</MenuItem>
+                              <MenuItem  onClick={handleClose}>Profile</MenuItem>
+                              <MenuItem  onClick={handleClose}>My account</MenuItem>
+                              <MenuItem  onClick={handleClose}>Logout</MenuItem>
                             </MenuList>        
                             </ClickAwayListener>
                         </Paper>

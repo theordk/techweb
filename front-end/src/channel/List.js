@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { forwardRef, useImperativeHandle, useLayoutEffect, useRef, useState, useContext } from 'react'
+=======
+import { forwardRef, useImperativeHandle, useLayoutEffect, useRef } from 'react'
+>>>>>>> ec1e383bf72f38fd5c933457618ea72da411ce83
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 // Layout
@@ -8,6 +12,7 @@ import unified from 'unified'
 import markdown from 'remark-parse'
 import remark2rehype from 'remark-rehype'
 import html from 'rehype-stringify'
+import Divider from '@material-ui/core/Divider';
 // Time
 import dayjs from 'dayjs'
 import calendar from 'dayjs/plugin/calendar'
@@ -26,6 +31,7 @@ dayjs.updateLocale('en', {
 const useStyles = (theme) => ({
   root: {
     position: 'relative',
+    marginleft: '10px',
     flex: '1 1 auto',
     'pre': {
 
@@ -62,6 +68,14 @@ const useStyles = (theme) => ({
     top: 0,
     width: '50px',
   },
+  title: {
+    marginLeft: '10px',
+    position: "fixed",
+    /* marginButtom: '50px' */
+  },
+  list: {
+    marginTop: '70px'
+  }
 })
 
 export default forwardRef(({
@@ -143,6 +157,7 @@ export default forwardRef(({
   return (
     <div css={styles.root} ref={rootEl}>
       <h1 css={styles.title}>Messages for {channel.name}</h1>
+<<<<<<< HEAD
       <ul>
         {messages.map((message, i) => {
           const { contents: content } = unified()
@@ -180,6 +195,32 @@ export default forwardRef(({
         })}
       </ul>
       <div ref={scrollEl} />
+=======
+      <div css={styles.list}>
+        <ul>
+          {messages.map((message, i) => {
+            const { contents: content } = unified()
+              .use(markdown)
+              .use(remark2rehype)
+              .use(html)
+              .processSync(message.content)
+            return (
+              <li key={i} css={styles.message}>
+                <p>
+                  <span>{message.author}</span>
+                  {' - '}
+                  <span>{dayjs().calendar(message.creation)}</span>
+                </p>
+                <div dangerouslySetInnerHTML={{ __html: content }}>
+                </div>         
+              </li>            
+            )
+          })}      
+        </ul>
+        <div ref={scrollEl} />
+      </div>
+>>>>>>> ec1e383bf72f38fd5c933457618ea72da411ce83
     </div>
+
   )
 })

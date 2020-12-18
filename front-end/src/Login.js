@@ -16,8 +16,9 @@ import {
 } from '@material-ui/core/styles';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import { makeStyles } from '@material-ui/core/styles';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
-import { Face, Fingerprint } from '@material-ui/icons'
+import { Face, Fingerprint, SportsRugbySharp } from '@material-ui/icons'
 import {
   BrowserRouter as Router,
   Switch,
@@ -30,6 +31,7 @@ import {
   useHistory
 } from "react-router-dom";
 import { red } from '@material-ui/core/colors';
+import { HoverMode } from 'react-particles-js';
 
 const base64URLEncode = (str) => {
   return str.toString('base64')
@@ -45,30 +47,10 @@ const sha256 = (buffer) => {
     .digest()
 }
 
-const useStyles = (theme) => ({
-  root: {
-    flex: '1 1 auto',
-    /* background: theme.palette.background.default, */
-    backgroundColor: '#1C7EB8',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    '& > div': {
-      margin: `${theme.spacing(1)}`,
-      marginLeft: 'auto',
-      marginRight: 'auto',
-    },
-    '& fieldset': {
-      border: 'none',
-      '& label': {
-        marginBottom: theme.spacing(.5),
-        display: 'block',
-      },
-    },
-  },
-})
-
-const CssTextField = withStyles({
+const useStylesBis = makeStyles((theme) => ({
+  /*   root: {
+      color: "white"
+    }, */
   root: {
     '& label.Mui-focused': {
       color: 'white',
@@ -88,6 +70,103 @@ const CssTextField = withStyles({
       },
     },
   },
+  paperstyle: {
+    background: theme.palette.primary.main,
+    /* backgroundColor: "#122A42",  */
+    textAlign: "center",
+    paddingTop: '20px',
+    fontSize: '150%',
+    fontWeight: "bold",
+    color: "white"
+  },
+  buttonstyleA: {
+    textTransform: "none",
+    marginRight: '10px',
+    color: "white",
+    borderColor: "white",
+    ':hover': {
+      backgroundColor: "rgba(0,0,0,.5)",
+    }
+  },
+  buttonstyleB: {
+    textTransform: "none",
+    marginLeft: '10px',
+    color: "white",
+    borderColor: "white"
+  },
+  buttonstyleC: {
+    textTransform: "none",
+    color: "white"
+  },
+  gridButtons: {
+    marginTop: '20px',
+    marginBottom: '10px',
+    padding: '10px'
+  },
+  styleCheckbox: {
+    color: "white"
+  },
+  input: {
+    color: 'white'
+  },
+}));
+
+const useStyles = (theme) => ({
+  root: {
+    flex: '1 1 auto',
+    background: theme.palette.secondary.main,
+    /* backgroundColor: '#1C7EB8', */
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    '& > div': {
+      margin: `${theme.spacing(1)}`,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
+    '& fieldset': {
+      border: 'none',
+      '& label': {
+        marginBottom: theme.spacing(.5),
+        display: 'block',
+      },
+    },
+  },
+  margin: {
+    marginLeft: '50px',
+    marginRight: '50px',
+    marginBottom: '20px',
+    marginTop: '20px',
+  }
+})
+
+const CssTextField = withStyles({
+  root: {
+    '& label.Mui-focused': {
+      color: 'white',
+    },
+    '& .MuiInput-underline:before': {
+      borderBottomColor: 'white',
+    },
+    '& .MuiInput-underline:hover:before': {
+      borderBottomColor: 'white', // Solid underline on hover
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: 'white',
+    },
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: 'white',
+      },
+      '&:hover fieldset': {
+        borderColor: 'white',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: 'white',
+      },
+    },
+  },
+  error: {},
 })(TextField);
 
 const Redirect = ({
@@ -95,7 +174,7 @@ const Redirect = ({
   codeVerifier,
 }) => {
   const styles = useStyles(useTheme())
-  const classes = useStyles(useTheme())
+  const stylesBis = useStylesBis(useTheme())
   const redirect = (e) => {
     e.stopPropagation()
     const code_challenge = base64URLEncode(sha256(codeVerifier))
@@ -113,16 +192,30 @@ const Redirect = ({
   return (
     <div css={styles.root}>
       <Router>
-        <Paper className={classes.padding} style={{ backgroundColor: "#122A42", textAlign: "center", paddingTop: '20px', fontSize: '150%', fontWeight: "bold" }}>
+        <Paper className={stylesBis.paperstyle}>
           Sign In !
-        <div className={classes.margin} style={{ marginLeft: '50px', marginRight: '50px', marginBottom: '20px', marginTop: '20px' }}>
+        <div css={styles.margin}>
             <Grid container spacing={3} alignItems="flex-end">
               <Grid item>
                 <AccountCircle />
               </Grid>
               <Grid item>
                 {/* <TextField id="email" label="Email" type="email" required /> */}
-                <CssTextField id="email" label="Email" type="email" required />
+                <CssTextField
+                  className={stylesBis.root}
+                  id="email"
+                  label="Email"
+                  type="email"
+                  required
+                  InputProps={{
+                    classes: {
+                      input: stylesBis.input,
+                    },
+                    inputMode: "numeric"
+                  }}
+                  InputLabelProps={{
+                    style: { color: '#fff' },
+                  }} />
               </Grid>
             </Grid>
             <Grid container spacing={3} alignItems="flex-end">
@@ -131,25 +224,39 @@ const Redirect = ({
               </Grid>
               <Grid item>
                 {/* <TextField id="password" label="Password" type="password" required /> */}
-                <CssTextField id="password" label="Password" type="password" required />
+                <CssTextField
+                  className={stylesBis.root}
+                  id="password"
+                  label="Password"
+                  type="password"
+                  required
+                  InputProps={{
+                    classes: {
+                      input: stylesBis.input,
+                    },
+                    inputMode: "numeric"
+                  }}
+                  InputLabelProps={{
+                    style: { color: '#fff' },
+                  }} />
               </Grid>
             </Grid>
             <Grid container spacing={3} alignItems="flex-end" style={{ marginTop: '8px' }}>
               <Grid item>
                 <FormControlLabel control={
                   <Checkbox
-                    color="white"
+                    className={stylesBis.styleCheckbox}
                   />
                 } label="Remember me" />
               </Grid>
             </Grid>
-            <Grid container justify="center" style={{ marginTop: '20px', marginBottom: '10px', padding: '10px' }}>
-              <Button type="submit" id="subscribe-submit" variant="outlined" color="white" style={{ textTransform: "none", marginRight: '10px' }}>Login</Button>
-              <Button onClick={redirect} variant="outlined" color="white" style={{ textTransform: "none", marginLeft: '10px' }}>Login with OAuth</Button>
+            <Grid className={stylesBis.gridButtons} container justify="center">
+              <Button className={stylesBis.buttonstyleA} type="submit" id="subscribe-submit" variant="outlined">Login</Button>
+              <Button className={stylesBis.buttonstyleB} variant="outlined" onClick={redirect}>Login with OAuth</Button>
             </Grid>
             <Route exact path="/">
               <Grid item justify="center">
-                <Button disableFocusRipple disableRipple style={{ textTransform: "none" }} variant="text" color="white">Create an account</Button>
+                <Button className={stylesBis.buttonstyleC} disableFocusRipple disableRipple variant="text" color="white">Create an account</Button>
               </Grid>
             </Route>
           </div>

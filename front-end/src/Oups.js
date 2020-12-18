@@ -6,7 +6,7 @@ import { useTheme } from '@material-ui/core/styles';
 
 const useStyles = (theme) => ({
   root: {
-    background: theme.palette.background.default,
+    background: theme.palette.secondary.main,
     overflow: 'hidden',
     flex: '1 1 auto',
     display: 'flex',

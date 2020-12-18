@@ -16,20 +16,29 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import LanguageIcon from '@material-ui/icons/Language';
 import InstagramIcon from '@material-ui/icons/Instagram';
 
-const styles = {
+/* const styles = {
   footer: {
-    backgroundColor: '#122A42',
+    /* backgroundColor: '#122A42', 
+    background: theme.palette.primary.main, 
     flexShrink: 0,
+    overflow: "hidden"
   },
-}
+} */
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
+  footer: {
+    /* backgroundColor: '#122A42', */
+    background: theme.palette.primary.main, 
+    flexShrink: 0,
+    overflow: "hidden"
+  },
   paper: {
     padding: theme.spacing(0.5),
-    backgroundColor: '#122A42',
+    /* backgroundColor: '#122A42', */
+    background: theme.palette.primary.main, 
     textAlign: 'center',
     color: theme.palette.text.secondary,
     color: "white",
@@ -61,11 +70,17 @@ const useStyles = makeStyles((theme) => ({
 
 export default () => {
   const classes = useStyles();
-  const oauth = useContext(Context)
+  /* const oauth = useContext(Context) */
+  const [open, setOpen] = React.useState(false);
+  const anchorRef = React.useRef(null);
+  const {
+    oauth, setOauth,
+    drawerVisible, setDrawerVisible
+  } = useContext(Context)
 
   if (oauth) {
     return (
-      <footer style={styles.footer}>
+      <footer className={classes.footer}>
         <Grid item xs={12}>
           <Paper className={classes.paper}>
             <Typography style={{ fontSize: 10 }}>
@@ -78,7 +93,7 @@ export default () => {
     );
   } else {
     return (
-      <footer style={styles.footer}>
+      <footer className={classes.footer}>
         <div className={classes.root}>
           <Grid container spacing={1} direction="row" alignItems="center">
             <Grid item xs={6} sm={3}>
