@@ -69,6 +69,7 @@ export default () => {
   return (
     <div css={styles.root}>
       <List
+        fetchMessages={fetchMessages}
         channel={channel}
         messages={messages}
         onScrollDown={onScrollDown}

@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import Context from './../Context'
 import axios from 'axios';
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
@@ -65,16 +66,24 @@ export default ({
   addMessage,
   channel,
 }) => {
+  const {oauth} = useContext(Context)
   const [content, setContent] = useState('')
   const styles = useStyles(useTheme())
   const classes = useStylesBis(useTheme())
   const onSubmit = async () => {
     const { data: message } = await axios.post(
       `http://localhost:3001/channels/${channel.id}/messages`
+<<<<<<< HEAD
+    , {
+      content: content,
+      author: `${oauth.email}`,
+    })
+=======
       , {
         content: content,
         author: 'david',
       })
+>>>>>>> ec1e383bf72f38fd5c933457618ea72da411ce83
     addMessage(message)
     setContent('')
   }

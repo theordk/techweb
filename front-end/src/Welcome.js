@@ -22,7 +22,7 @@ const particuleParams = {
   background: {
     "particles": {
       "number": {
-        "value": 25,
+        "value": 40,
         "density": {
           "enable": true,
           "value_area": 800,
@@ -188,7 +188,8 @@ export default () => {
             </Typography>
           </Button>
           <Dialog open={openChannel} onClose={handleCloseChannel} css={styles.icon}>
-            <BasicTextFields openSettings={openSettings} onChange={handleCloseChannel} />
+          <BasicTextFields openSettings={openSettings} onChange={handleCloseSettings} />
+            
           </Dialog>
           <Dialog open={openFriends} onClose={handleCloseFriends} css={styles.icon}>
             <Button>
@@ -196,7 +197,7 @@ export default () => {
             </Button>
           </Dialog>
           <Dialog open={openSettings} onClose={handleCloseSettings} css={styles.dialog}>
-            <Button>
+          <Button>
               Settings
             </Button>
           </Dialog>
