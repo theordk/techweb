@@ -37,7 +37,7 @@ const useStyles = (theme) => ({
 const useStylesBis = makeStyles((theme) => ({
   paper: {
     background: theme.palette.primary.main,
-  }
+  },
 }));
 
 export default () => {

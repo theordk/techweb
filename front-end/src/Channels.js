@@ -14,6 +14,7 @@ import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
+import styled from 'styled-components';
 import { useTheme, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 // Local
 import Context from './Context'
@@ -55,7 +56,19 @@ const useStyles = makeStyles((theme) => ({
     height: 28,
     margin: 4,
   },
+  divider2: {
+    background: theme.palette.secondary.dark,
+    marginBottom: '5px'
+  }
 }));
+
+/* const HoverPaper = styled.p`
+	color: #000;
+	:hover {
+		color: #ed1212;
+		cursor: pointer;
+	}
+` */
 
 export default () => {
   const stylesBis = useStyles(useTheme())
@@ -100,8 +113,7 @@ export default () => {
         </IconButton>
         <Divider className={stylesBis.divider} orientation="vertical" />
       </Paper>
-
-      
+      <Divider classes={{root: classes.divider2}} variant="middle"></Divider>
       { channels.map((channel, i) => (
         <li key={i} css={styles.channel}>
           <Paper

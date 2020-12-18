@@ -25,11 +25,10 @@ const theme = createMuiTheme({
     },
     secondary: {
       //bleu clair
-      main: "#1C7EB8"
+      main: "#4584B6"
     },
   },
 }); 
-
 
 ReactDOM.render(
   <React.StrictMode>

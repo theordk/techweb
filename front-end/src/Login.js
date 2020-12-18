@@ -114,8 +114,7 @@ const useStylesBis = makeStyles((theme) => ({
 const useStyles = (theme) => ({
   root: {
     flex: '1 1 auto',
-    background: theme.palette.secondary.main,
-    /* backgroundColor: '#1C7EB8', */
+    background: theme.palette.secondary.dark,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -149,7 +148,7 @@ const CssTextField = withStyles({
       borderBottomColor: 'white',
     },
     '& .MuiInput-underline:hover:before': {
-      borderBottomColor: 'white', // Solid underline on hover
+      borderBottomColor: 'white',
     },
     '& .MuiInput-underline:after': {
       borderBottomColor: 'white',
