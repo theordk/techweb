@@ -74,7 +74,6 @@ const particuleParams = {
       }
     },
     "retina_detect": false
-
   }
 }
 
@@ -88,7 +87,6 @@ const useStyles2 = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-
   }
 }))
 
@@ -110,7 +108,6 @@ const useStyles = (theme) => ({
     zIndex: '2',
     textAlign: 'center',
     float: 'left',
-
   },
   icon: {
     position: 'relative',
@@ -188,8 +185,7 @@ export default () => {
             </Typography>
           </Button>
           <Dialog open={openChannel} onClose={handleCloseChannel} css={styles.icon}>
-          <BasicTextFields openSettings={openSettings} onChange={handleCloseSettings} />
-            
+          <BasicTextFields openSettings={openSettings} onChange={handleCloseSettings} />        
           </Dialog>
           <Dialog open={openFriends} onClose={handleCloseFriends} css={styles.icon}>
             <Button>

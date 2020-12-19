@@ -3,6 +3,14 @@ import { forwardRef, useImperativeHandle, useLayoutEffect, useRef, useState, use
 import { jsx } from '@emotion/core'
 // Layout
 import { useTheme } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import { Tooltip, Typography } from '@material-ui/core';
+import { IconButton } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import { Button, Paper } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
 // Markdown
 import unified from 'unified'
 import markdown from 'remark-parse'
@@ -23,6 +31,30 @@ dayjs.updateLocale('en', {
     sameElse: 'DD/MM/YYYY hh:mm A'
   }
 })
+
+const useStylesBis = makeStyles((theme) => ({
+  root: {
+    alignContent: 'center',
+    alignItems: 'center',
+    //width:'18%',
+    margin: theme.spacing(1),
+    '& > *': {
+      margin: theme.spacing(1),
+      width: '25vh',
+    },
+  },
+  paperstyle: {
+    background: theme.palette.primary.main,
+    textAlign: "center",
+    padding: '20px',
+    fontSize: '150%',
+    fontWeight: "bold",
+    color: "white",
+  },
+  input: {
+    color: "white"
+  }
+}));
 
 const useStyles = (theme) => ({
   root: {
@@ -52,7 +84,6 @@ const useStyles = (theme) => ({
       }
     },
   },
-
   fabWrapper: {
     position: 'absolute',
     right: 0,
@@ -64,15 +95,50 @@ const useStyles = (theme) => ({
     top: 0,
     width: '50px',
   },
-  title: {
-    marginLeft: '10px',
-    position: "fixed",
-    /* marginButtom: '50px' */
+  /*   title: {
+      marginLeft: '10px',
+      position: "fixed",
+    },
+    list: {
+      marginTop: '70px'
+    } */
+  icons: {
+    display: "flex",
+    float: "right"
   },
-  list: {
-    marginTop: '70px'
+  buttons: {
+    display: "flex",
+  },
+  margin: {
+    marginLeft: '50px',
+    marginRight: '50px',
+    marginBottom: '20px',
+    marginTop: '20px',
   }
 })
+
+const CssTextField = withStyles({
+  root: {
+    '& label.Mui-focused': {
+      color: 'white',
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: 'white',
+    },
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: 'white',
+      },
+      '&:hover fieldset': {
+        borderColor: 'white',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: 'white',
+      },
+    },
+  },
+  error: {},
+})(TextField);
 
 export default forwardRef(({
   channel,
@@ -84,10 +150,10 @@ export default forwardRef(({
   const [openUpdate, setOpenUpdate] = useState({})
 
   const handleClickOpenUpdate = (i) => {
-    setOpenUpdate(prev => Boolean(!prev[i]) ? {...prev, [i]:true} : {...prev, [i]: false})
+    setOpenUpdate(prev => Boolean(!prev[i]) ? { ...prev, [i]: true } : { ...prev, [i]: false })
   }
   const handleCloseUpdate = () => {
-    
+
     setOpenUpdate(false)
   };
   const handleSubmit = async (creation, channelId) => {
@@ -120,10 +186,11 @@ export default forwardRef(({
         author: `${oauth.email}`,
         creation: `${creation}`
       })
-      fetchMessages()
+    fetchMessages()
   }
   const { oauth } = useContext(Context)
   const styles = useStyles(useTheme())
+  const classes = useStylesBis();
   // Expose the `scroll` action
   useImperativeHandle(ref, () => ({
     scroll: scroll
@@ -163,29 +230,74 @@ export default forwardRef(({
             .processSync(message.content)
           return (
             <li key={i} css={styles.message}  >
-              
               {`${oauth.email}` === message.author ?
                 <div>
-                  <button onClick={() => deleteMessage(message.creation, message.channelId)}>Delete message</button>
-                  <button onClick={() => handleClickOpenUpdate(i) }>Change message</button>
                   <Dialog open={openUpdate[i]} onClose={(i) => handleCloseUpdate} css={styles.icon}>
-                    <form autoComplete="off" onSubmit={() => handleSubmit(message.creation, message.channelId)}>
-                      <input type="text" label="Change your message" onChange={(event) => setNewMessage(event.target.value)} />
-                      <button type="button" value="klala" onClick={handleCloseUpdate}>Cancel</button>
-                      <button type="submit">update message</button>
-                    </form>
+                    <Paper className={classes.paperstyle}>
+                      Modify your message
+                      <div css={styles.margin}>
+                        <form autoComplete="off" onSubmit={() => handleSubmit(message.creation, message.channelId)}>
+                          <Box className={classes.root}>
+                            <CssTextField
+                              className={classes.margin}
+                              label="New Message"
+                              variant="outlined"
+                              id="custom-css-outlined-input"
+                              color="inherit"
+                              InputProps={{
+                                classes: {
+                                  input: classes.input,
+                                },
+                                inputMode: "numeric"
+                              }}
+                              InputLabelProps={{
+                                style: { color: '#fff' },
+                              }}
+                              onChange={(event) => setNewMessage(event.target.value)}
+                            />
+                          </Box>
+                          <div css={styles.buttons}>
+                          <Box className={classes.root}>
+                            <Button type="button" color="inherit" onClick={handleCloseUpdate}>Cancel</Button>
+                          </Box>
+                          <Box className={classes.root}>
+                            <Button type="submit" color="inherit">Update Message</Button>
+                          </Box>
+                          </div>                      
+                        </form>
+                      </div>
+                    </Paper>
                   </Dialog>
                 </div>
                 : null
               }
               <p>
+                <div css={styles.icons} >
+                  <Tooltip title="Delete">
+                    <IconButton
+                      aria-label="delete"
+                      color="inherit"
+                      onClick={() => deleteMessage(message.creation, message.channelId)}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Edit">
+                    <IconButton
+                      aria-label="edit"
+                      color="inherit"
+                      onClick={() => handleClickOpenUpdate(i)}
+                    >
+                      <EditIcon />
+                    </IconButton>
+                  </Tooltip>
+                </div>
                 <span>{message.author}</span>
                 {' - '}
                 <span>{dayjs().calendar(message.creation)}</span>
               </p>
               <div dangerouslySetInnerHTML={{ __html: content }}>
               </div>
-
             </li>
           )
         })}

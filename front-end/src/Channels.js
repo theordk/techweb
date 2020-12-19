@@ -59,6 +59,10 @@ const useStyles = makeStyles((theme) => ({
   divider2: {
     background: theme.palette.secondary.dark,
     marginBottom: '5px'
+  },
+  divider3: {
+    background: theme.palette.secondary.dark,
+    marginTop: '5px'
   }
 }));
 
@@ -131,8 +135,9 @@ export default () => {
               </MenuItem>
             </MenuList>
           </Paper>
-        </li>
+        </li>     
       ))}
+      <Divider classes={{root: classes.divider3}} variant="middle"></Divider>
     </ul>
   );
 }
