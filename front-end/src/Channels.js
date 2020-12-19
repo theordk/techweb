@@ -45,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(0),
     padding: theme.spacing(0.1),
     display: "flex",
+<<<<<<< HEAD
     background: theme.palette.secondary.light,
     '&:hover': {
       background: theme.palette.secondary.dark,
@@ -53,6 +54,10 @@ const useStyles = makeStyles((theme) => ({
       }
     },
     
+=======
+    /* backgroundColor: theme.palette.secondary.light, */
+    background: "#4584B6"
+>>>>>>> f4674d6eea72003a07945849397427e9381b18f7
   },
   input: {
     marginLeft: theme.spacing(1),
@@ -65,6 +70,10 @@ const useStyles = makeStyles((theme) => ({
   divider2: {
     background: theme.palette.secondary.dark,
     marginBottom: '5px'
+  },
+  divider3: {
+    background: theme.palette.secondary.dark,
+    marginTop: '5px'
   }
 }));
 
@@ -130,8 +139,9 @@ export default () => {
               </MenuItem>
             </MenuList>
           </Paper>
-        </li>
+        </li>     
       ))}
+      <Divider classes={{root: classes.divider3}} variant="middle"></Divider>
     </ul>
   );
 }
