@@ -16,7 +16,7 @@ import { Particles } from 'react-particles-js';
 import React from 'react';
 import { useContext } from 'react'
 import Dialog from '@material-ui/core/Dialog';
-import { BasicTextFields } from './Dialogs1.js'
+import { ChannelModal } from './Dialogs1.js'
 
 const particuleParams = {
   background: {
@@ -25,7 +25,7 @@ const particuleParams = {
         "value": 40,
         "density": {
           "enable": true,
-          "value_area": 800,
+          "value_area": 650,
         }
       },
       "line_linked": {
@@ -188,8 +188,7 @@ export default () => {
             </Typography>
           </Button>
           <Dialog open={openChannel} onClose={handleCloseChannel} css={styles.icon}>
-          <BasicTextFields openSettings={openSettings} onChange={handleCloseSettings} />
-            
+          <ChannelModal openSettings={openSettings} onChange={handleCloseChannel} /> 
           </Dialog>
           <Dialog open={openFriends} onClose={handleCloseFriends} css={styles.icon}>
             <Button>

@@ -28,7 +28,10 @@ const useStyles = (theme) => ({
   },
   fabDisabled: {
     display: 'none !important',
-  }
+  },
+  title: {
+    marginLeft: '1%',
+  },
 })
 
 export default () => {
@@ -68,6 +71,7 @@ export default () => {
   }
   return (
     <div css={styles.root}>
+
       <List
         fetchMessages={fetchMessages}
         channel={channel}
@@ -84,6 +88,7 @@ export default () => {
       >
         <ArrowDropDownIcon />
       </Fab>
+
     </div>
   );
 }

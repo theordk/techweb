@@ -188,6 +188,7 @@ const Redirect = ({
     ].join('')
     window.location = url
   }
+
   return (
     <div css={styles.root}>
       <Router>
@@ -255,7 +256,7 @@ const Redirect = ({
             </Grid>
             <Route exact path="/">
               <Grid item justify="center">
-                <Button className={stylesBis.buttonstyleC} disableFocusRipple disableRipple variant="text" color="white">Create an account</Button>
+                <Button className={stylesBis.buttonstyleC} disableFocusRipple disableRipple variant="text" color="white" >Create an account</Button>
               </Grid>
             </Route>
           </div>

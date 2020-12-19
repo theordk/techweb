@@ -98,7 +98,7 @@ const helperTextStyles = makeStyles(theme => ({
   }
 }));
 
-export function BasicTextFields(props) {
+export function ChannelModal(props) {
   const classes = useStyles();
   const styles = useStylesBis(useTheme())
   const helperTestClasses = helperTextStyles();
@@ -199,5 +199,6 @@ export function BasicTextFields(props) {
     </Paper>
 
   );
-}
+};
+
 

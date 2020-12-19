@@ -65,12 +65,12 @@ const useStyles = (theme) => ({
     width: '50px',
   },
   title: {
-    marginLeft: '10px',
-    position: "fixed",
-    /* marginButtom: '50px' */
+    marginLeft: '1%',
+    //position: "fixed" ,
+    
   },
   list: {
-    marginTop: '70px'
+    /* position: 'absolute' */
   }
 })
 
@@ -152,8 +152,11 @@ export default forwardRef(({
     return () => rootNode.removeEventListener('scroll', handleScroll)
   })
   return (
+    
+    
     <div css={styles.root} ref={rootEl}>
       <h1 css={styles.title}>Messages for {channel.name}</h1>
+      <div>
       <ul>
         {messages.map((message, i) => {
           const { contents: content } = unified()
@@ -171,7 +174,7 @@ export default forwardRef(({
                   <Dialog open={openUpdate[i]} onClose={(i) => handleCloseUpdate} css={styles.icon}>
                     <form autoComplete="off" onSubmit={() => handleSubmit(message.creation, message.channelId)}>
                       <input type="text" label="Change your message" onChange={(event) => setNewMessage(event.target.value)} />
-                      <button type="button" value="klala" onClick={handleCloseUpdate}>Cancel</button>
+                      <button type="button" onClick={handleCloseUpdate}>Cancel</button>
                       <button type="submit">update message</button>
                     </form>
                   </Dialog>
@@ -190,8 +193,11 @@ export default forwardRef(({
           )
         })}
       </ul>
+      
       <div ref={scrollEl} />
+      </div>
     </div>
+
 
   )
 })

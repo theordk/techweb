@@ -14,7 +14,6 @@ import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
-import styled from 'styled-components';
 import { useTheme, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 // Local
 import Context from './Context'
@@ -46,7 +45,14 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(0),
     padding: theme.spacing(0.1),
     display: "flex",
-    backgroundColor: theme.palette.secondary.light,
+    background: theme.palette.secondary.light,
+    '&:hover': {
+      background: theme.palette.secondary.dark,
+      '& button': {
+        'display': 'block'
+      }
+    },
+    
   },
   input: {
     marginLeft: theme.spacing(1),
@@ -62,13 +68,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-/* const HoverPaper = styled.p`
-	color: #000;
-	:hover {
-		color: #ed1212;
-		cursor: pointer;
-	}
-` */
 
 export default () => {
   const stylesBis = useStyles(useTheme())
