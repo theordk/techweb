@@ -103,7 +103,7 @@ const useStyles2 = makeStyles((theme) => ({
     marginLeft: '70%',
     borderRadius: '5px',
     maxHeight: '60%',
-    overflow: 'hidden',
+    overflow: 'scroll',
     backgroundColor: theme.palette.secondary.dark,
   },
   inline: {

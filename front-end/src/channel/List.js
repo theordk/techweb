@@ -47,8 +47,6 @@ const useStylesBis = makeStyles((theme) => ({
     background: theme.palette.primary.main,
     border: '1px solid white',
     textAlign: "center",
-    alignContent: 'center',
-    alignItems: 'center',
     padding: '20px',
     fontSize: '150%',
     fontWeight: "bold",
