@@ -47,6 +47,8 @@ const useStylesBis = makeStyles((theme) => ({
     background: theme.palette.primary.main,
     border: '1px solid white',
     textAlign: "center",
+    alignContent: 'center',
+    alignItems: 'center',
     padding: '20px',
     fontSize: '150%',
     fontWeight: "bold",
@@ -96,15 +98,6 @@ const useStyles = (theme) => ({
     top: 0,
     width: '50px',
   },
-<<<<<<< HEAD
-  title: {
-    marginLeft: '1%',
-    //position: "fixed" ,
-    
-  },
-  list: {
-    /* position: 'absolute' */
-=======
   /*   title: {
       marginLeft: '10px',
       position: "fixed",
@@ -124,7 +117,6 @@ const useStyles = (theme) => ({
     marginRight: '50px',
     marginBottom: '20px',
     marginTop: '20px',
->>>>>>> f4674d6eea72003a07945849397427e9381b18f7
   }
 })
 
@@ -247,13 +239,6 @@ export default forwardRef(({
               {`${oauth.email}` === message.author ?
                 <div>
                   <Dialog open={openUpdate[i]} onClose={(i) => handleCloseUpdate} css={styles.icon}>
-<<<<<<< HEAD
-                    <form autoComplete="off" onSubmit={() => handleSubmit(message.creation, message.channelId)}>
-                      <input type="text" label="Change your message" onChange={(event) => setNewMessage(event.target.value)} />
-                      <button type="button" onClick={handleCloseUpdate}>Cancel</button>
-                      <button type="submit">update message</button>
-                    </form>
-=======
                     <Paper className={classes.paperstyle}>
                       Modify your message
                       <div css={styles.margin}>
@@ -288,7 +273,6 @@ export default forwardRef(({
                         </form>
                       </div>
                     </Paper>
->>>>>>> f4674d6eea72003a07945849397427e9381b18f7
                   </Dialog>
                 </div>
                 : null

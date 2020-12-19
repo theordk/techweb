@@ -16,9 +16,6 @@ import { Particles } from 'react-particles-js';
 import React from 'react';
 import { useContext } from 'react'
 import Dialog from '@material-ui/core/Dialog';
-<<<<<<< HEAD
-import { ChannelModal } from './Dialogs1.js'
-=======
 import { ChannelModal } from './Dialogs1.js';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -27,7 +24,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
->>>>>>> f4674d6eea72003a07945849397427e9381b18f7
 
 const particuleParams = {
   background: {
@@ -101,13 +97,13 @@ const useStyles2 = makeStyles((theme) => ({
   },
   root: {
     width: '100%',
-    maxWidth: '36ch',
+    //maxWidth: '36ch',
     height: '60%',
     marginTop: '30%',
     marginLeft: '70%',
     borderRadius: '5px',
-    maxHeight: '90%',
-    overflow: 'scroll',
+    maxHeight: '60%',
+    overflow: 'hidden',
     backgroundColor: theme.palette.secondary.dark,
   },
   inline: {
@@ -218,11 +214,7 @@ export default () => {
             </Typography>
           </Button>
           <Dialog open={openChannel} onClose={handleCloseChannel} css={styles.icon}>
-<<<<<<< HEAD
-          <ChannelModal openSettings={openSettings} onChange={handleCloseChannel} /> 
-=======
             <ChannelModal onChange={handleCloseChannel} />
->>>>>>> f4674d6eea72003a07945849397427e9381b18f7
           </Dialog>
           <Dialog open={openFriends} onClose={handleCloseFriends} css={styles.icon}>
             <Button>
