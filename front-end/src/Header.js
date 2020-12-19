@@ -23,6 +23,8 @@ import Popper from '@material-ui/core/Popper';
 import MenuList from '@material-ui/core/MenuList';
 import Link from '@material-ui/core/Link'
 import HomeIcon from '@material-ui/icons/Home';
+import { Profile } from './Dialogs1';
+import Dialog from '@material-ui/core/Dialog';
 
 const useStylesBis = makeStyles((theme) => ({
   root: {
@@ -31,7 +33,7 @@ const useStylesBis = makeStyles((theme) => ({
     zIndex: '10'
   },
   appStyle: {
-    background: theme.palette.primary.main, 
+    background: theme.palette.primary.main,
   },
   title: {
     flexGrow: 1,
@@ -75,6 +77,8 @@ export default ({
   const [auth] = React.useState(true);
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
+  const [openProfile, setOpenProfile] = React.useState(false)
+  const [openSettings, setOpenSettings] = React.useState(false)
   const {
     oauth, setOauth,
     drawerVisible, setDrawerVisible
@@ -101,6 +105,12 @@ export default ({
       setOpen(false);
     }
   }
+  const handleClickOpenProfile = () => {
+    setOpenProfile(true);
+  };
+  const handleCloseProfile = () => {
+    setOpenProfile(false);
+  };
   // return focus to the button when we transitioned from !open -> open
   const prevOpen = React.useRef(open);
   React.useEffect(() => {
@@ -126,7 +136,7 @@ export default ({
               </IconButton>
               {/* <HomeIcon></HomeIcon> */}
               <Typography className={classes.title}>
-                <Button 
+                <Button
                   color="inherit"
                   href={`/'`}
                   onClick={(e) => {
@@ -163,21 +173,20 @@ export default ({
                         }}
                       >
                         <Paper className={classes.menu} >
-                          <ClickAwayListener onClickAway={handleClose}>                
+                          <ClickAwayListener onClickAway={handleClose}>
                             <MenuList
-                            
-                            className={styles.dropmenu}
+                              className={styles.dropmenu}
                               color="inherit"
                               css={styles.header}
                               autoFocusItem={open}
                               id="menu-list-grow"
-                              onKeyDown={handleListKeyDown}                           
+                              onKeyDown={handleListKeyDown}
                             >
-                              <MenuItem  onClick={handleClose}>Profile</MenuItem>
-                              <MenuItem  onClick={handleClose}>My account</MenuItem>
-                              <MenuItem  onClick={handleClose}>Logout</MenuItem>
-                            </MenuList>        
-                            </ClickAwayListener>
+                              <MenuItem onClick={handleClickOpenProfile}>Profile</MenuItem>
+                              <MenuItem onClick={handleClose}>My account</MenuItem>
+                              <MenuItem onClick={handleClose}>Logout</MenuItem>
+                            </MenuList>
+                          </ClickAwayListener>
                         </Paper>
                       </Grow>
                     )}
@@ -188,6 +197,9 @@ export default ({
             </Toolbar>
           </AppBar>
         </div>
+        <Dialog open={openProfile} onClose={handleCloseProfile} css={styles.icon}>
+          <Profile onChange={handleCloseProfile} />
+        </Dialog>
       </header>
     );
   } else {

@@ -46,7 +46,8 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(0),
     padding: theme.spacing(0.1),
     display: "flex",
-    backgroundColor: theme.palette.secondary.light,
+    /* backgroundColor: theme.palette.secondary.light, */
+    background: "#4584B6"
   },
   input: {
     marginLeft: theme.spacing(1),

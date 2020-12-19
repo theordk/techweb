@@ -32,7 +32,8 @@ const useStyles = makeStyles((theme) => ({
   footer: {
     background: theme.palette.primary.main, 
     flexShrink: 0,
-    overflow: "hidden"
+    overflow: "hidden",
+    borderTop: "1px solid #3A5B7B"
   },
   paper: {
     padding: theme.spacing(0.5),

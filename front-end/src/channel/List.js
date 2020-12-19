@@ -45,6 +45,7 @@ const useStylesBis = makeStyles((theme) => ({
   },
   paperstyle: {
     background: theme.palette.primary.main,
+    border: '1px solid white',
     textAlign: "center",
     padding: '20px',
     fontSize: '150%',
