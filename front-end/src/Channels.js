@@ -46,7 +46,14 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(0),
     padding: theme.spacing(0.1),
     display: "flex",
-    backgroundColor: theme.palette.secondary.light,
+    background: theme.palette.secondary.light,
+    '&:hover': {
+      background: theme.palette.secondary.dark,
+      '& button': {
+        'display': 'block'
+      }
+    },
+    
   },
   input: {
     marginLeft: theme.spacing(1),
