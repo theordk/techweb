@@ -52,8 +52,7 @@ const useStyles = makeStyles((theme) => ({
       '& button': {
         'display': 'block'
       }
-    },
-    
+    },   
   },
   input: {
     marginLeft: theme.spacing(1),
@@ -72,14 +71,6 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '5px'
   }
 }));
-
-/* const HoverPaper = styled.p`
-	color: #000;
-	:hover {
-		color: #ed1212;
-		cursor: pointer;
-	}
-` */
 
 export default () => {
   const stylesBis = useStyles(useTheme())

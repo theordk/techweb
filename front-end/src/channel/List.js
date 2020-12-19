@@ -21,16 +21,22 @@ import Divider from '@material-ui/core/Divider';
 import dayjs from 'dayjs'
 import calendar from 'dayjs/plugin/calendar'
 import updateLocale from 'dayjs/plugin/updateLocale'
+/* import LocalizedFormat from 'dayjs/plugin/LocalizedFormat' */
 import axios from 'axios';
 import Context from './../Context'
 import Dialog from '@material-ui/core/Dialog';
+
+var LocalizedFormat = require('dayjs/plugin/localizedFormat')
+dayjs.extend(LocalizedFormat)
+
 dayjs.extend(calendar)
-dayjs.extend(updateLocale)
+/* dayjs.extend(updateLocale)
 dayjs.updateLocale('en', {
   calendar: {
     sameElse: 'DD/MM/YYYY hh:mm A'
   }
-})
+}) */
+
 
 const useStylesBis = makeStyles((theme) => ({
   root: {
@@ -40,7 +46,7 @@ const useStylesBis = makeStyles((theme) => ({
     margin: theme.spacing(1),
     '& > *': {
       margin: theme.spacing(1),
-      width: '25vh',
+      /* width: '25vh', */
     },
   },
   paperstyle: {
@@ -98,13 +104,10 @@ const useStyles = (theme) => ({
     top: 0,
     width: '50px',
   },
-  /*   title: {
-      marginLeft: '10px',
-      position: "fixed",
-    },
-    list: {
-      marginTop: '70px'
-    } */
+  title: {
+    marginLeft: '10px',
+    /*  position: "fixed", */
+  },
   icons: {
     display: "flex",
     float: "right"
@@ -222,94 +225,92 @@ export default forwardRef(({
     return () => rootNode.removeEventListener('scroll', handleScroll)
   })
   return (
-    
-    
+
     <div css={styles.root} ref={rootEl}>
       <h1 css={styles.title}>Messages for {channel.name}</h1>
       <div>
-      <ul>
-        {messages.map((message, i) => {
-          const { contents: content } = unified()
-            .use(markdown)
-            .use(remark2rehype)
-            .use(html)
-            .processSync(message.content)
-          return (
-            <li key={i} css={styles.message}  >
-              {`${oauth.email}` === message.author ?
-                <div>
-                  <Dialog open={openUpdate[i]} onClose={(i) => handleCloseUpdate} css={styles.icon}>
-                    <Paper className={classes.paperstyle}>
-                      Modify your message
+        <ul>
+          {messages.map((message, i) => {
+            const { contents: content } = unified()
+              .use(markdown)
+              .use(remark2rehype)
+              .use(html)
+              .processSync(message.content)
+            return (
+              <li key={i} css={styles.message}  >
+                {`${oauth.email}` === message.author ?
+                  <div>
+                    <Dialog open={openUpdate[i]} onClose={(i) => handleCloseUpdate} css={styles.icon}>
+                      <Paper className={classes.paperstyle}>
+                        Modify your message
                       <div css={styles.margin}>
-                        <form autoComplete="off" onSubmit={() => handleSubmit(message.creation, message.channelId)}>
-                          <Box className={classes.root}>
-                            <CssTextField
-                              className={classes.margin}
-                              label="New Message"
-                              variant="outlined"
-                              id="custom-css-outlined-input"
-                              color="inherit"
-                              InputProps={{
-                                classes: {
-                                  input: classes.input,
-                                },
-                                inputMode: "numeric"
-                              }}
-                              InputLabelProps={{
-                                style: { color: '#fff' },
-                              }}
-                              onChange={(event) => setNewMessage(event.target.value)}
-                            />
-                          </Box>
-                          <div css={styles.buttons}>
-                          <Box className={classes.root}>
-                            <Button type="button" color="inherit" onClick={handleCloseUpdate}>Cancel</Button>
-                          </Box>
-                          <Box className={classes.root}>
-                            <Button type="submit" color="inherit">Update Message</Button>
-                          </Box>
-                          </div>                      
-                        </form>
-                      </div>
-                    </Paper>
-                  </Dialog>
+                          <form autoComplete="off" onSubmit={() => handleSubmit(message.creation, message.channelId)}>
+                            <Box className={classes.root}>
+                              <CssTextField
+                                className={classes.margin}
+                                label="New Message"
+                                variant="outlined"
+                                id="custom-css-outlined-input"
+                                color="inherit"
+                                InputProps={{
+                                  classes: {
+                                    input: classes.input,
+                                  },
+                                  inputMode: "numeric"
+                                }}
+                                InputLabelProps={{
+                                  style: { color: '#fff' },
+                                }}
+                                onChange={(event) => setNewMessage(event.target.value)}
+                              />
+                            </Box>
+                            <div css={styles.buttons}>
+                              <Box className={classes.root}>
+                                <Button type="button" color="inherit" onClick={handleCloseUpdate}>Cancel</Button>
+                              </Box>
+                              <Box className={classes.root}>
+                                <Button type="submit" color="inherit">Update Message</Button>
+                              </Box>
+                            </div>
+                          </form>
+                        </div>
+                      </Paper>
+                    </Dialog>
+                  </div>
+                  : null
+                }
+                <p>
+                  <div css={styles.icons} >
+                    <Tooltip title="Delete">
+                      <IconButton
+                        aria-label="delete"
+                        color="inherit"
+                        onClick={() => deleteMessage(message.creation, message.channelId)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Edit">
+                      <IconButton
+                        aria-label="edit"
+                        color="inherit"
+                        onClick={() => handleClickOpenUpdate(i)}
+                      >
+                        <EditIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </div>
+                  <span>{message.author}</span>
+                  {' - '}
+                  <span>{dayjs.unix(parseInt(message.creation)/1000000).format('LLLL')}</span>
+                </p>
+                <div dangerouslySetInnerHTML={{ __html: content }}>
                 </div>
-                : null
-              }
-              <p>
-                <div css={styles.icons} >
-                  <Tooltip title="Delete">
-                    <IconButton
-                      aria-label="delete"
-                      color="inherit"
-                      onClick={() => deleteMessage(message.creation, message.channelId)}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title="Edit">
-                    <IconButton
-                      aria-label="edit"
-                      color="inherit"
-                      onClick={() => handleClickOpenUpdate(i)}
-                    >
-                      <EditIcon />
-                    </IconButton>
-                  </Tooltip>
-                </div>
-                <span>{message.author}</span>
-                {' - '}
-                <span>{dayjs().calendar(message.creation)}</span>
-              </p>
-              <div dangerouslySetInnerHTML={{ __html: content }}>
-              </div>
-            </li>
-          )
-        })}
-      </ul>
-      
-      <div ref={scrollEl} />
+              </li>
+            )
+          })}
+        </ul>
+        <div ref={scrollEl} />
       </div>
     </div>
 
