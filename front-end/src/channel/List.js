@@ -1,4 +1,4 @@
-import { forwardRef, useImperativeHandle, useLayoutEffect, useRef, useState, useContext} from 'react'
+import { forwardRef, useImperativeHandle, useLayoutEffect, useRef, useState, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
@@ -26,6 +26,8 @@ import updateLocale from 'dayjs/plugin/updateLocale'
 import axios from 'axios';
 import Context from './../Context'
 import Dialog from '@material-ui/core/Dialog';
+import GroupAddIcon from '@material-ui/icons/GroupAdd';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 var LocalizedFormat = require('dayjs/plugin/localizedFormat')
 dayjs.extend(LocalizedFormat)
@@ -60,7 +62,7 @@ const useStylesBis = makeStyles((theme) => ({
   },
   input: {
     color: "white"
-  }
+  },
 }));
 
 const useStyles = (theme) => ({
@@ -110,8 +112,17 @@ const useStyles = (theme) => ({
     display: "flex",
     float: "right"
   },
+  iconsBis: {
+    display: "flex",
+    float: "right",
+    position: "relative"
+  },
   buttons: {
     display: "flex",
+  },
+  buttonsChoice: {
+    display: "flex",
+    marginLeft: '20px'
   },
   margin: {
     marginLeft: '50px',
@@ -174,32 +185,32 @@ export default forwardRef(({
     await axios.put(`http://localhost:3001/channels/${channel.id}`, {
       name: `${channel.name}`,
       list: `${channel.list}`,
-      chanAdmin: `${finalAdminsList}`,     
+      chanAdmin: `${finalAdminsList}`,
     }, {
       headers: {
         'Authorization': `Bearer ${oauth.access_token}`
       },
     })
-    
+
     setOpenAdmin(false)
   }
 
 
-    const fetch = async () => {
-      try {
-        const { data: channels } = await axios.get('http://localhost:3001/channels', {
-          headers: {
-            'Authorization': `Bearer ${oauth.access_token}`
-          },
-          params: {
-            user: `${oauth.email}`
-          },
-        })
-        setChannels(channels)
-      } catch (err) {
-        console.error(err)
-      }
+  const fetch = async () => {
+    try {
+      const { data: channels } = await axios.get('http://localhost:3001/channels', {
+        headers: {
+          'Authorization': `Bearer ${oauth.access_token}`
+        },
+        params: {
+          user: `${oauth.email}`
+        },
+      })
+      setChannels(channels)
+    } catch (err) {
+      console.error(err)
     }
+  }
 
 
   const addFriends = async (e) => {
@@ -211,13 +222,13 @@ export default forwardRef(({
     await axios.put(`http://localhost:3001/channels/${channel.id}`, {
       name: `${channel.name}`,
       list: `${finalFriendsList}`,
-      chanAdmin: `${channel.chanAdmin}`,     
+      chanAdmin: `${channel.chanAdmin}`,
     }, {
       headers: {
         'Authorization': `Bearer ${oauth.access_token}`
       },
     })
-    
+
     setOpenFriends(false)
   }
 
@@ -227,36 +238,36 @@ export default forwardRef(({
     await axios.put(`http://localhost:3001/channels/${channel.id}`, {
       name: `${name}`,
       list: `${channel.list}`,
-      chanAdmin: `${channel.chanAdmin}`,     
+      chanAdmin: `${channel.chanAdmin}`,
     }, {
       headers: {
         'Authorization': `Bearer ${oauth.access_token}`
       },
     })
-    
+
     setOpenName(false)
     fetch()
-    
+
   }
 
 
   const deleteChannel = async (e) => {
     e.preventDefault()
 
-    await axios.delete(`http://localhost:3001/channels/${channel.id}`,{
+    await axios.delete(`http://localhost:3001/channels/${channel.id}`, {
       headers: {
         'Authorization': `Bearer ${oauth.access_token}`
       },
     })
     fetch()
     history.push('/channels')
-    
-    
+
+
   }
 
 
-  
-  
+
+
   const handleClickOpenUpdate = (i) => {
     setOpenUpdate(prev => Boolean(!prev[i]) ? { ...prev, [i]: true } : { ...prev, [i]: false })
   }
@@ -326,41 +337,197 @@ export default forwardRef(({
   return (
 
     <div css={styles.root} ref={rootEl}>
-      <h1 css={styles.title}>Messages for {channel.name}</h1>
-      {channel.chanAdmin.includes(`${oauth.email}`) ? 
-      <div>
-      <button onClick={() => setOpenName(true)}>change name</button>
-      <button onClick={() => setOpenAdmin(true)}> add admins </button>
-      <button onClick={() => setOpenDelete(true)}>Delete Channel</button>
-
-      <Dialog open={openAdmin} onClose={() => setOpenAdmin(false)}>
-        <form onSubmit={addAdmins}>
-          <input type="text" onChange={(event) => setAdmins(event.target.value)}/>
-          <button type="submit">Confirm</button>
-        </form>
-      </Dialog>
-      <Dialog open={openFriends} onClose={() => setOpenFriends(false)}>
-        <form onSubmit={addFriends}>
-          <input type="text" onChange={(event) => setFriends(event.target.value)}/>
-          <button type="submit">Confirm</button>
-        </form>
-      </Dialog>
-      <Dialog open={openName} onClose={() => setOpenName(false)}>
-        <form onSubmit={newName}>
-          <input type="text" onChange={(event) => setName(event.target.value)}/>
-          <button type="submit">Confirm</button>
-        </form>
-      </Dialog>
-      <Dialog open={openDelete} onClose={() => setOpenDelete(false)}>
-        <form onSubmit={deleteChannel}>
-          <p>Are you sure you want to delete this channel ?</p>
-          <button type="submit">Confirm</button>
-        </form>
-      </Dialog>
-      </div>
-      : null
+      {channel.chanAdmin.includes(`${oauth.email}`) ?
+        <div>
+          <h1 css={styles.title}>Messages for {channel.name}
+            <div css={styles.iconsBis}>
+              <Tooltip title="Rename Channel">
+                <IconButton
+                  aria-label="Rename Channel"
+                  color="inherit"
+                  onClick={() => setOpenName(true)}
+                >
+                  <EditIcon />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Add Admin">
+                <IconButton
+                  aria-label="Add Admin"
+                  color="inherit"
+                  onClick={() => setOpenAdmin(true)}
+                >
+                  <AddCircleIcon />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Delete Channel">
+                <IconButton
+                  aria-label="Delete Channel"
+                  color="inherit"
+                  onClick={() => setOpenDelete(true)}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </Tooltip>
+              <div css={styles.iconsBis} >
+                <Tooltip title="Add Users">
+                  <IconButton
+                    aria-label="Add Users"
+                    color="inherit"
+                    onClick={() => setOpenFriends(true)}
+                  >
+                    <GroupAddIcon />
+                  </IconButton>
+                </Tooltip>
+              </div>
+            </div>
+          </h1>
+        </div>
+        :
+        <div>
+          <h1 css={styles.title}>Messages for {channel.name}
+            <div css={styles.iconsBis} >
+              <Tooltip title="Add Users">
+                <IconButton
+                  aria-label="Add Users"
+                  color="inherit"
+                  onClick={() => setOpenFriends(true)}
+                >
+                  <GroupAddIcon />
+                </IconButton>
+              </Tooltip>
+            </div>
+          </h1>
+        </div>
       }
-      <button onClick={() => setOpenFriends(true)}>add users</button>
+      <Dialog open={openAdmin} onClose={() => setOpenAdmin(false)} css={styles.icon}>
+        <Paper className={classes.paperstyle}>
+          Add Admins
+          <div css={styles.margin}>
+            <form autoComplete="off" onSubmit={addAdmins}>
+              <Box className={classes.root}>
+                <CssTextField
+                  className={classes.margin}
+                  label="Name A, Name B, ..."
+                  type="text"
+                  variant="outlined"
+                  id="custom-css-outlined-input"
+                  color="inherit"
+                  InputProps={{
+                    classes: {
+                      input: classes.input,
+                    },
+                    inputMode: "numeric"
+                  }}
+                  InputLabelProps={{
+                    style: { color: '#fff' },
+                  }}
+                  onChange={(event) => setAdmins(event.target.value)}
+                />
+              </Box>
+              <div css={styles.buttons}>
+                <Box className={classes.root}>
+                  <Button type="button" color="inherit" onClick={() => setOpenAdmin(false)}>Cancel</Button>
+                </Box>
+                <Box className={classes.root}>
+                  <Button type="submit" color="inherit">Confirm</Button>
+                </Box>
+              </div>
+            </form>
+          </div>
+        </Paper>
+      </Dialog>
+      <Dialog open={openFriends} onClose={() => setOpenFriends(false)} css={styles.icon}>
+        <Paper className={classes.paperstyle}>
+          Add Friends
+          <div css={styles.margin}>
+            <form autoComplete="off" onSubmit={addFriends}>
+              <Box className={classes.root}>
+                <CssTextField
+                  className={classes.margin}
+                  label="Name A, Name B, ..."
+                  type="text"
+                  variant="outlined"
+                  id="custom-css-outlined-input"
+                  color="inherit"
+                  InputProps={{
+                    classes: {
+                      input: classes.input,
+                    },
+                    inputMode: "numeric"
+                  }}
+                  InputLabelProps={{
+                    style: { color: '#fff' },
+                  }}
+                  onChange={(event) => setFriends(event.target.value)}
+                />
+              </Box>
+              <div css={styles.buttons}>
+                <Box className={classes.root}>
+                  <Button type="button" color="inherit" onClick={() => setOpenFriends(false)} >Cancel</Button>
+                </Box>
+                <Box className={classes.root}>
+                  <Button type="submit" color="inherit">Confirm</Button>
+                </Box>
+              </div>
+            </form>
+          </div>
+        </Paper>
+      </Dialog>
+      <Dialog open={openName} onClose={() => setOpenName(false)} css={styles.icon}>
+        <Paper className={classes.paperstyle}>
+          Change channel's name
+          <div css={styles.margin}>
+            <form autoComplete="off" onSubmit={newName}>
+              <Box className={classes.root}>
+                <CssTextField
+                  className={classes.margin}
+                  label="New name"
+                  type="text"
+                  variant="outlined"
+                  id="custom-css-outlined-input"
+                  color="inherit"
+                  InputProps={{
+                    classes: {
+                      input: classes.input,
+                    },
+                    inputMode: "numeric"
+                  }}
+                  InputLabelProps={{
+                    style: { color: '#fff' },
+                  }}
+                  onChange={(event) => setName(event.target.value)}
+                />
+              </Box>
+              <div css={styles.buttons}>
+                <Box className={classes.root}>
+                  <Button type="button" color="inherit" onClick={() => setOpenName(false)}>Cancel</Button>
+                </Box>
+                <Box className={classes.root}>
+                  <Button type="submit" color="inherit">Confirm</Button>
+                </Box>
+              </div>
+            </form>
+          </div>
+        </Paper>
+      </Dialog>
+
+      <Dialog open={openDelete} onClose={() => setOpenDelete(false)} css={styles.icon}>
+        <Paper className={classes.paperstyle}>
+          Delete the channel
+          <div css={styles.margin}>
+            <form autoComplete="off" onSubmit={deleteChannel}>
+              <div css={styles.buttons}>
+                <Box className={classes.root}>
+                  <Button type="button" color="inherit" onClick={() => setOpenDelete(false)}>Cancel</Button>
+                </Box>
+                <Box className={classes.root}>
+                  <Button type="submit" color="inherit">Confirm</Button>
+                </Box>
+              </div>
+            </form>
+          </div>
+        </Paper>
+      </Dialog>
       <div>
         <ul>
           {messages.map((message, i) => {
@@ -435,7 +602,7 @@ export default forwardRef(({
                   </div>
                   <span>{message.author}</span>
                   {' - '}
-                  <span>{dayjs.unix(parseInt(message.creation)/1000000).format('LLLL')}</span>
+                  <span>{dayjs.unix(parseInt(message.creation) / 1000000).format('LLLL')}</span>
                 </p>
                 <div dangerouslySetInnerHTML={{ __html: content }}>
                 </div>
