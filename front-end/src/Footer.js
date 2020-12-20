@@ -1,43 +1,37 @@
 import { useContext } from 'react'
+import React from 'react';
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+// Local
 import Context from './Context'
+// Layout
+import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import GroupIcon from '@material-ui/icons/Group';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import CopyrightIcon from '@material-ui/icons/Copyright';
-import PhoneIcon from '@material-ui/icons/Phone';
-import ContactSupportIcon from '@material-ui/icons/ContactSupport';
+// Icons
 import FacebookIcon from '@material-ui/icons/Facebook';
 import LanguageIcon from '@material-ui/icons/Language';
 import InstagramIcon from '@material-ui/icons/Instagram';
-
-/* const styles = {
-  footer: {
-    /* backgroundColor: '#122A42', 
-    background: theme.palette.primary.main, 
-    flexShrink: 0,
-    overflow: "hidden"
-  },
-} */
+import ContactSupportIcon from '@material-ui/icons/ContactSupport';
+import GroupIcon from '@material-ui/icons/Group';
+import CopyrightIcon from '@material-ui/icons/Copyright';
+import PhoneIcon from '@material-ui/icons/Phone';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
   footer: {
-    background: theme.palette.primary.main, 
+    background: theme.palette.primary.main,
     flexShrink: 0,
     overflow: "hidden",
     borderTop: "1px solid #3A5B7B"
   },
   paper: {
     padding: theme.spacing(0.5),
-    background: theme.palette.primary.main, 
+    background: theme.palette.primary.main,
     textAlign: 'center',
     color: theme.palette.text.secondary,
     color: "white",
@@ -79,7 +73,6 @@ export default () => {
     oauth, setOauth,
     drawerVisible, setDrawerVisible
   } = useContext(Context)
-
   if (oauth) {
     return (
       <footer className={classes.footer}>
@@ -104,7 +97,7 @@ export default () => {
                   <GroupIcon className={classes.wrapIcon}></GroupIcon>
                   Team
                 </Typography>
-                <Divider classes={{root: classes.dividerColor}} variant="middle"></Divider>
+                <Divider classes={{ root: classes.dividerColor }} variant="middle"></Divider>
                 <Typography className={classes.elements}>Victor Quidet | Théophile Tarbé</Typography>
               </Paper>
             </Grid>
@@ -114,7 +107,7 @@ export default () => {
                   <PhoneIcon className={classes.wrapIcon}></PhoneIcon>
                   Contact Us
                 </Typography>
-                <Divider classes={{root: classes.dividerColor}} variant="middle"></Divider>
+                <Divider classes={{ root: classes.dividerColor }} variant="middle"></Divider>
                 <Typography className={classes.elements}>+33 981507172</Typography>
               </Paper>
             </Grid>
@@ -124,7 +117,7 @@ export default () => {
                   <ContactSupportIcon className={classes.wrapIcon}></ContactSupportIcon>
                   Email Us
                 </Typography>
-                <Divider classes={{root: classes.dividerColor}} variant="middle"></Divider>
+                <Divider classes={{ root: classes.dividerColor }} variant="middle"></Divider>
                 <Typography className={classes.elements}>rdk@webtech.com</Typography>
               </Paper>
             </Grid>
@@ -134,7 +127,7 @@ export default () => {
                   <LanguageIcon className={classes.wrapIcon}></LanguageIcon>
                   Follow Us
                 </Typography>
-                <Divider classes={{root: classes.dividerColor}} variant="middle"></Divider>
+                <Divider classes={{ root: classes.dividerColor }} variant="middle"></Divider>
                 <Typography className={classes.elements}>
                   <FacebookIcon style={{ fontSize: "small" }}></FacebookIcon>
                   <InstagramIcon style={{ fontSize: "small" }}></InstagramIcon>

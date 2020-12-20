@@ -1,23 +1,21 @@
+import { useContext, useEffect, useState } from 'react';
+import axios from 'axios';
 import React from 'react';
-import PropTypes from 'prop-types';
+import Avatar from 'react-avatar';
+/** @jsx jsx */
+import { jsx } from '@emotion/core'
+// Layout
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import { Button, Modal, Paper } from '@material-ui/core';
+import { Button, Paper } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
-import axios from 'axios';
 import Typography from '@material-ui/core/Typography';
-import Context from './Context'
-import { useTheme, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import Avatar from 'react-avatar';
-import AvatarReact from '@material-ui/core/Avatar';
+import { useTheme } from '@material-ui/core/styles';
 import { IconButton } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
 import BackupIcon from '@material-ui/icons/Backup';
 import Dialog from '@material-ui/core/Dialog';
-import AvatarUploader from 'react-avatar';
-import { useState } from 'react';
-import ReactDOM from 'react-dom';
+// Local
+import Context from './Context'
 import AvatarPic1 from './pics/1.jpeg'
 import AvatarPic2 from './pics/2.jpg'
 import AvatarPic3 from './pics/3.jpg'
@@ -152,7 +150,6 @@ const helperTextStyles = makeStyles(theme => ({
 function randomColor() {
   let hex = Math.floor(Math.random() * 0xFFFFFF);
   let color = "#" + hex.toString(16);
-
   return color;
 }
 
@@ -162,7 +159,6 @@ export function ChannelModal(props) {
   const helperTestClasses = helperTextStyles();
   const [channelName, setChannelName] = React.useState('')
   const [friendsList, setFriendsList] = React.useState('')
-
   const {
     oauth, setChannels
   } = React.useContext(Context)
@@ -259,7 +255,6 @@ export function ChannelModal(props) {
   );
 };
 
-
 export function ManageAccount(props) {
   const classes = useStyles();
   const styles = useStylesBis(useTheme())
@@ -270,18 +265,15 @@ export function ManageAccount(props) {
   const {
     oauth, setChannels
   } = React.useContext(Context);
-
   const handleClose = () => {
     setAnchorEl(null);
   };
-
   const handleClickOpenChooseAvatar = () => {
     setChooseAvatar(true);
   };
   const handleClickCloseChooseAvatar = () => {
     setChooseAvatar(false);
   };
-
 
   return (
     <Paper className={classes.paperstyleProfile}>
@@ -355,7 +347,6 @@ export function ManageAvatar(props) {
   const {
     oauth, setChannels
   } = React.useContext(Context);
-
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -366,30 +357,29 @@ export function ManageAvatar(props) {
     setChooseAvatar(false);
   };
 
-
   return (
     <Paper className={classes.paperstyleProfile}>
       <Typography className={classes.title}>Choose an avatar</Typography>
       <div css={styles.avatars}>
         <Box>
-        <Avatar size="60" name="A" src={AvatarPic1} round={true} style={{ margin: 15}}/>
-        <Button color="inherit" >Select</Button>
+          <Avatar size="60" name="A" src={AvatarPic1} round={true} style={{ margin: 15 }} />
+          <Button color="inherit" >Select</Button>
         </Box>
         <Box>
-        <Avatar size="60" name="B" src={AvatarPic2} round={true} style={{ margin: 15}}/>
-        <Button color="inherit">Select</Button>
+          <Avatar size="60" name="B" src={AvatarPic2} round={true} style={{ margin: 15 }} />
+          <Button color="inherit">Select</Button>
         </Box>
         <Box>
-        <Avatar size="60" name="A" src={AvatarPic3} round={true} style={{ margin: 15}}/>
-        <Button color="inherit">Select</Button>
+          <Avatar size="60" name="A" src={AvatarPic3} round={true} style={{ margin: 15 }} />
+          <Button color="inherit">Select</Button>
         </Box>
         <Box>
-        <Avatar size="60" name="A" src={AvatarPic4} round={true} style={{ margin: 15}}/>
-        <Button color="inherit">Select</Button>
+          <Avatar size="60" name="A" src={AvatarPic4} round={true} style={{ margin: 15 }} />
+          <Button color="inherit">Select</Button>
         </Box>
         <Box>
-        <Avatar size="60" name="A" src={AvatarPic5} round={true} style={{ margin: 15}}/>
-        <Button color="inherit">Select</Button>
+          <Avatar size="60" name="A" src={AvatarPic5} round={true} style={{ margin: 15 }} />
+          <Button color="inherit">Select</Button>
         </Box>
       </div>
     </Paper>

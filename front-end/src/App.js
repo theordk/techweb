@@ -1,5 +1,4 @@
 import { useContext, useState } from 'react'
-import { green } from "@material-ui/core/colors";
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 // Local
@@ -18,11 +17,6 @@ import {
   useLocation
 } from "react-router-dom"
 
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import { red } from '@material-ui/core/colors'
-
-
-
 const styles = {
   root: {
     boxSizing: 'border-box',
@@ -33,14 +27,14 @@ const styles = {
 
 export default () => {
   const location = useLocation()
-  const {oauth} = useContext(Context)
+  const { oauth } = useContext(Context)
   const [drawerMobileVisible, setDrawerMobileVisible] = useState(false)
   const drawerToggleListener = () => {
     setDrawerMobileVisible(!drawerMobileVisible)
   }
   return (
     <div className="App" css={styles.root}>
-      <Header drawerToggleListener={drawerToggleListener}/>
+      <Header drawerToggleListener={drawerToggleListener} />
       <Switch>
         <Route exact path="/">
           {
@@ -52,8 +46,8 @@ export default () => {
                 }}
               />
             ) : (
-              <Login />
-            )
+                <Login />
+              )
           }
         </Route>
         <Route path="/channels">
@@ -61,13 +55,13 @@ export default () => {
             oauth ? (
               <Main />
             ) : (
-              <Redirect
-                to={{
-                  pathname: "/",
-                  state: { from: location }
-                }}
-              />
-            )
+                <Redirect
+                  to={{
+                    pathname: "/",
+                    state: { from: location }
+                  }}
+                />
+              )
           }
         </Route>
         <Route path="/Oups">

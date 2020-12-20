@@ -1,24 +1,17 @@
 import { useContext, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom'
 import axios from 'axios';
 //import React from 'react';
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-// Layout
-import Link from '@material-ui/core/Link'
-import Paper from '@material-ui/core/Paper';
-import MenuItem from '@material-ui/core/MenuItem';
-import MenuList from '@material-ui/core/MenuList';
-import { makeStyles } from '@material-ui/core/styles';
-import InputBase from "@material-ui/core/InputBase";
-import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import SearchIcon from "@material-ui/icons/Search";
-
-import { useTheme, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 // Local
 import Context from './Context'
-import { useHistory } from 'react-router-dom'
+// Layout
+import { useTheme, makeStyles, Divider, InputBase, MenuList, MenuItem, Paper } from '@material-ui/core';
+// Icon
+import IconButton from "@material-ui/core/IconButton";
+import SearchIcon from "@material-ui/icons/Search";
+
 
 const styles = {
   root: {
@@ -84,7 +77,6 @@ export default () => {
   } = useContext(Context)
   const history = useHistory();
   const [research, setResearch] = useState('')
-
 
   useEffect(() => {
     const fetch = async () => {

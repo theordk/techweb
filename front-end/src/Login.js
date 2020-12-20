@@ -3,35 +3,17 @@ import { useCookies } from 'react-cookie';
 import crypto from 'crypto'
 import qs from 'qs'
 import axios from 'axios'
-
+import React from 'react';
+import { useHistory, BrowserRouter as Router, Route } from "react-router-dom";
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-// Layout
-import { useTheme, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import React from 'react';
-import Link from '@material-ui/core/Link'
-import { TextField, Grid, Button, Paper, FormControlLabel, Checkbox, InputBase } from '@material-ui/core';
-import {
-  withStyles,
-} from '@material-ui/core/styles';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import { makeStyles } from '@material-ui/core/styles';
-import VpnKeyIcon from '@material-ui/icons/VpnKey';
-import { Face, Fingerprint, SportsRugbySharp } from '@material-ui/icons'
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from "react-router-dom";
 // Local
 import Context from './Context'
-
-import {
-  useHistory
-} from "react-router-dom";
-import { red } from '@material-ui/core/colors';
-import { HoverMode } from 'react-particles-js';
+// Layout
+import { useTheme, makeStyles, withStyles, TextField, Grid, Button, Paper, FormControlLabel, Checkbox, Link } from '@material-ui/core';
+// Icons
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import { Fingerprint } from '@material-ui/icons'
 
 const base64URLEncode = (str) => {
   return str.toString('base64')
@@ -39,18 +21,13 @@ const base64URLEncode = (str) => {
     .replace(/\//g, '_')
     .replace(/=/g, '');
 }
-
 const sha256 = (buffer) => {
   return crypto
     .createHash('sha256')
     .update(buffer)
     .digest()
 }
-
 const useStylesBis = makeStyles((theme) => ({
-  /*   root: {
-      color: "white"
-    }, */
   root: {
     '& label.Mui-focused': {
       color: 'white',
@@ -72,7 +49,6 @@ const useStylesBis = makeStyles((theme) => ({
   },
   paperstyle: {
     background: theme.palette.primary.main,
-    /* backgroundColor: "#122A42",  */
     textAlign: "center",
     paddingTop: '20px',
     fontSize: '150%',
@@ -188,7 +164,6 @@ const Redirect = ({
     ].join('')
     window.location = url
   }
-
   return (
     <div css={styles.root}>
       <Router>
@@ -200,7 +175,6 @@ const Redirect = ({
                 <AccountCircle />
               </Grid>
               <Grid item>
-                {/* <TextField id="email" label="Email" type="email" required /> */}
                 <CssTextField
                   className={stylesBis.root}
                   id="email"
@@ -223,7 +197,6 @@ const Redirect = ({
                 <Fingerprint />
               </Grid>
               <Grid item>
-                {/* <TextField id="password" label="Password" type="password" required /> */}
                 <CssTextField
                   className={stylesBis.root}
                   id="password"
@@ -284,7 +257,6 @@ const Tokens = ({
     </div>
   )
 }
-
 export default ({
   onUser
 }) => {

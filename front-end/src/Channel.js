@@ -1,4 +1,5 @@
 import {useContext, useRef, useState} from 'react';
+import { useHistory, useParams } from 'react-router-dom'
 import axios from 'axios';
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
@@ -10,7 +11,6 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import Form from './channel/Form'
 import List from './channel/List'
 import Context from './Context'
-import { useHistory, useParams } from 'react-router-dom'
 
 const useStyles = (theme) => ({
   root: {
@@ -87,7 +87,6 @@ export default () => {
       >
         <ArrowDropDownIcon />
       </Fab>
-
     </div>
   );
 }

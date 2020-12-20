@@ -1,31 +1,21 @@
 import { useEffect } from 'react';
+import axios from 'axios';
+import { useHistory } from 'react-router-dom'
+import React from 'react';
+import { useContext } from 'react'
+import { Particles } from 'react-particles-js';
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-// Layout
-import { duration, useTheme } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+// Local
+import { ChannelModal, ManageAccount } from './Dialogs1.js';
 import Context from './Context'
-import Typography from '@material-ui/core/Typography';
+import users from './icons/users.png';
+import message from './icons/message.png';
 import { ReactComponent as ChannelIcon } from './icons/channel.svg';
 import { ReactComponent as FriendsIcon } from './icons/friends.svg';
 import { ReactComponent as SettingsIcon } from './icons/settings.svg';
-import { makeStyles } from '@material-ui/core/styles';
-import users from './icons/users.png';
-import message from './icons/message.png';
-import { Particles } from 'react-particles-js';
-import React from 'react';
-import { useContext } from 'react'
-import Dialog from '@material-ui/core/Dialog';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import Divider from '@material-ui/core/Divider';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Avatar from '@material-ui/core/Avatar';
-import axios from 'axios';
-import { useHistory } from 'react-router-dom'
-import { ChannelModal, ManageAccount } from './Dialogs1.js';
-/* import Bail from './Latest' */
+// Layout
+import { useTheme, makeStyles, Button, Typography, Dialog, List, ListItem, Divider, ListItemText, ListItemAvatar, Avatar } from '@material-ui/core';
 
 const particuleParams = {
   background: {
@@ -159,8 +149,6 @@ const useStyles = (theme) => ({
   }
 })
 
-
-
 export default () => {
   const {
     oauth
@@ -172,7 +160,6 @@ export default () => {
   const [openFriends, setOpenFriends] = React.useState(false)
   const [openSettings, setOpenSettings] = React.useState(false)
   const [latestMessages, setLastMessages] = React.useState([])
-
 
   const handleClickOpenChannel = () => {
     setOpenChannel(true);
@@ -193,14 +180,12 @@ export default () => {
     setOpenSettings(false);
   };
 
-
   useEffect(() => {
     async function fetchLatest() {
       var channelsNames = []
       var channelsIds = []
       const lastMessageContent = []
       const lastMessageAuthor = []
-
       const { data: channels } = await axios.get('http://localhost:3001/channels', {
         headers: {
           'Authorization': `Bearer ${oauth.access_token}`
@@ -214,28 +199,26 @@ export default () => {
         channelsIds.push(element.id)
       });
 
-      for(let y =0; y < channelsIds.length; y++) {
+      for (let y = 0; y < channelsIds.length; y++) {
         const { data: message } = await axios.request(`http://localhost:3001/channels/${channelsIds[y]}/messages`)
         if (message.length === 0) {
           lastMessageContent.push(" - No messages yet")
           lastMessageAuthor.push("Nobody talked yet")
         }
-        else{
-          for(let i = 0; i < message.length; i++) {
+        else {
+          for (let i = 0; i < message.length; i++) {
             if (i === message.length - 1) {
               if (message[i].content.length >= 47) lastMessageContent.push(" - " + message[i].content.substring(0, 47) + "...")
               else lastMessageContent.push(" - " + message[i].content)
               let auth = message[i].author.split('@')[0]
-              if (auth.legnth >= 16) lastMessageAuthor.push(auth.substring(0, 13) + "...")           
+              if (auth.legnth >= 16) lastMessageAuthor.push(auth.substring(0, 13) + "...")
               else lastMessageAuthor.push(auth)
             }
           }
-        }       
+        }
       }
-
       const finalArray = []
-
-      for(let i = 0; i<channelsIds.length ; i++){    
+      for (let i = 0; i < channelsIds.length; i++) {
         var message = {
           channelId: channelsIds[i],
           channelName: channelsNames[i],
@@ -249,11 +232,7 @@ export default () => {
     fetchLatest();
   }, []);
 
-
-
-
   return (
-
     <div css={styles.root}>
       <Particles css={styles.particles} params={particuleParams.background} />
       <div className={styles2.container}>
@@ -299,40 +278,39 @@ export default () => {
             Latest Messages
         </Typography>
           {latestMessages.map((message, i) => {
-            return ( 
+            return (
               <div>
-              <ListItem key={i} alignItems="flex-start" 
-              onClick={(e) => {
-                e.preventDefault()
-                history.push(`/channels/${message.channelId}`)
-              }}>
-                <ListItemAvatar>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-                </ListItemAvatar>
-                <ListItemText key={i}
-                  primary={message.channelName}
-                  secondary={
-                    <React.Fragment>
-                      <Typography
-                        component="span"
-                        variant="body2"
-                        className={styles2.inline}
-                        color="textPrimary"
-                      >
-                        {message.author}
-                      </Typography>
-                      {message.content}
-                    </React.Fragment>
-                  }
-                />
-              </ListItem>
-             <Divider variant="inset" component="li" />
-            </div>
+                <ListItem key={i} alignItems="flex-start"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    history.push(`/channels/${message.channelId}`)
+                  }}>
+                  <ListItemAvatar>
+                    <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                  </ListItemAvatar>
+                  <ListItemText key={i}
+                    primary={message.channelName}
+                    secondary={
+                      <React.Fragment>
+                        <Typography
+                          component="span"
+                          variant="body2"
+                          className={styles2.inline}
+                          color="textPrimary"
+                        >
+                          {message.author}
+                        </Typography>
+                        {message.content}
+                      </React.Fragment>
+                    }
+                  />
+                </ListItem>
+                <Divider variant="inset" component="li" />
+              </div>
             )
-                })}
+          })}
         </List>
       </div>
     </div>
-
   );
 }

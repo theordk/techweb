@@ -1,47 +1,32 @@
 import { forwardRef, useImperativeHandle, useLayoutEffect, useRef, useState, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
+import axios from 'axios';
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
+// Local
+import Context from './../Context'
 // Layout
-import { useTheme } from '@material-ui/core/styles';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import { Tooltip, Typography } from '@material-ui/core';
+import { makeStyles, withStyles, useTheme } from '@material-ui/core/styles';
+import { Tooltip, TextField, Button, Paper, Box, Dialog } from '@material-ui/core';
+// import Icon from "@material-ui/core/Icon"
 import { IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import { Button, Paper } from '@material-ui/core';
-import Box from '@material-ui/core/Box';
+import GroupAddIcon from '@material-ui/icons/GroupAdd';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 // Markdown
 import unified from 'unified'
 import markdown from 'remark-parse'
 import remark2rehype from 'remark-rehype'
 import html from 'rehype-stringify'
-import Divider from '@material-ui/core/Divider';
 // Time
 import dayjs from 'dayjs'
 import calendar from 'dayjs/plugin/calendar'
-import updateLocale from 'dayjs/plugin/updateLocale'
-/* import LocalizedFormat from 'dayjs/plugin/LocalizedFormat' */
-import axios from 'axios';
-import Context from './../Context'
-import Dialog from '@material-ui/core/Dialog';
-import GroupAddIcon from '@material-ui/icons/GroupAdd';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
-
 var LocalizedFormat = require('dayjs/plugin/localizedFormat')
 dayjs.extend(LocalizedFormat)
-
 dayjs.extend(calendar)
-/* dayjs.extend(updateLocale)
-dayjs.updateLocale('en', {
-  calendar: {
-    sameElse: 'DD/MM/YYYY hh:mm A'
-  }
-}) */
 
-
-const useStylesBis = makeStyles((theme) => ({
+const useStylesUI = makeStyles((theme) => ({
   root: {
     alignContent: 'center',
     alignItems: 'center',
@@ -106,7 +91,6 @@ const useStyles = (theme) => ({
   },
   title: {
     marginLeft: '10px',
-    /*  position: "fixed", */
   },
   icons: {
     display: "flex",
@@ -161,6 +145,8 @@ export default forwardRef(({
   onScrollDown,
   fetchMessages
 }, ref) => {
+  const styles = useStyles(useTheme())
+  const classes = useStylesUI();
   const history = useHistory()
   const { oauth, setChannels } = useContext(Context)
   const [newMessage, setNewMessage] = useState('')
@@ -170,18 +156,42 @@ export default forwardRef(({
   const [chanUsers, setChanUsers] = useState('')
   const [friends, setFriends] = useState('')
   const [openFriends, setOpenFriends] = useState(false)
-
   const [name, setName] = useState('')
   const [openName, setOpenName] = useState(false)
-
   const [openDelete, setOpenDelete] = useState(false)
+
+  // Expose the `scroll` action
+  useImperativeHandle(ref, () => ({
+    scroll: scroll
+  }));
+  const rootEl = useRef(null)
+  const scrollEl = useRef(null)
+  const scroll = () => {
+    scrollEl.current.scrollIntoView()
+  }
+  // See https://dev.to/n8tb1t/tracking-scroll-position-with-react-hooks-3bbj
+  const throttleTimeout = useRef(null) // react-hooks/exhaustive-deps
+  useLayoutEffect(() => {
+    const rootNode = rootEl.current // react-hooks/exhaustive-deps
+    const handleScroll = () => {
+      if (throttleTimeout.current === null) {
+        throttleTimeout.current = setTimeout(() => {
+          throttleTimeout.current = null
+          const { scrollTop, offsetHeight, scrollHeight } = rootNode // react-hooks/exhaustive-deps
+          onScrollDown(scrollTop + offsetHeight < scrollHeight)
+        }, 200)
+      }
+    }
+    handleScroll()
+    rootNode.addEventListener('scroll', handleScroll)
+    return () => rootNode.removeEventListener('scroll', handleScroll)
+  })
 
   const addAdmins = async (e) => {
     e.preventDefault()
     let listWithoutSpaces = admins.replace(/ /g, '')
     const adminsList = listWithoutSpaces.split(',')
     let finalAdminsList = adminsList.concat(channel.chanAdmin)
-
     await axios.put(`http://localhost:3001/channels/${channel.id}`, {
       name: `${channel.name}`,
       list: `${channel.list}`,
@@ -191,10 +201,8 @@ export default forwardRef(({
         'Authorization': `Bearer ${oauth.access_token}`
       },
     })
-
     setOpenAdmin(false)
   }
-
 
   const fetch = async () => {
     try {
@@ -213,7 +221,6 @@ export default forwardRef(({
     }
   }
 
-
   const addFriends = async (e) => {
     e.preventDefault()
     let listWithoutSpaces = friends.replace(/ /g, '')
@@ -229,7 +236,6 @@ export default forwardRef(({
         'Authorization': `Bearer ${oauth.access_token}`
       },
     })
-
     fetch()
     let chanU = listWithoutSpaces + "," + channel.list
     chanU = chanU.replace(/,/g, ' - ')
@@ -239,7 +245,6 @@ export default forwardRef(({
 
   const newName = async (e) => {
     e.preventDefault()
-
     await axios.put(`http://localhost:3001/channels/${channel.id}`, {
       name: `${name}`,
       list: `${channel.list}`,
@@ -249,16 +254,12 @@ export default forwardRef(({
         'Authorization': `Bearer ${oauth.access_token}`
       },
     })
-
     setOpenName(false)
     fetch()
-
   }
-
 
   const deleteChannel = async (e) => {
     e.preventDefault()
-
     await axios.delete(`http://localhost:3001/channels/${channel.id}`, {
       headers: {
         'Authorization': `Bearer ${oauth.access_token}`
@@ -266,12 +267,7 @@ export default forwardRef(({
     })
     fetch()
     history.push('/channels')
-
-
   }
-
-
-
 
   const handleClickOpenUpdate = (i) => {
     setOpenUpdate(prev => Boolean(!prev[i]) ? { ...prev, [i]: true } : { ...prev, [i]: false })
@@ -310,39 +306,7 @@ export default forwardRef(({
     fetchMessages()
   }
 
-  const styles = useStyles(useTheme())
-  const classes = useStylesBis();
-  // Expose the `scroll` action
-  useImperativeHandle(ref, () => ({
-    scroll: scroll
-  }));
-  const rootEl = useRef(null)
-  const scrollEl = useRef(null)
-  const scroll = () => {
-    scrollEl.current.scrollIntoView()
-  }
-  // See https://dev.to/n8tb1t/tracking-scroll-position-with-react-hooks-3bbj
-  const throttleTimeout = useRef(null) // react-hooks/exhaustive-deps
-  useLayoutEffect(() => {
-    const rootNode = rootEl.current // react-hooks/exhaustive-deps
-    const handleScroll = () => {
-      if (throttleTimeout.current === null) {
-        throttleTimeout.current = setTimeout(() => {
-          throttleTimeout.current = null
-          const { scrollTop, offsetHeight, scrollHeight } = rootNode // react-hooks/exhaustive-deps
-          onScrollDown(scrollTop + offsetHeight < scrollHeight)
-        }, 200)
-      }
-    }
-    handleScroll()
-    rootNode.addEventListener('scroll', handleScroll)
-
-    return () => rootNode.removeEventListener('scroll', handleScroll)
-  })
-
-
   return (
-    
     <div css={styles.root} ref={rootEl}>
       {channel.chanAdmin.includes(`${oauth.email}`) ?
         <div>
@@ -519,7 +483,6 @@ export default forwardRef(({
           </div>
         </Paper>
       </Dialog>
-
       <Dialog open={openDelete} onClose={() => setOpenDelete(false)} css={styles.icon}>
         <Paper className={classes.paperstyle}>
           Delete the channel
@@ -548,84 +511,83 @@ export default forwardRef(({
             return (
               <li key={i} css={styles.message}  >
                 <Dialog open={openUpdate[i]} onClose={(i) => handleCloseUpdate} css={styles.icon}>
-                      <Paper className={classes.paperstyle}>
-                        Modify your message
+                  <Paper className={classes.paperstyle}>
+                    Modify your message
                       <div css={styles.margin}>
-                          <form autoComplete="off" onSubmit={() => handleSubmit(message.creation, message.channelId)}>
-                            <Box className={classes.root}>
-                              <CssTextField
-                                className={classes.margin}
-                                label="New Message"
-                                variant="outlined"
-                                id="custom-css-outlined-input"
-                                color="inherit"
-                                InputProps={{
-                                  classes: {
-                                    input: classes.input,
-                                  },
-                                  inputMode: "numeric"
-                                }}
-                                InputLabelProps={{
-                                  style: { color: '#fff' },
-                                }}
-                                onChange={(event) => setNewMessage(event.target.value)}
-                              />
-                            </Box>
-                            <div css={styles.buttons}>
-                              <Box className={classes.root}>
-                                <Button type="button" color="inherit" onClick={handleCloseUpdate}>Cancel</Button>
-                              </Box>
-                              <Box className={classes.root}>
-                                <Button type="submit" color="inherit">Update Message</Button>
-                              </Box>
-                            </div>
-                          </form>
+                      <form autoComplete="off" onSubmit={() => handleSubmit(message.creation, message.channelId)}>
+                        <Box className={classes.root}>
+                          <CssTextField
+                            className={classes.margin}
+                            label="New Message"
+                            variant="outlined"
+                            id="custom-css-outlined-input"
+                            color="inherit"
+                            InputProps={{
+                              classes: {
+                                input: classes.input,
+                              },
+                              inputMode: "numeric"
+                            }}
+                            InputLabelProps={{
+                              style: { color: '#fff' },
+                            }}
+                            onChange={(event) => setNewMessage(event.target.value)}
+                          />
+                        </Box>
+                        <div css={styles.buttons}>
+                          <Box className={classes.root}>
+                            <Button type="button" color="inherit" onClick={handleCloseUpdate}>Cancel</Button>
+                          </Box>
+                          <Box className={classes.root}>
+                            <Button type="submit" color="inherit">Update Message</Button>
+                          </Box>
                         </div>
-                      </Paper>
-                    </Dialog>
+                      </form>
+                    </div>
+                  </Paper>
+                </Dialog>
                 {`${oauth.email}` === message.author ?
                   <div>
                     <div css={styles.icons} >
-                    <Tooltip title="Delete">
-                      <IconButton
-                        aria-label="delete"
-                        color="inherit"
-                        onClick={() => deleteMessage(message.creation, message.channelId)}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Edit">
-                      <IconButton
-                        aria-label="edit"
-                        color="inherit"
-                        onClick={() => handleClickOpenUpdate(i)}
-                      >
-                        <EditIcon />
-                      </IconButton>
-                    </Tooltip>
-                  </div>
+                      <Tooltip title="Delete">
+                        <IconButton
+                          aria-label="delete"
+                          color="inherit"
+                          onClick={() => deleteMessage(message.creation, message.channelId)}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Edit">
+                        <IconButton
+                          aria-label="edit"
+                          color="inherit"
+                          onClick={() => handleClickOpenUpdate(i)}
+                        >
+                          <EditIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </div>
                   </div>
                   : null
                 }
-                 {channel.chanAdmin.includes(`${oauth.email}`) && message.author !== `${oauth.email}` ?
-                 
+                {channel.chanAdmin.includes(`${oauth.email}`) && message.author !== `${oauth.email}` ?
                   <div>
                     <div css={styles.icons} >
-                    <Tooltip title="Delete">
-                      <IconButton
-                        aria-label="delete"
-                        color="inherit"
-                        onClick={() => deleteMessage(message.creation, message.channelId)}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    </Tooltip>
-                  </div>
+                      <Tooltip title="Delete">
+                        <IconButton
+                          aria-label="delete"
+                          color="inherit"
+                          onClick={() => deleteMessage(message.creation, message.channelId)}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </div>
                   </div>
                   : null
-                } 
-                <p>               
+                }
+                <p>
                   <span>{message.author}</span>
                   {' - '}
                   <span>{dayjs.unix(parseInt(message.creation) / 1000000).format('LLLL')}</span>
@@ -639,7 +601,5 @@ export default forwardRef(({
         <div ref={scrollEl} />
       </div>
     </div>
-
-
   )
 })

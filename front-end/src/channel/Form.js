@@ -5,14 +5,14 @@ import axios from 'axios';
 import { jsx } from '@emotion/core'
 // Layout
 import Button from "@material-ui/core/Button"
-// import Icon from "@material-ui/core/Icon"
-import SendIcon from "@material-ui/icons/Send";
 import TextField from '@material-ui/core/TextField';
 import { useTheme } from '@material-ui/core/styles';
 import {
   withStyles,
   makeStyles
 } from '@material-ui/core/styles';
+// import Icon from "@material-ui/core/Icon"
+import SendIcon from "@material-ui/icons/Send";
 
 const useStyles = (theme) => {
   // See https://github.com/mui-org/material-ui/blob/next/packages/material-ui/src/OutlinedInput/OutlinedInput.js

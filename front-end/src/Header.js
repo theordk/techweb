@@ -1,34 +1,30 @@
 import { useContext } from 'react'
+import { Switch as SwitchRouter, useHistory } from 'react-router-dom';
+import React from 'react';
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
+// Local
+import { ManageAccount, ChannelModal } from './Dialogs1';
+import Context from './Context'
 // Layout
 import { createMuiTheme, useTheme } from '@material-ui/core/styles';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import Context from './Context'
-import { Switch as SwitchRouter, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import React from 'react';
 import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
 import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import MenuList from '@material-ui/core/MenuList';
-import Link from '@material-ui/core/Link'
-import HomeIcon from '@material-ui/icons/Home';
-import { Profile } from './Dialogs1';
 import Dialog from '@material-ui/core/Dialog';
-import { useRef, useState } from 'react';
 import { Switch } from '@material-ui/core';
-import Avatar from 'react-avatar';
-import { ManageAccount, ChannelModal } from './Dialogs1';
+// Icons
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import AccountCircle from "@material-ui/icons/AccountCircle";
 
 const useStylesBis = makeStyles((theme) => ({
   root: {
