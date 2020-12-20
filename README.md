@@ -112,22 +112,22 @@ It is the main page of the App with :
   - Main part : animated background - icons for creating new channels and accessing parameters - list of the all recent messages of the user 
   - The footer : copyright of the App
 * New channel creation (6pts) <br/>
-1- The user can create channels by 2 ways :
+- The user can create channels by 2 ways :
   - the main icon "add channels"
   - the dropdown menu in the header <br/><br/>
-2- On the form, the user can :
+- On the form, the user can :
   - choose the name of the channel
   - chosse 1 OR multiple users to add on it (by emails) <br/><br/>
-3- The user who created the channel is automatically an Admin of the channel <br/><br/>
-4- Only the name of the user(s) of the channel appear on the top of the chat <br/><br/>
-5- Once created, the channel is registered in the database and accessible at anytime fot its users by :
+- The user who created the channel is automatically an Admin of the channel <br/><br/>
+- Only the name of the user(s) of the channel appear on the top of the chat <br/><br/>
+- Once created, the channel is registered in the database and accessible at anytime fot its users by :
   - The list of channels in the drawer
   - The list of last messages on the welcome page
 * Channel membership and access (4pts) <br/>
-1- A user only have access to the channels that :
+- A user only have access to the channels that :
   - he created himself
   - he has been invited in <br/><br/>
-2- Once on the channel, the user have mutliple options over channels/messages depending on his status (Admin/Simple user)
+- Once on the channel, the user have mutliple options over channels/messages depending on his status (Admin/Simple user)
 * Ressource access control (4pts) <br/>
 We implemented a 2 rôles access for members wich doesn't give the same rights on a channel : <br/>
   - The Admin can :
@@ -142,8 +142,8 @@ We implemented a 2 rôles access for members wich doesn't give the same rights o
     - Delete and modify its own messages only
 * Invite users to channels (6pts) <br/>
 There are multiple ways to invite users in a channel :
-1- At the moment of creating the channel with the form (by emails)
-2- Once on the channel, the admin adn the simple user can add other users
+- At the moment of creating the channel with the form (by emails)
+- Once on the channel, the admin adn the simple user can add other users
 * Message modification (2pts) <br/>
 A user (either Admin or simple user) can only modify its own messages by clicking on the icon "modify" in front of each message
 * Message removal (2pts) <br/>
@@ -167,10 +167,10 @@ This functionality wasn't working perfectly so we didn't push it in our final ve
 ## Bonus
 
 We added some bonus tasks to our App for a better utilization (and not by priority; only because it was easy and quick for us to implement them during the project): <br/>
-1- The Search Bar is working inside the Drawer in order to quickly find a channel <br/>
-2- Admins of a channel can : <br/>
+- The Search Bar is working inside the Drawer in order to quickly find a channel <br/>
+- Admins of a channel can : <br/>
   - Rename the channel
-  - Delete the channel (and all messages within)
-3- The "Recent Messages" in the Welcome Page : <br/>
+  - Delete the channel (and all messages within) <br/>
+- The "Recent Messages" in the Welcome Page : <br/>
   - automatically presents all recents messages on every channels of the user
   - by clicking on any message, it redirects the user on the dedicated channel
