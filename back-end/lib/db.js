@@ -8,7 +8,6 @@ const db = level(__dirname + '/../db')
 module.exports = {
   channels: {
     create: async (channel) => {
-      console.log(__dirname)
       if(!channel.name) throw Error('Invalid channel')
       const id = uuid()
       await db.put(`channels:${id}`, JSON.stringify(channel))
@@ -42,15 +41,15 @@ module.exports = {
         })
       })
     },
-    update: (id, channel) => {
-      const original = store.channels[id]
-      if(!original) throw Error('Unregistered channel id')
-      store.channels[id] = merge(original, channel)
+    update: async(id, channel) => {
+      console.log(channel)
+      await db.put(`channels:${id}`, JSON.stringify(channel))
+      return merge(channel, {id: id})
     },
-    delete: (id, channel) => {
-      const original = store.channels[id]
-      if(!original) throw Error('Unregistered channel id')
-      delete store.channels[id]
+    delete: async(id) => {
+      await db.del(`channels:${id}`, (error) => {
+        if(error) console.log(error)
+      })
     }
   },
   messages: {
@@ -89,7 +88,7 @@ module.exports = {
     },
     delete: async (channelId, creation) => {
       await db.del(`messages:${channelId}:${creation}`, (error) => {
-        if(error) console.log("testes")
+        if(error) console.log(error)
       })
     },
   },

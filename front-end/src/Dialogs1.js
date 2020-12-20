@@ -137,10 +137,11 @@ export function ChannelModal(props) {
   const helperTestClasses = helperTextStyles();
   const [channelName, setChannelName] = React.useState('')
   const [friendsList, setFriendsList] = React.useState('')
+  
   const {
     oauth, setChannels
   } = React.useContext(Context)
-
+  const chanAdmin = [`${oauth.email}`]
   const handleSubmit = async (e) => {
     let listWithoutSpaces = friendsList.replace(/ /g, '')
     const finalFriendsList = listWithoutSpaces.split(',')
@@ -150,14 +151,13 @@ export function ChannelModal(props) {
       e.preventDefault()
       await axios.post(`http://localhost:3001/channels/`, {
         name: `${channelName}`,
-        list: `${finalFriendsList}`, chanAdmin: `${oauth.email}`
+        list: `${finalFriendsList}`, chanAdmin: `${chanAdmin}`
       }, {
         headers: {
           'Authorization': `Bearer ${oauth.access_token}`
         },
       }
       ).then(function (response) {
-        console.log(response);
       })
       try {
         const { data: channels } = await axios.get('http://localhost:3001/channels', {
@@ -257,12 +257,6 @@ export function Profile(props) {
     setOpen(false);
   };
 
-  const handleOk = e => {
-    console.log(e);
-    this.setState({
-      visible: false,
-    });
-  }
 
   return (
     <Paper className={classes.paperstyleProfile}>

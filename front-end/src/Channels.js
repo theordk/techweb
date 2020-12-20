@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 //import React from 'react';
 /** @jsx jsx */
@@ -47,6 +47,9 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0.1),
     display: "flex",
     background: theme.palette.secondary.light,
+    '& button': {
+      'display': 'none'
+    },
     '&:hover': {
       background: theme.palette.secondary.dark,
       '& button': {
@@ -89,6 +92,8 @@ export default () => {
     classes = useStyles()
   } = useContext(Context)
   const history = useHistory();
+
+
   useEffect(() => {
     const fetch = async () => {
       try {
@@ -133,7 +138,7 @@ export default () => {
             onClick={(e) => {
               e.preventDefault()
               history.push(`/channels/${channel.id}`)
-            }}>
+            }}>         
             <MenuList>
               <MenuItem>
                 <div css={styles.channel}>
