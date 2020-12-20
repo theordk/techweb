@@ -2,22 +2,29 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import { Button, Paper } from '@material-ui/core';
+import { Button, Modal, Paper } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import axios from 'axios';
 import Typography from '@material-ui/core/Typography';
 import Context from './Context'
 import { useTheme, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import Avatar from 'react-avatar';
+import AvatarReact from '@material-ui/core/Avatar';
 import { IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import BackupIcon from '@material-ui/icons/Backup';
+import Dialog from '@material-ui/core/Dialog';
 import AvatarUploader from 'react-avatar';
-
-import Modal from '@material-ui/core/Modal';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
+import { useState } from 'react';
+import ReactDOM from 'react-dom';
+/* import 'antd/dist/antd.css'; */
+import { Avatar as AvatarAntd, Button as ButtonAntd } from 'antd';
+import AvatarPic1 from './pics/1.jpeg'
+import AvatarPic2 from './pics/2.jpg'
+import AvatarPic3 from './pics/3.jpg'
+import AvatarPic4 from './pics/4.jpg'
+import AvatarPic5 from './pics/5.jpg'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -103,6 +110,9 @@ const useStylesBis = (theme) => ({
     marginRight: '50px',
     marginBottom: '20px',
     marginTop: '20px',
+  },
+  avatars: {
+    margin: 5
   }
 })
 
@@ -154,7 +164,7 @@ export function ChannelModal(props) {
   const helperTestClasses = helperTextStyles();
   const [channelName, setChannelName] = React.useState('')
   const [friendsList, setFriendsList] = React.useState('')
-  
+
   const {
     oauth, setChannels
   } = React.useContext(Context)
@@ -258,6 +268,7 @@ export function ManageAccount(props) {
   const [open, setOpen] = React.useState(false);
   const [auth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [chooseAvatar, setChooseAvatar] = React.useState(false);
   const {
     oauth, setChannels
   } = React.useContext(Context);
@@ -266,18 +277,17 @@ export function ManageAccount(props) {
     setAnchorEl(null);
   };
 
-  const handleOpenModal = () => {
-    setOpen(true);
+  const handleClickOpenChooseAvatar = () => {
+    setChooseAvatar(true);
   };
-
-  const handleCloseModal = () => {
-    setOpen(false);
+  const handleClickCloseChooseAvatar = () => {
+    setChooseAvatar(false);
   };
 
 
   return (
     <Paper className={classes.paperstyleProfile}>
-      <Typography className={classes.title}>My Profile</Typography>
+      <Typography className={classes.title}>Manage Account</Typography>
       <div css={styles.margin}>
         <form className={classes.container} autoComplete="off" /* onSubmit={handleSubmit} */>
           {auth && (
@@ -298,29 +308,18 @@ export function ManageAccount(props) {
                       {
                   oauth ?
                     <span>
-                      <input
-                        accept="image/*"
-                        className={classes.input}
-                        id="contained-button-file"
-                        multiple
-                        type="file"
+                      <Avatar
+                        email={oauth.email}
+                        size="80"
+                        round={true}
+                        style={{
+                          marginLeft: 15
+                        }}
                       />
-                      <label htmlFor="contained-button-file">
-                        <IconButton>
-                          <Avatar
-                            email={oauth.email}
-                            size="80"
-                            round={true}
-                            style={{
-                              marginLeft: 15
-                            }}
-                          />
-                        </IconButton>
-                      </label>
                     </span>
                     :
                     <Avatar
-                      size={80}
+                      size={60}
                       round={true}
                       style={{
                         backgroundColor: randomColor()
@@ -331,24 +330,69 @@ export function ManageAccount(props) {
                 <IconButton
                   aria-label="upload"
                   color="inherit"
-                /* onClick={() => handleClickOpenUpdate()} */
+                  onClick={() => handleClickOpenChooseAvatar()}
                 >
                   <BackupIcon />
                 </IconButton>
-                {/* <div>
-                  <Avatar
-                    width={50}
-                    height={50}
-                    onCrop={onCrop}
-                    onClose={onClose}
-                    src={state.src}
-                  />
-                  <img src={state.preview} alt="Preview" />
-                </div> */}
+                Upload another Avatar
               </Typography>
+              <Dialog open={chooseAvatar} onClose={handleClickCloseChooseAvatar} css={styles.dialog}>
+                <ManageAvatar onChange={handleClickCloseChooseAvatar} />
+              </Dialog>
             </div>
           )}
         </form>
+      </div>
+    </Paper>
+  );
+}
+
+export function ManageAvatar(props) {
+  const classes = useStyles();
+  const styles = useStylesBis(useTheme())
+  const [open, setOpen] = React.useState(false);
+  const [auth] = React.useState(true);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [chooseAvatar, setChooseAvatar] = React.useState(false);
+  const {
+    oauth, setChannels
+  } = React.useContext(Context);
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const handleClickOpenChooseAvatar = () => {
+    setChooseAvatar(true);
+  };
+  const handleClickCloseChooseAvatar = () => {
+    setChooseAvatar(false);
+  };
+
+
+  return (
+    <Paper className={classes.paperstyleProfile}>
+      <Typography className={classes.title}>Choose an avatar</Typography>
+      <div css={styles.avatars}>
+        <Box>
+        <Avatar size="60" name="A" src={AvatarPic1} round={true} style={{ margin: 15}}/>
+        <Button color="inherit" >Select</Button>
+        </Box>
+        <Box>
+        <Avatar size="60" name="B" src={AvatarPic2} round={true} style={{ margin: 15}}/>
+        <Button color="inherit">Select</Button>
+        </Box>
+        <Box>
+        <Avatar size="60" name="A" src={AvatarPic3} round={true} style={{ margin: 15}}/>
+        <Button color="inherit">Select</Button>
+        </Box>
+        <Box>
+        <Avatar size="60" name="A" src={AvatarPic4} round={true} style={{ margin: 15}}/>
+        <Button color="inherit">Select</Button>
+        </Box>
+        <Box>
+        <Avatar size="60" name="A" src={AvatarPic5} round={true} style={{ margin: 15}}/>
+        <Button color="inherit">Select</Button>
+        </Box>
       </div>
     </Paper>
   );
