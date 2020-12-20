@@ -28,6 +28,7 @@ import Dialog from '@material-ui/core/Dialog';
 import { useRef, useState } from 'react';
 import { Switch } from '@material-ui/core';
 import Avatar from 'react-avatar';
+import { ManageAccount, ChannelModal } from './Dialogs1';
 
 const useStylesBis = makeStyles((theme) => ({
   root: {
@@ -80,8 +81,8 @@ export default ({
   const [auth] = React.useState(true);
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
-  const [openProfile, setOpenProfile] = React.useState(false)
-  const [openSettings, setOpenSettings] = React.useState(false)
+  const [openChannel, setOpenChannel] = React.useState(false)
+  const [openManageAccount, setOpenManageAccount] = React.useState(false)
   const {
     oauth, setOauth,
     drawerVisible, setDrawerVisible,
@@ -109,12 +110,19 @@ export default ({
       setOpen(false);
     }
   }
-  const handleClickOpenProfile = () => {
-    setOpenProfile(true);
+  const handleClickOpenManageAccount = () => {
+    setOpenManageAccount(true);
   };
-  const handleCloseProfile = () => {
-    setOpenProfile(false);
+  const handleCloseManageAccount = () => {
+    setOpenManageAccount(false);
   };
+  const handleClickOpenChannel = () => {
+    setOpenChannel(true);
+  };
+  const handleCloseChannel = () => {
+    setOpenChannel(false);
+  };
+
   // return focus to the button when we transitioned from !open -> open
   const prevOpen = React.useRef(open);
   React.useEffect(() => {
@@ -187,9 +195,9 @@ export default ({
                               id="menu-list-grow"
                               onKeyDown={handleListKeyDown}
                             >
-                              <MenuItem onClick={handleClickOpenProfile}>Profile</MenuItem>
-                              <MenuItem onClick={handleClose}>My account</MenuItem>
-                              <MenuItem onClick={handleClose}>Logout</MenuItem>
+                              <MenuItem onClick={handleClickOpenChannel}>Create Channel</MenuItem>
+                              <MenuItem onClick={handleClose}>Add Friends</MenuItem>
+                              <MenuItem onClick={handleClickOpenManageAccount}>Manage Account</MenuItem>
                             </MenuList>
                           </ClickAwayListener>
                         </Paper>
@@ -202,8 +210,11 @@ export default ({
             </Toolbar>
           </AppBar>
         </div>
-        <Dialog open={openProfile} onClose={handleCloseProfile} css={styles.icon}>
-          <Profile onChange={handleCloseProfile} />
+        <Dialog open={openManageAccount} onClose={handleCloseManageAccount} css={styles.icon}>
+          <ManageAccount onChange={handleCloseManageAccount} />
+        </Dialog>
+        <Dialog open={openChannel} onClose={handleCloseChannel} css={styles.icon}>
+          <ChannelModal onChange={handleCloseChannel} />
         </Dialog>
       </header>
     );

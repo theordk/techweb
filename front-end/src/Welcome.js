@@ -16,7 +16,6 @@ import { Particles } from 'react-particles-js';
 import React from 'react';
 import { useContext } from 'react'
 import Dialog from '@material-ui/core/Dialog';
-import { ChannelModal } from './Dialogs1.js';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
@@ -25,6 +24,8 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom'
+import { ChannelModal, ManageAccount } from './Dialogs1.js';
+/* import Bail from './Latest' */
 
 const particuleParams = {
   background: {
@@ -288,9 +289,7 @@ export default () => {
             </Button>
           </Dialog>
           <Dialog open={openSettings} onClose={handleCloseSettings} css={styles.dialog}>
-            <Button>
-              Settings
-            </Button>
+            <ManageAccount onChange={handleCloseSettings} />
           </Dialog>
         </div>
       </div>
