@@ -217,7 +217,8 @@ export default forwardRef(({
         'Authorization': `Bearer ${oauth.access_token}`
       },
     })
-    
+
+    fetch()
     setOpenFriends(false)
   }
 
@@ -323,15 +324,22 @@ export default forwardRef(({
 
     return () => rootNode.removeEventListener('scroll', handleScroll)
   })
-  return (
 
+
+  return (
+    
     <div css={styles.root} ref={rootEl}>
       <h1 css={styles.title}>Messages for {channel.name}</h1>
+      <p>Users : {channel.list.replace(/,/g, ' - ')}</p>
       {channel.chanAdmin.includes(`${oauth.email}`) ? 
       <div>
       <button onClick={() => setOpenName(true)}>change name</button>
       <button onClick={() => setOpenAdmin(true)}> add admins </button>
       <button onClick={() => setOpenDelete(true)}>Delete Channel</button>
+      <button onClick={() => setOpenFriends(true)}>add users</button>
+      </div>
+      : <button onClick={() => setOpenFriends(true)}>add users</button>
+      }
 
       <Dialog open={openAdmin} onClose={() => setOpenAdmin(false)}>
         <form onSubmit={addAdmins}>
@@ -357,10 +365,7 @@ export default forwardRef(({
           <button type="submit">Confirm</button>
         </form>
       </Dialog>
-      </div>
-      : null
-      }
-      <button onClick={() => setOpenFriends(true)}>add users</button>
+
       <div>
         <ul>
           {messages.map((message, i) => {

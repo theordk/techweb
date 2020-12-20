@@ -1,4 +1,4 @@
-import { } from 'react';
+import { useEffect } from 'react';
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 // Layout
@@ -23,7 +23,8 @@ import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
-import Paper from '@material-ui/core/Paper';
+import axios from 'axios';
+/* import Bail from './Latest' */
 
 const particuleParams = {
   background: {
@@ -157,6 +158,8 @@ const useStyles = (theme) => ({
   }
 })
 
+
+
 export default () => {
   const {
     oauth
@@ -166,6 +169,10 @@ export default () => {
   const [openChannel, setOpenChannel] = React.useState(false)
   const [openFriends, setOpenFriends] = React.useState(false)
   const [openSettings, setOpenSettings] = React.useState(false)
+  const [channelsNames2, setChannelsNames2] = React.useState([])
+  const [channelsIds2, setChannelsIds2] = React.useState([])
+  const [lastMessageContent2, setLastMessageContent2] = React.useState([])
+  const [lastMessageAuthor2, setLastMessageAuthor2] = React.useState([])
 
   const handleClickOpenChannel = () => {
     setOpenChannel(true);
@@ -186,7 +193,57 @@ export default () => {
     setOpenSettings(false);
   };
 
+    
+  useEffect(() => {
+    async function fetchLatest() {
+        const channelsNames = []
+        const channelsIds = []
+      const lastMessageContent = []
+        const lastMessageAuthor = []
+          
+          const { data: channels } = await axios.get('http://localhost:3001/channels', {
+              headers: {
+                  'Authorization': `Bearer ${oauth.access_token}`
+              },
+              params: {
+                  user: `${oauth.email}`
+              },
+          })
+          channels.forEach(element => {
+              channelsNames.push(element.name)
+              channelsIds.push(element.id)
+          });
+    
+          channelsIds.forEach(async (element) => {
+              const { data: message } = await axios.request(`http://localhost:3001/channels/${element}/messages`)
+              if (message.length === 0) {
+                  lastMessageContent.push(" - No messages yet")
+                  lastMessageAuthor.push("Nobody talked yet")
+              }
+              message.forEach((el, i, message) => {
+                  if (i === message.length - 1) {
+                      if (el.content.length >= 47) lastMessageContent.push(" - " + el.content.substring(0, 47) + "...")
+                      else lastMessageContent.push(" - " + el.content)
+                      let auth = el.author.split('@')[0]
+                      if (auth.legnth >= 16) lastMessageAuthor.push(auth.substring(0, 13) + "...")
+                      else lastMessageAuthor.push(auth)
+                  }
+              })
+          })
+          console.log(lastMessageContent)
+          setChannelsNames2(channelsNames)
+          setChannelsIds2(channelsIds)
+          setLastMessageAuthor2(lastMessageAuthor)
+          setLastMessageContent2(lastMessageContent)
+    }
+    fetchLatest();
+  }, []);
+  
+        
+  
+
   return (
+
     <div css={styles.root}>
       <Particles css={styles.particles} params={particuleParams.background} />
       <div className={styles2.container}>
@@ -231,7 +288,7 @@ export default () => {
       <div css={styles.card} >
         <List className={styles2.root}>
           <Typography color="inherit" className={styles2.title}>
-            My friends
+            Latest Messages
         </Typography>
           <ListItem alignItems="flex-start">
             <ListItemAvatar>
@@ -255,98 +312,11 @@ export default () => {
             />
           </ListItem>
           <Divider variant="inset" component="li" />
-          <ListItem alignItems="flex-start">
-            <ListItemAvatar>
-              <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
-            </ListItemAvatar>
-            <ListItemText
-              primary="Summer BBQ"
-              secondary={
-                <React.Fragment>
-                  <Typography
-                    component="span"
-                    variant="body2"
-                    className={styles2.inline}
-                    color="textPrimary"
-                  >
-                    to Scott, Alex, Jennifer
-              </Typography>
-                  {" — Wish I could come, but I'm out of town this…"}
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <Divider variant="inset" component="li" />
-          <ListItem alignItems="flex-start">
-            <ListItemAvatar>
-              <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
-            </ListItemAvatar>
-            <ListItemText
-              primary="Oui Oui"
-              secondary={
-                <React.Fragment>
-                  <Typography
-                    component="span"
-                    variant="body2"
-                    className={styles2.inline}
-                    color="textPrimary"
-                  >
-                    Sandra Adams
-              </Typography>
-                  {' — Do you have Paris recommendations? Have you ever…'}
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <Divider variant="inset" component="li" />
-          <ListItem alignItems="flex-start">
-            <ListItemAvatar>
-              <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
-            </ListItemAvatar>
-            <ListItemText
-              primary="Oui Oui"
-              secondary={
-                <React.Fragment>
-                  <Typography
-                    component="span"
-                    variant="body2"
-                    className={styles2.inline}
-                    color="textPrimary"
-                  >
-                    Sandra Adams
-              </Typography>
-                  {' — Do you have Paris recommendations? Have you ever…'}
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <Divider variant="inset" component="li" />
-          <ListItem alignItems="flex-start">
-            <ListItemAvatar>
-              <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
-            </ListItemAvatar>
-            <ListItemText
-              primary="Oui Oui"
-              secondary={
-                <React.Fragment>
-                  <Typography
-                    component="span"
-                    variant="body2"
-                    className={styles2.inline}
-                    color="textPrimary"
-                  >
-                    Sandra Adams
-              </Typography>
-                  {' — Do you have Paris recommendations? Have you ever…'}
-                </React.Fragment>
-              }
-            />
-          </ListItem>
         </List>
+        <p>
+          {console.log(lastMessageContent2)}
+        </p>
       </div>
-
-
-
     </div>
 
   );
