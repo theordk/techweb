@@ -64,6 +64,10 @@ app.delete('/channels/:id/messages', async (req, res) => {
   res.status(201).json(deletion)
 })
 
+app.use('/channels/:id/messages', async (req, res) => {
+  const message = await db.messages.last(req.params.id)
+  res.json(message)
+})
 
 // Users
 

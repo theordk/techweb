@@ -91,6 +91,12 @@ module.exports = {
         if(error) console.log(error)
       })
     },
+    last: async (channelId) => {
+      const last = await db.get(`messages:${channelId}`, (error) => {
+        if(error) console.log(error)
+      })
+      return last
+    }
   },
   users: {
     create: async (user) => {

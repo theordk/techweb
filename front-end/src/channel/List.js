@@ -167,7 +167,7 @@ export default forwardRef(({
   const [openUpdate, setOpenUpdate] = useState({})
   const [admins, setAdmins] = useState('')
   const [openAdmin, setOpenAdmin] = useState(false)
-
+  const [chanUsers, setChanUsers] = useState('')
   const [friends, setFriends] = useState('')
   const [openFriends, setOpenFriends] = useState(false)
 
@@ -206,6 +206,7 @@ export default forwardRef(({
           user: `${oauth.email}`
         },
       })
+      setChanUsers(toString(channel.list).replace(/,/g, ' - '))
       setChannels(channels)
     } catch (err) {
       console.error(err)
@@ -229,10 +230,10 @@ export default forwardRef(({
       },
     })
 
-<<<<<<< HEAD
     fetch()
-=======
->>>>>>> 6d6512d466d66a91570c8e9d839d7a67b27d5e88
+    let chanU = listWithoutSpaces + "," + channel.list
+    chanU = chanU.replace(/,/g, ' - ')
+    setChanUsers(chanU)
     setOpenFriends(false)
   }
 
@@ -343,25 +344,6 @@ export default forwardRef(({
   return (
     
     <div css={styles.root} ref={rootEl}>
-<<<<<<< HEAD
-      <h1 css={styles.title}>Messages for {channel.name}</h1>
-      <p>Users : {channel.list.replace(/,/g, ' - ')}</p>
-      {channel.chanAdmin.includes(`${oauth.email}`) ? 
-      <div>
-      <button onClick={() => setOpenName(true)}>change name</button>
-      <button onClick={() => setOpenAdmin(true)}> add admins </button>
-      <button onClick={() => setOpenDelete(true)}>Delete Channel</button>
-      <button onClick={() => setOpenFriends(true)}>add users</button>
-      </div>
-      : <button onClick={() => setOpenFriends(true)}>add users</button>
-      }
-
-      <Dialog open={openAdmin} onClose={() => setOpenAdmin(false)}>
-        <form onSubmit={addAdmins}>
-          <input type="text" onChange={(event) => setAdmins(event.target.value)}/>
-          <button type="submit">Confirm</button>
-        </form>
-=======
       {channel.chanAdmin.includes(`${oauth.email}`) ?
         <div>
           <h1 css={styles.title}>Messages for {channel.name}
@@ -406,6 +388,7 @@ export default forwardRef(({
               </div>
             </div>
           </h1>
+          <p css={styles.title}>Users : {channel.list.replace(/,/g, ' - ')}</p>
         </div>
         :
         <div>
@@ -422,6 +405,7 @@ export default forwardRef(({
               </Tooltip>
             </div>
           </h1>
+          <p css={styles.title}>Users : {channel.list.replace(/,/g, ' - ')}</p>
         </div>
       }
       <Dialog open={openAdmin} onClose={() => setOpenAdmin(false)} css={styles.icon}>
@@ -460,7 +444,6 @@ export default forwardRef(({
             </form>
           </div>
         </Paper>
->>>>>>> 6d6512d466d66a91570c8e9d839d7a67b27d5e88
       </Dialog>
       <Dialog open={openFriends} onClose={() => setOpenFriends(false)} css={styles.icon}>
         <Paper className={classes.paperstyle}>
@@ -554,10 +537,6 @@ export default forwardRef(({
           </div>
         </Paper>
       </Dialog>
-<<<<<<< HEAD
-
-=======
->>>>>>> 6d6512d466d66a91570c8e9d839d7a67b27d5e88
       <div>
         <ul>
           {messages.map((message, i) => {
@@ -568,9 +547,7 @@ export default forwardRef(({
               .processSync(message.content)
             return (
               <li key={i} css={styles.message}  >
-                {`${oauth.email}` === message.author ?
-                  <div>
-                    <Dialog open={openUpdate[i]} onClose={(i) => handleCloseUpdate} css={styles.icon}>
+                <Dialog open={openUpdate[i]} onClose={(i) => handleCloseUpdate} css={styles.icon}>
                       <Paper className={classes.paperstyle}>
                         Modify your message
                       <div css={styles.margin}>
@@ -606,11 +583,9 @@ export default forwardRef(({
                         </div>
                       </Paper>
                     </Dialog>
-                  </div>
-                  : null
-                }
-                <p>
-                  <div css={styles.icons} >
+                {`${oauth.email}` === message.author ?
+                  <div>
+                    <div css={styles.icons} >
                     <Tooltip title="Delete">
                       <IconButton
                         aria-label="delete"
@@ -630,6 +605,27 @@ export default forwardRef(({
                       </IconButton>
                     </Tooltip>
                   </div>
+                  </div>
+                  : null
+                }
+                 {channel.chanAdmin.includes(`${oauth.email}`) && message.author !== `${oauth.email}` ?
+                 
+                  <div>
+                    <div css={styles.icons} >
+                    <Tooltip title="Delete">
+                      <IconButton
+                        aria-label="delete"
+                        color="inherit"
+                        onClick={() => deleteMessage(message.creation, message.channelId)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </div>
+                  </div>
+                  : null
+                } 
+                <p>               
                   <span>{message.author}</span>
                   {' - '}
                   <span>{dayjs.unix(parseInt(message.creation) / 1000000).format('LLLL')}</span>

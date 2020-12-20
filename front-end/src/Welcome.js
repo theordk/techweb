@@ -24,7 +24,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import axios from 'axios';
-/* import Bail from './Latest' */
+import { useHistory } from 'react-router-dom'
 
 const particuleParams = {
   background: {
@@ -98,7 +98,7 @@ const useStyles2 = makeStyles((theme) => ({
   },
   root: {
     width: '100%',
-    //maxWidth: '36ch',
+    minWidth: '50ch',
     height: '60%',
     marginTop: '20%',
     marginLeft: '45%',
@@ -164,15 +164,14 @@ export default () => {
   const {
     oauth
   } = useContext(Context)
+  const history = useHistory();
   const styles = useStyles(useTheme())
   const styles2 = useStyles2(useTheme())
   const [openChannel, setOpenChannel] = React.useState(false)
   const [openFriends, setOpenFriends] = React.useState(false)
   const [openSettings, setOpenSettings] = React.useState(false)
-  const [channelsNames2, setChannelsNames2] = React.useState([])
-  const [channelsIds2, setChannelsIds2] = React.useState([])
-  const [lastMessageContent2, setLastMessageContent2] = React.useState([])
-  const [lastMessageAuthor2, setLastMessageAuthor2] = React.useState([])
+  const [latestMessages, setLastMessages] = React.useState([])
+
 
   const handleClickOpenChannel = () => {
     setOpenChannel(true);
@@ -193,54 +192,64 @@ export default () => {
     setOpenSettings(false);
   };
 
-    
+
   useEffect(() => {
     async function fetchLatest() {
-        const channelsNames = []
-        const channelsIds = []
+      var channelsNames = []
+      var channelsIds = []
       const lastMessageContent = []
-        const lastMessageAuthor = []
-          
-          const { data: channels } = await axios.get('http://localhost:3001/channels', {
-              headers: {
-                  'Authorization': `Bearer ${oauth.access_token}`
-              },
-              params: {
-                  user: `${oauth.email}`
-              },
-          })
-          channels.forEach(element => {
-              channelsNames.push(element.name)
-              channelsIds.push(element.id)
-          });
-    
-          channelsIds.forEach(async (element) => {
-              const { data: message } = await axios.request(`http://localhost:3001/channels/${element}/messages`)
-              if (message.length === 0) {
-                  lastMessageContent.push(" - No messages yet")
-                  lastMessageAuthor.push("Nobody talked yet")
-              }
-              message.forEach((el, i, message) => {
-                  if (i === message.length - 1) {
-                      if (el.content.length >= 47) lastMessageContent.push(" - " + el.content.substring(0, 47) + "...")
-                      else lastMessageContent.push(" - " + el.content)
-                      let auth = el.author.split('@')[0]
-                      if (auth.legnth >= 16) lastMessageAuthor.push(auth.substring(0, 13) + "...")
-                      else lastMessageAuthor.push(auth)
-                  }
-              })
-          })
-          console.log(lastMessageContent)
-          setChannelsNames2(channelsNames)
-          setChannelsIds2(channelsIds)
-          setLastMessageAuthor2(lastMessageAuthor)
-          setLastMessageContent2(lastMessageContent)
+      const lastMessageAuthor = []
+
+      const { data: channels } = await axios.get('http://localhost:3001/channels', {
+        headers: {
+          'Authorization': `Bearer ${oauth.access_token}`
+        },
+        params: {
+          user: `${oauth.email}`
+        },
+      })
+      channels.forEach(element => {
+        channelsNames.push(element.name)
+        channelsIds.push(element.id)
+      });
+
+      for(let y =0; y < channelsIds.length; y++) {
+        const { data: message } = await axios.request(`http://localhost:3001/channels/${channelsIds[y]}/messages`)
+        if (message.length === 0) {
+          lastMessageContent.push(" - No messages yet")
+          lastMessageAuthor.push("Nobody talked yet")
+        }
+        else{
+          for(let i = 0; i < message.length; i++) {
+            if (i === message.length - 1) {
+              if (message[i].content.length >= 47) lastMessageContent.push(" - " + message[i].content.substring(0, 47) + "...")
+              else lastMessageContent.push(" - " + message[i].content)
+              let auth = message[i].author.split('@')[0]
+              if (auth.legnth >= 16) lastMessageAuthor.push(auth.substring(0, 13) + "...")           
+              else lastMessageAuthor.push(auth)
+            }
+          }
+        }       
+      }
+
+      const finalArray = []
+
+      for(let i = 0; i<channelsIds.length ; i++){    
+        var message = {
+          channelId: channelsIds[i],
+          channelName: channelsNames[i],
+          content: lastMessageContent[i],
+          author: lastMessageAuthor[i]
+        }
+        finalArray.push(message)
+      }
+      setLastMessages(finalArray)
     }
     fetchLatest();
   }, []);
-  
-        
-  
+
+
+
 
   return (
 
@@ -290,32 +299,39 @@ export default () => {
           <Typography color="inherit" className={styles2.title}>
             Latest Messages
         </Typography>
-          <ListItem alignItems="flex-start">
-            <ListItemAvatar>
-              <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-            </ListItemAvatar>
-            <ListItemText
-              primary="Brunch this weekend?"
-              secondary={
-                <React.Fragment>
-                  <Typography
-                    component="span"
-                    variant="body2"
-                    className={styles2.inline}
-                    color="textPrimary"
-                  >
-                    Ali Connors
-              </Typography>
-                  {" — I'll be in your neighborhood doing errands this…"}
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <Divider variant="inset" component="li" />
+          {latestMessages.map((message, i) => {
+            return ( 
+              <div>
+              <ListItem key={i} alignItems="flex-start" 
+              onClick={(e) => {
+                e.preventDefault()
+                history.push(`/channels/${message.channelId}`)
+              }}>
+                <ListItemAvatar>
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                </ListItemAvatar>
+                <ListItemText key={i}
+                  primary={message.channelName}
+                  secondary={
+                    <React.Fragment>
+                      <Typography
+                        component="span"
+                        variant="body2"
+                        className={styles2.inline}
+                        color="textPrimary"
+                      >
+                        {message.author}
+                      </Typography>
+                      {message.content}
+                    </React.Fragment>
+                  }
+                />
+              </ListItem>
+             <Divider variant="inset" component="li" />
+            </div>
+            )
+                })}
         </List>
-        <p>
-          {console.log(lastMessageContent2)}
-        </p>
       </div>
     </div>
 

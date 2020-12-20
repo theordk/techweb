@@ -83,6 +83,7 @@ export default () => {
     classes = useStyles()
   } = useContext(Context)
   const history = useHistory();
+  const [research, setResearch] = useState('')
 
 
   useEffect(() => {
@@ -110,6 +111,7 @@ export default () => {
           className={stylesBis.input}
           placeholder="Search Channel"
           inputProps={{ "aria-label": "search channel" }}
+          onChange={(event) => setResearch(event.target.value)}
         />
         <IconButton
           type="submit"
