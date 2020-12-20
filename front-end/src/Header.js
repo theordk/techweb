@@ -2,11 +2,11 @@ import { useContext } from 'react'
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 // Layout
-import { useTheme } from '@material-ui/core/styles';
+import { createMuiTheme, useTheme } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Context from './Context'
-import { useHistory } from 'react-router-dom';
+import { Switch as SwitchRouter, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -25,6 +25,9 @@ import Link from '@material-ui/core/Link'
 import HomeIcon from '@material-ui/icons/Home';
 import { Profile } from './Dialogs1';
 import Dialog from '@material-ui/core/Dialog';
+import { useRef, useState } from 'react';
+import { Switch } from '@material-ui/core';
+import Avatar from 'react-avatar';
 
 const useStylesBis = makeStyles((theme) => ({
   root: {
@@ -81,7 +84,8 @@ export default ({
   const [openSettings, setOpenSettings] = React.useState(false)
   const {
     oauth, setOauth,
-    drawerVisible, setDrawerVisible
+    drawerVisible, setDrawerVisible,
+    darkMode, setDarkMode
   } = useContext(Context)
   const drawerToggle = (e) => {
     setDrawerVisible(!drawerVisible)
@@ -146,6 +150,7 @@ export default ({
                   Menu
                 </Button>
               </Typography>
+              <Switch checked={darkMode} onChange={() => setDarkMode(!darkMode)} />
               {auth && (
                 <div>
                   <IconButton

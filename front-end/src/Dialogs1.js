@@ -2,12 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import { Avatar, Button, Paper } from '@material-ui/core';
+import { Button, Paper } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import axios from 'axios';
 import Typography from '@material-ui/core/Typography';
 import Context from './Context'
 import { useTheme, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import Avatar from 'react-avatar';
+import { IconButton } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import BackupIcon from '@material-ui/icons/Backup';
+import AvatarUploader from 'react-avatar';
 
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -65,6 +71,10 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
+  gravatar: {
+    round: "true",
+    size: '30px'
+  }
 }));
 
 const useStylesBis = (theme) => ({
@@ -130,6 +140,13 @@ const helperTextStyles = makeStyles(theme => ({
     }
   }
 }));
+
+function randomColor() {
+  let hex = Math.floor(Math.random() * 0xFFFFFF);
+  let color = "#" + hex.toString(16);
+
+  return color;
+}
 
 export function ChannelModal(props) {
   const classes = useStyles();
@@ -243,7 +260,7 @@ export function Profile(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const {
     oauth, setChannels
-  } = React.useContext(Context)
+  } = React.useContext(Context);
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -277,38 +294,57 @@ export function Profile(props) {
                 }
               </Typography> <br></br>
               <Typography onClick={handleClose}>
-                Avatar
-                      <Avatar
-                  size={64}
-                  icon="user"
+                Avatar :
+                      {
+                  oauth ?
+                    <span>
+                      <input
+                        accept="image/*"
+                        className={classes.input}
+                        id="contained-button-file"
+                        multiple
+                        type="file"
+                      />
+                      <label htmlFor="contained-button-file">
+                        <IconButton>
+                          <Avatar
+                            email={oauth.email}
+                            size="80"
+                            round={true}
+                            style={{
+                              marginLeft: 15
+                            }}
+                          />
+                        </IconButton>
+                      </label>
+                    </span>
+                    :
+                    <Avatar
+                      size={80}
+                      round={true}
+                      style={{
+                        backgroundColor: randomColor()
+                      }}
+                    >
+                    </Avatar>
+                }
+                <IconButton
+                  aria-label="upload"
+                  color="inherit"
+                /* onClick={() => handleClickOpenUpdate()} */
                 >
-                </Avatar>
-                <div>
-                  <button type="button" onClick={handleOpenModal}>
-                    react-transition-group
-                  </button>
-                  <Modal
-                    aria-labelledby="transition-modal-title"
-                    aria-describedby="transition-modal-description"
-                    className={classes.modal}
-                    open={open}
-                    onClose={handleCloseModal}
-                    onOk={handleOk}
-                    /* onCancel={handleCancel} */
-                    closeAfterTransition
-                    BackdropComponent={Backdrop}
-                    BackdropProps={{
-                      timeout: 500,
-                    }}
-                  >
-                    <Fade in={open}>
-                      <div className={classes.paper}>
-                        <h2 id="transition-modal-title">Transition modal</h2>
-                        <p id="transition-modal-description">react-transition-group animates me.</p>
-                      </div>
-                    </Fade>
-                  </Modal>
-                </div>
+                  <BackupIcon />
+                </IconButton>
+                {/* <div>
+                  <Avatar
+                    width={50}
+                    height={50}
+                    onCrop={onCrop}
+                    onClose={onClose}
+                    src={state.src}
+                  />
+                  <img src={state.preview} alt="Preview" />
+                </div> */}
               </Typography>
             </div>
           )}

@@ -100,7 +100,7 @@ const useStyles2 = makeStyles((theme) => ({
     //maxWidth: '36ch',
     height: '60%',
     marginTop: '20%',
-    marginLeft: '50%',
+    marginLeft: '45%',
     borderRadius: '5px',
     maxHeight: '60%',
     overflow: 'scroll',

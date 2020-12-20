@@ -18,17 +18,28 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 
 const theme = createMuiTheme({
   palette: {
-    /* type: 'dark', */
+    /* type: darkMode ? "dark" : "light", */ 
+    /* type: "dark", */
     primary: {
       //bleu foncé
       main: "#122A42",
+      /* light: "#111111",
+      dark: "#fff" */
     },
     secondary: {
       //bleu clair
-      main: "#4584B6"
+      main: "#4584B6",
+      /* light: "#111111",
+      dark: "#fff" */
     },
   },
 }); 
+
+/* const darkTheme = createMuiTheme({
+  palette: {
+    type: 'dark',
+  },
+}); */
 
 ReactDOM.render(
   <React.StrictMode>
