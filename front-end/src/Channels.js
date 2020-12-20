@@ -12,7 +12,6 @@ import { useTheme, makeStyles, Divider, InputBase, MenuList, MenuItem, Paper } f
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 
-
 const styles = {
   root: {
     color: "black"
@@ -30,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "10px",
     display: "flex",
     alignItems: "center",
-    width: 235,
+    width: 220,
     background: theme.palette.secondary.dark,
     marginLeft: theme.spacing(1),
     marginTop: 10,
@@ -48,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
       '& button': {
         'display': 'block'
       }
-    },   
+    },
   },
   input: {
     marginLeft: theme.spacing(1),
@@ -77,7 +76,19 @@ export default () => {
   } = useContext(Context)
   const history = useHistory();
   const [research, setResearch] = useState('')
-
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const { data: channels } = await axios.get('http://localhost:3001/channels', {
+      headers: {
+        'Authorization': `Bearer ${oauth.access_token}`
+      },
+      params: {
+        user: `${oauth.email}`,
+        chanName: `${research}`
+      },
+    })
+    setChannels(channels)
+  }
   useEffect(() => {
     const fetch = async () => {
       try {
@@ -86,7 +97,8 @@ export default () => {
             'Authorization': `Bearer ${oauth.access_token}`
           },
           params: {
-            user: `${oauth.email}`
+            user: `${oauth.email}`,
+            chanName: '',
           },
         })
         setChannels(channels)
@@ -98,8 +110,8 @@ export default () => {
   }, [oauth, setChannels])
   return (
     <ul style={styles.root}>
-      <Paper component="form" className={stylesBis.root}>
-        <InputBase  
+      <Paper component="form" className={stylesBis.root} onSubmit={handleSubmit}>
+        <InputBase
           className={stylesBis.input}
           placeholder="Search Channel"
           inputProps={{ "aria-label": "search channel" }}
@@ -114,7 +126,7 @@ export default () => {
         </IconButton>
         <Divider className={stylesBis.divider} orientation="vertical" />
       </Paper>
-      <Divider classes={{root: classes.divider2}} variant="middle"></Divider>
+      <Divider classes={{ root: classes.divider2 }} variant="middle"></Divider>
       { channels.map((channel, i) => (
         <li key={i} css={styles.channel}>
           <Paper
@@ -123,7 +135,7 @@ export default () => {
             onClick={(e) => {
               e.preventDefault()
               history.push(`/channels/${channel.id}`)
-            }}>         
+            }}>
             <MenuList>
               <MenuItem>
                 <div css={styles.channel}>
@@ -132,9 +144,9 @@ export default () => {
               </MenuItem>
             </MenuList>
           </Paper>
-        </li>     
+        </li>
       ))}
-      <Divider classes={{root: classes.divider3}} variant="middle"></Divider>
+      <Divider classes={{ root: classes.divider3 }} variant="middle"></Divider>
     </ul>
   );
 }

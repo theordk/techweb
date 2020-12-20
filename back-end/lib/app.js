@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
 // Channels a
 
 app.get('/channels', authenticate, async (req, res) => {
-  const channels = await db.channels.list(req.query.user)
+  const channels = await db.channels.list(req.query.user, req.query.chanName)
   res.json(channels)
 })
 
