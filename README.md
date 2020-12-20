@@ -80,12 +80,12 @@ Back-End :
   - db
   - lib
   - test
-  - package.json <br/>
+  - package.json <br/><br/>
 Front-End :
   - build
   - public
   - src 
-  - package.json <br/>
+  - package.json <br/><br/>
 Dex-Config :
   - config.yml
 * Code quality (4pts) <br/>
@@ -94,7 +94,7 @@ We made our best for it to be as understandable as possible.
 * Design, UX (4pts) <br/>
 We coded an application as simple as possible to use for a new customer. The code is responsive, with an animated background, and proposes a refined theme around the colors blue and white. For that, we used librairies such as : <br/>
   - material ui (icons, components, routes, theme) <br/>
-  - particules js (background) <br/>
+  - particules js (background) <br/><br/>
 We wanted to keep it simple and elegant and to prevent from bad user experience.
 * Git and DevOps
 Throughout the project we used our TechWeb GitHub repository to exchange the different features we each coded.
@@ -114,22 +114,22 @@ It is the main page of the App with :
 * New channel creation (6pts) <br/>
 1- The user can create channels by 2 ways :
   - the main icon "add channels"
-  - the dropdown menu in the header
+  - the dropdown menu in the header <br/><br/>
 2- On the form, the user can :
   - choose the name of the channel
-  - chosse 1 OR multiple users to add on it (by emails)
-3- The user who created the channel is automatically an Admin of the channel
-4- Only the name of the user(s) of the channel appear on the top of the chat
+  - chosse 1 OR multiple users to add on it (by emails) <br/><br/>
+3- The user who created the channel is automatically an Admin of the channel <br/><br/>
+4- Only the name of the user(s) of the channel appear on the top of the chat <br/><br/>
 5- Once created, the channel is registered in the database and accessible at anytime fot its users by :
   - The list of channels in the drawer
   - The list of last messages on the welcome page
 * Channel membership and access (4pts) <br/>
 1- A user only have access to the channels that :
   - he created himself
-  - he has been invited in 
+  - he has been invited in <br/><br/>
 2- Once on the channel, the user have mutliple options over channels/messages depending on his status (Admin/Simple user)
 * Ressource access control (4pts) <br/>
-2 - We implemented a 2 rôles access for members wich doesn't give the same rights on a channel :
+We implemented a 2 rôles access for members wich doesn't give the same rights on a channel : <br/>
   - The Admin can :
     - Rename a channel
     - Delete a channel (and all messages within)
