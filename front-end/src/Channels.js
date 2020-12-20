@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "10px",
     display: "flex",
     alignItems: "center",
-    width: 220,
+    width: 235,
     background: theme.palette.secondary.dark,
     marginLeft: theme.spacing(1),
     marginTop: 10,

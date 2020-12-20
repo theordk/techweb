@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom'
 import React from 'react';
 import { useContext } from 'react'
 import { Particles } from 'react-particles-js';
+import CryptoJS from 'crypto-js'
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 // Local
@@ -16,6 +17,12 @@ import { ReactComponent as FriendsIcon } from './icons/friends.svg';
 import { ReactComponent as SettingsIcon } from './icons/settings.svg';
 // Layout
 import { useTheme, makeStyles, Button, Typography, Dialog, List, ListItem, Divider, ListItemText, ListItemAvatar, Avatar } from '@material-ui/core';
+// Avatars
+import AvatarPic1 from './pics/1.jpeg'
+import AvatarPic2 from './pics/2.jpg'
+import AvatarPic3 from './pics/3.jpg'
+import AvatarPic4 from './pics/4.jpg'
+import AvatarPic5 from './pics/5.jpg'
 
 const particuleParams = {
   background: {
@@ -172,6 +179,7 @@ export default () => {
   const handleClickOpenFriends = () => {
     setOpenFriends(true);
   };
+
   const handleCloseFriends = () => {
     setOpenFriends(false);
   };
@@ -188,6 +196,27 @@ export default () => {
       var channelsIds = []
       const lastMessageContent = []
       const lastMessageAuthor = []
+
+      const md5 = CryptoJS.MD5(`${oauth.email}`)
+      try{
+          await axios.get(`https://www.gravatar.com/avatar/${md5}?d=404`).then(() => {
+          setimgSrc(`https://www.gravatar.com/avatar/${md5}?d=404`)
+          axios.put(`http://localhost:3001/users/${oauth.email}`, {
+           gravatar: `https://www.gravatar.com/avatar/${md5}?d=404`,
+       })
+         })
+      }catch (error) {
+       /* try{
+          const {data: gravatar } = axios.get(`http://localhost:3001/users/${oauth.email}`)
+          setimgSrc(gravatar.gravatar)
+        }catch (error){
+          await axios.put(`http://localhost:3001/users/${oauth.email}`, {
+          gravatar: ``,
+      })
+      setimgSrc('')
+        } */
+      }
+
       const { data: channels } = await axios.get('http://localhost:3001/channels', {
         headers: {
           'Authorization': `Bearer ${oauth.access_token}`
@@ -234,6 +263,11 @@ export default () => {
     fetchLatest();
   }, []);
 
+  const [imgSrc, setimgSrc] = React.useState('')
+  const change = (data) => {
+    setimgSrc(data)
+  }
+
   return (
     <div css={styles.root}>
       <Particles css={styles.particles} params={particuleParams.background} />
@@ -270,7 +304,7 @@ export default () => {
             </Button>
           </Dialog>
           <Dialog open={openSettings} onClose={handleCloseSettings} css={styles.dialog}>
-            <ManageAccount onChange={handleCloseSettings} />
+            <ManageAccount onChange={handleCloseSettings} change={change} imgSrc={imgSrc} />
           </Dialog>
         </div>
       </div>
@@ -282,33 +316,33 @@ export default () => {
           {latestMessages.map((message, i) => {
             return (
               <div>
-              <ListItem key={i} className={styles2.listItem} alignItems="flex-start" 
-              onClick={(e) => {
-                e.preventDefault()
-                history.push(`/channels/${message.channelId}`)
-              }}>
-                <ListItemAvatar>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-                </ListItemAvatar>
-                <ListItemText key={i} 
-                  primary={message.channelName}
-                  secondary={
-                    <React.Fragment>
-                      <Typography
-                        component="span"
-                        variant="body2"
-                        className={styles2.inline}
-                        color="textPrimary"
-                      >
-                        {message.author}
-                      </Typography>
-                      {message.content}
-                    </React.Fragment>
-                  }
-                />
-              </ListItem>
-             <Divider variant="inset" component="li" />
-            </div>
+                <ListItem key={i} className={styles2.listItem} alignItems="flex-start"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    history.push(`/channels/${message.channelId}`)
+                  }}>
+                  <ListItemAvatar>
+                    <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                  </ListItemAvatar>
+                  <ListItemText key={i}
+                    primary={message.channelName}
+                    secondary={
+                      <React.Fragment>
+                        <Typography
+                          component="span"
+                          variant="body2"
+                          className={styles2.inline}
+                          color="textPrimary"
+                        >
+                          {message.author}
+                        </Typography>
+                        {message.content}
+                      </React.Fragment>
+                    }
+                  />
+                </ListItem>
+                <Divider variant="inset" component="li" />
+              </div>
             )
           })}
         </List>

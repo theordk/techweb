@@ -160,7 +160,7 @@ export function ChannelModal(props) {
   const [channelName, setChannelName] = React.useState('')
   const [friendsList, setFriendsList] = React.useState('')
   const {
-    oauth, setChannels
+    oauth, setChannels, setChosenAv, chosenAv
   } = React.useContext(Context)
   const chanAdmin = [`${oauth.email}`]
   const handleSubmit = async (e) => {
@@ -263,8 +263,14 @@ export function ManageAccount(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [chooseAvatar, setChooseAvatar] = React.useState(false);
   const {
-    oauth, setChannels
+    oauth, setChannels, chosenAv
   } = React.useContext(Context);
+
+  const changeSrc = (data) => {
+    console.log(typeof (change))
+    props.change(data)
+
+  }
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -299,6 +305,7 @@ export function ManageAccount(props) {
                   oauth ?
                     <span>
                       <Avatar
+                        /* src={props.imgSrc} */
                         email={oauth.email}
                         size="80"
                         round={true}
@@ -327,7 +334,7 @@ export function ManageAccount(props) {
                 Upload another Avatar
               </Typography>
               <Dialog open={chooseAvatar} onClose={handleClickCloseChooseAvatar} css={styles.dialog}>
-                <ManageAvatar onChange={handleClickCloseChooseAvatar} />
+                <ManageAvatar changeSrc={changeSrc} onChange={handleClickCloseChooseAvatar} />
               </Dialog>
             </div>
           )}
@@ -345,7 +352,7 @@ export function ManageAvatar(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [chooseAvatar, setChooseAvatar] = React.useState(false);
   const {
-    oauth, setChannels
+    oauth, setChannels, setChosenAv
   } = React.useContext(Context);
   const handleClose = () => {
     setAnchorEl(null);
@@ -353,8 +360,16 @@ export function ManageAvatar(props) {
   const handleClickOpenChooseAvatar = () => {
     setChooseAvatar(true);
   };
-  const handleClickCloseChooseAvatar = () => {
-    setChooseAvatar(false);
+  const handleClickCloseChooseAvatar = (avatar, nb) => {
+
+
+    const av = `${avatar}`
+    //props.changeSrc(`${av}`)
+    axios.put(`http://localhost:3001/users/${oauth.email}`, {
+      gravatar: `${av}`,
+    })
+
+
   };
 
   return (
@@ -363,23 +378,23 @@ export function ManageAvatar(props) {
       <div css={styles.avatars}>
         <Box>
           <Avatar size="60" name="A" src={AvatarPic1} round={true} style={{ margin: 15 }} />
-          <Button color="inherit" >Select</Button>
+          <Button color="inherit" onClick={() => handleClickCloseChooseAvatar({ AvatarPic1 }, 1)}>Select</Button>
         </Box>
         <Box>
           <Avatar size="60" name="B" src={AvatarPic2} round={true} style={{ margin: 15 }} />
-          <Button color="inherit">Select</Button>
+          <Button color="inherit" onClick={() => handleClickCloseChooseAvatar({ AvatarPic2 }, 2)}>Select</Button>
         </Box>
         <Box>
           <Avatar size="60" name="A" src={AvatarPic3} round={true} style={{ margin: 15 }} />
-          <Button color="inherit">Select</Button>
+          <Button color="inherit" onClick={() => handleClickCloseChooseAvatar(AvatarPic3, 3)}>Select</Button>
         </Box>
         <Box>
           <Avatar size="60" name="A" src={AvatarPic4} round={true} style={{ margin: 15 }} />
-          <Button color="inherit">Select</Button>
+          <Button color="inherit" onClick={() => handleClickCloseChooseAvatar({ AvatarPic4 }, 4)}>Select</Button>
         </Box>
         <Box>
           <Avatar size="60" name="A" src={AvatarPic5} round={true} style={{ margin: 15 }} />
-          <Button color="inherit">Select</Button>
+          <Button color="inherit" onClick={() => handleClickCloseChooseAvatar({ AvatarPic5 }, 5)}>Select</Button>
         </Box>
       </div>
     </Paper>

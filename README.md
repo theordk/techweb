@@ -1,7 +1,7 @@
 
 # Chat application - final project
 
-*presentation, introduction, ...*
+This Application that we developped with React & node.js allows users to exchange messages in a simple way. Moreover, we added some functionalities in order to make it easey to use and pretty. 
 
 ## Usage
 
@@ -71,7 +71,7 @@ Project management
 * Naming convention (2pts)
 Folders names : lowercase letter
 Files .js : start with a uppercase letter
-Classes etc ??? ------------
+Variable & const : start with lowercase letter
 React Components : start with a uppercase letter
 * Project structure (4pts)
 The project is structured as follow :
@@ -90,11 +90,12 @@ Dex-Config :
   - config.yml
 * Code quality (4pts)
 The code respects indentation and avoids spaces where they are not needed.
-We made our best for it to be as understandable as possible
+We made our best for it to be as understandable as possible.
 * Design, UX (4pts)
 We coded an application as simple as possible to use for a new customer. The code is responsive, with an animated background, and proposes a refined theme around the colors blue and white. For that, we used librairies such as :
   - material ui (icons, components, routes, theme)
   - particules js (background)
+We wanted to keep it simple and elegant and to prevent from bad user experience.
 * Git and DevOps   
 Throughout the project we used our TechWeb GitHub repository to exchange the different features we each coded.
 
@@ -106,7 +107,7 @@ The Sign In screen proposes :
   - The other fields (Email / Password) are here for estethic and an eventual future implementation of the code (as well as "Create an Account")
 * Welcome screens (2pts)
 It is the main page of the App with :
-  - The header : menu icon - dropdown icon for accessing features - logout buttun
+  - The header : menu icon - dropdown icon for accessing features - logout button
   - The drawer : search bar - list of channels
   - Main part : animated background - icons for creating new channels and accessing parameters - list of the all recent messages of the user 
   - The footer : copyright of the App
@@ -118,7 +119,7 @@ It is the main page of the App with :
   - choose the name of the channel
   - chosse 1 OR multiple users to add on it (by emails)
 3- The user who created the channel is automatically an Admin of the channel
-4- The name of each user of the channel appears on the top of the chat
+4- Only the name of the user(s) of the channel appear on the top of the chat
 5- Once created, the channel is registered in the database and accessible at anytime fot its users by :
   - The list of channels in the drawer
   - The list of last messages on the welcome page
@@ -135,16 +136,14 @@ It is the main page of the App with :
     - Add other admins
     - Add new users
     - Modify its own messages
-    - Delete every message he wants
+    - Delete every message that he wants
   - The Simple user can :
     - Add new users to the channel
-    - Delete and modify its own messages
+    - Delete and modify its own messages only
 * Invite users to channels (6pts)
 There are multiple ways to invite users in a channel :
 1- At the moment of creating the channel with the form (by emails)
-2- Once on the channel :
-  - An admin can add either Admins OR new Users
-  - A simple user can only add other users
+2- Once on the channel, the admin adn the simple user can add other users
 * Message modification (2pts)
 A user (either Admin or simple user) can only modify its own messages by clicking on the icon "modify" in front of each message
 * Message removal (2pts)
@@ -154,13 +153,13 @@ We impemented a 2 ways access for :
 * Account settings (4pts)
 On setting the user can :
   - access his email
-  - see its avatar and choose another one if he wants
+  - see his avatar
 * Gravatar integration   
 When logged with Dex, a user either :
   - gets his own avatar if he has a gravatar account
   - gets a default avatar
 * Avatar selection   
-On settings the user can choose his favorite avatar among 5 choices
+On settings the user can see 5 other avatars but we couldn't manage to change it correctly.
 * Personal custom avatar   
 This functionality wasn't working perfectly so we didn't push it in our final version of the App
 
@@ -174,4 +173,4 @@ We added some bonus tasks to our App for a better utilization (and not by priori
   - Delete the channel (and all messages within)
 3- The "Recent Messages" in the Welcome Page :
   - automatically presents all recents messages on every channels of the user
-  - By clicking on any message, it redirects the user on the dedicated channel
+  - by clicking on any message, it redirects the user on the dedicated channel
