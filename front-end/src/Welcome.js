@@ -118,6 +118,11 @@ const useStyles2 = makeStyles((theme) => ({
     textAlign: "center",
     fontWeight: "bold",
     fontSize: '150%'
+  },
+  listItem: {
+    '&:hover': {
+      background: 'rgba(255,255,255,.05)',
+    },
   }
 }))
 
@@ -301,7 +306,7 @@ export default () => {
           {latestMessages.map((message, i) => {
             return ( 
               <div>
-              <ListItem key={i} alignItems="flex-start" 
+              <ListItem key={i} className={styles2.listItem} alignItems="flex-start" 
               onClick={(e) => {
                 e.preventDefault()
                 history.push(`/channels/${message.channelId}`)
@@ -309,7 +314,7 @@ export default () => {
                 <ListItemAvatar>
                   <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
                 </ListItemAvatar>
-                <ListItemText key={i}
+                <ListItemText key={i} 
                   primary={message.channelName}
                   secondary={
                     <React.Fragment>

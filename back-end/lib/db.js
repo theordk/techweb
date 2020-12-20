@@ -19,7 +19,7 @@ module.exports = {
       const channel = JSON.parse(data)
       return merge(channel, {id: id})
     },
-    list: async (user) => {
+    list: async (user, chanName) => {
       return new Promise( (resolve, reject) => {
         const channels = []
         db.createReadStream({
@@ -30,9 +30,9 @@ module.exports = {
           channel.id = key.split(':')[1]
           const friendsList = channel.list.split(',')
           friendsList.forEach(element => {
-            if(element == user){
+            if(element == user && channel.name.includes(chanName)){
               channels.push(channel)
-            }
+            }else if (element == user && chanName === undefined) channels.push(channel)
           });
         }).on( 'error', (err) => {
           reject(err)
