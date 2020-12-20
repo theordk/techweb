@@ -42,7 +42,6 @@ module.exports = {
       })
     },
     update: async(id, channel) => {
-      console.log(channel)
       await db.put(`channels:${id}`, JSON.stringify(channel))
       return merge(channel, {id: id})
     },
@@ -128,10 +127,9 @@ module.exports = {
         })
       })
     },
-    update: (id, user) => {
-      const original = store.users[id]
-      if(!original) throw Error('Unregistered user id')
-      store.users[id] = merge(original, user)
+    update: async(id, user) => {
+      await db.put(`users:${id}`, JSON.stringify(user))
+      return merge(user, {id: id})
     },
     delete: (id, user) => {
       const original = store.users[id]
