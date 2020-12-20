@@ -68,50 +68,49 @@ ING4 - Gr01 SI International
 
 Project management
 
-* Naming convention (2pts) <br/>
+### Naming convention (2pts) <br/>
 Folders names : lowercase letter <br/>
 Files .js : start with a uppercase letter <br/>
 Variable & const : start with lowercase letter <br/>
 React Components : start with a uppercase letter
-* Project structure (4pts) <br/>
+### Project structure (4pts) <br/>
 The project is structured as follow : <br/>
-Back-End :
+- Back-End :
   - bin
   - db
   - lib
   - test
-  - package.json <br/><br/>
-Front-End :
+  - package.json
+- Front-End :
   - build
   - public
   - src 
-  - package.json <br/><br/>
-Dex-Config :
+  - package.json
+- Dex-Config :
   - config.yml
-* Code quality (4pts) <br/>
+### Code quality (4pts) <br/>
 The code respects indentation and avoids spaces where they are not needed.
 We made our best for it to be as understandable as possible.
-* Design, UX (4pts) <br/>
-We coded an application as simple as possible to use for a new customer. The code is responsive, with an animated background, and proposes a refined theme around the colors blue and white. For that, we used librairies such as : <br/>
+### Design, UX (4pts) <br/>
+We coded an application as simple as possible to use for a new customer. We wanted to keep it simple and elegant and to prevent from bad user experience. The code is responsive, with an animated background, and proposes a refined theme around the colors blue and white. For that, we used librairies such as : <br/>
   - material ui (icons, components, routes, theme) <br/>
-  - particules js (background) <br/><br/>
-We wanted to keep it simple and elegant and to prevent from bad user experience.
-* Git and DevOps
+  - particules js (background)
+### Git and DevOps <br/>
 Throughout the project we used our TechWeb GitHub repository to exchange the different features we each coded.
 
 Application development
 
-* Sign in (4pts) <br/>
+### Sign in (4pts) <br/>
 The Sign In screen proposes :
   - An secured authentification with Dex (OAuth & OpenID Connect)
   - The other fields (Email / Password) are here for estethic and an eventual future implementation of the code (as well as "Create an Account")
-* Welcome screens (2pts) <br/>
+### Welcome screens (2pts) <br/>
 It is the main page of the App with :
   - The header : menu icon - dropdown icon for accessing features - logout button
   - The drawer : search bar - list of channels
   - Main part : animated background - icons for creating new channels and accessing parameters - list of the all recent messages of the user 
-  - The footer : copyright of the App
-* New channel creation (6pts) <br/>
+  - The footer : copyright of the App <br/>
+### New channel creation (6pts) <br/>
 - The user can create channels by 2 ways :
   - the main icon "add channels"
   - the dropdown menu in the header <br/><br/>
@@ -123,12 +122,12 @@ It is the main page of the App with :
 - Once created, the channel is registered in the database and accessible at anytime fot its users by :
   - The list of channels in the drawer
   - The list of last messages on the welcome page
-* Channel membership and access (4pts) <br/>
+### Channel membership and access (4pts) <br/>
 - A user only have access to the channels that :
   - he created himself
   - he has been invited in <br/><br/>
 - Once on the channel, the user have mutliple options over channels/messages depending on his status (Admin/Simple user)
-* Ressource access control (4pts) <br/>
+### Ressource access control (4pts) <br/>
 We implemented a 2 rôles access for members wich doesn't give the same rights on a channel : <br/>
   - The Admin can :
     - Rename a channel
@@ -140,27 +139,27 @@ We implemented a 2 rôles access for members wich doesn't give the same rights o
   - The Simple user can :
     - Add new users to the channel
     - Delete and modify its own messages only
-* Invite users to channels (6pts) <br/>
+### Invite users to channels (6pts) <br/>
 There are multiple ways to invite users in a channel :
 - At the moment of creating the channel with the form (by emails)
 - Once on the channel, the admin adn the simple user can add other users
 * Message modification (2pts) <br/>
 A user (either Admin or simple user) can only modify its own messages by clicking on the icon "modify" in front of each message
-* Message removal (2pts) <br/>
+### Message removal (2pts) <br/>
 We impemented a 2 ways access for :
   - Admin : he can delete any message he wants 
   - Simple user : he can only delete its own messages
-* Account settings (4pts) <br/>
+### Account settings (4pts) <br/>
 On setting the user can :
   - access his email
   - see his avatar
-* Gravatar integration <br/>
+### Gravatar integration <br/>
 When logged with Dex, a user either :
   - gets his own avatar if he has a gravatar account
   - gets a default avatar
-* Avatar selection <br/>
+### Avatar selection <br/>
 On settings the user can see 5 other avatars but we couldn't manage to change it correctly.
-* Personal custom avatar <br/>
+### Personal custom avatar <br/>
 This functionality wasn't working perfectly so we didn't push it in our final version of the App
 
 
