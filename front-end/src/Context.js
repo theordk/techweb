@@ -1,6 +1,11 @@
 
 import React, {useState} from 'react'
 import { useCookies } from 'react-cookie'
+import AvatarPic1 from './pics/1.jpeg'
+import AvatarPic2 from './pics/2.jpg'
+import AvatarPic3 from './pics/3.jpg'
+import AvatarPic4 from './pics/4.jpg'
+import AvatarPic5 from './pics/5.jpg'
 
 const Context = React.createContext()
 
@@ -9,8 +14,11 @@ export default Context
 export const Provider = ({
   children
 }) => {
+
+
   const [cookies, setCookie, removeCookie] = useCookies([])
   const [oauth, setOauth] = useState(cookies.oauth)
+  
   const [drawerVisible, setDrawerVisible] = useState(false)
   const [channels, setChannels] = useState([])
   const [currentChannel, setCurrentChannel] = useState(null)
