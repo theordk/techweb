@@ -229,10 +229,7 @@ export default forwardRef(({
       },
     })
 
-<<<<<<< HEAD
     fetch()
-=======
->>>>>>> 6d6512d466d66a91570c8e9d839d7a67b27d5e88
     setOpenFriends(false)
   }
 
@@ -343,25 +340,6 @@ export default forwardRef(({
   return (
     
     <div css={styles.root} ref={rootEl}>
-<<<<<<< HEAD
-      <h1 css={styles.title}>Messages for {channel.name}</h1>
-      <p>Users : {channel.list.replace(/,/g, ' - ')}</p>
-      {channel.chanAdmin.includes(`${oauth.email}`) ? 
-      <div>
-      <button onClick={() => setOpenName(true)}>change name</button>
-      <button onClick={() => setOpenAdmin(true)}> add admins </button>
-      <button onClick={() => setOpenDelete(true)}>Delete Channel</button>
-      <button onClick={() => setOpenFriends(true)}>add users</button>
-      </div>
-      : <button onClick={() => setOpenFriends(true)}>add users</button>
-      }
-
-      <Dialog open={openAdmin} onClose={() => setOpenAdmin(false)}>
-        <form onSubmit={addAdmins}>
-          <input type="text" onChange={(event) => setAdmins(event.target.value)}/>
-          <button type="submit">Confirm</button>
-        </form>
-=======
       {channel.chanAdmin.includes(`${oauth.email}`) ?
         <div>
           <h1 css={styles.title}>Messages for {channel.name}
@@ -460,7 +438,6 @@ export default forwardRef(({
             </form>
           </div>
         </Paper>
->>>>>>> 6d6512d466d66a91570c8e9d839d7a67b27d5e88
       </Dialog>
       <Dialog open={openFriends} onClose={() => setOpenFriends(false)} css={styles.icon}>
         <Paper className={classes.paperstyle}>
@@ -554,10 +531,6 @@ export default forwardRef(({
           </div>
         </Paper>
       </Dialog>
-<<<<<<< HEAD
-
-=======
->>>>>>> 6d6512d466d66a91570c8e9d839d7a67b27d5e88
       <div>
         <ul>
           {messages.map((message, i) => {

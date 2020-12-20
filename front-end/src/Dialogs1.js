@@ -252,7 +252,7 @@ export function ChannelModal(props) {
 };
 
 
-export function Profile(props) {
+export function ManageAccount(props) {
   const classes = useStyles();
   const styles = useStylesBis(useTheme())
   const [open, setOpen] = React.useState(false);
